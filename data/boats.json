@@ -1,0 +1,10 @@
+[{
+	name: 'Badger Sloop',
+	inventory: [{
+		hull: '2'
+		loan: {
+			purpose: 'Day Sailing',
+			out: '2013-10-10'
+		}
+	}]
+}]
