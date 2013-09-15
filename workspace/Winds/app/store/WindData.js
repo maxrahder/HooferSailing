@@ -22,9 +22,13 @@ Ext.define('Winds.store.WindData', {
 			success: function(response) {
 				var d = [];
 				for (var i = 0; i < response.stamps.length; i++) {
-					var stamp = response.stamps[i];
+
 					var data = response.data[i];
-					var time = Ext.Date.parse(stamp, 'Y-m-d H:i:s');
+
+					var stamp = response.stamps[i];
+					stamp += 'Z';
+					time = moment(stamp)
+					
 					data.push(time);
 					data.push(Winds.util.Compass.degreesToDirection(data[0]));
 					data.push(data[1]*1.94384);

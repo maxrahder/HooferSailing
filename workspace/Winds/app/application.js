@@ -1,9 +1,12 @@
 Ext.define('Winds.Application', {
-    name: 'Winds',
+	extend: 'Ext.app.Application',
+	requires: ['Winds.util.Date'],
 
-    extend: 'Ext.app.Application',
+	name: 'Winds',
 
-    controllers: [
-        'Main'
-    ]
+
+
+	controllers: [
+		'Main'
+	]
 });

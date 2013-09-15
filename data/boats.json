@@ -1,10 +1,104 @@
 [{
-	name: 'Badger Sloop',
-	inventory: [{
-		hull: '2'
-		loan: {
-			purpose: 'Day Sailing',
-			out: '2013-10-10'
+    "name": "Badger Sloop",
+	"inventory": [{
+		"name": "", "hull": "1",
+		"loan": {
+			"purpose": "Day Sailing",
+			"out": "2013-10-10T10:01:01Z 10:01:01Z"
+		}
+	}, {
+		"name": "",
+		"hull": "2",
+		"loan": {
+			"purpose": "Instruction",
+			"out": "2013-10-10T10:01:01Z 10:01:01Z"
+		}
+	}, {
+		"name": "", "hull": "3",
+		"loan": {
+			"purpose": "Day Sailing",
+			"out": "2013-10-10T10:01:01Z 10:01:01Z"
+		}
+	}, {
+		"name": "", "hull": "4",
+		"loan": {
+			"purpose": "Day Sailing",
+			"out": "2013-10-10T10:01:01Z 10:01:01Z"
+		}
+	}, {
+		"name": "", "hull": "5",
+		"loan:": {}
+	}, {
+		"name": "", "hull": "6",
+		"loan": {}
+	}, {
+		"name": "", "hull": "7",
+		"loan": {}
+	}, {
+		"name": "", "hull": "7",
+		"loan": {}
+	}]
+}, {
+	"name": "420",
+	"inventory": [{
+		"name": "", "hull": "1",
+		"loan": {
+			"purpose": "Day Sailing",
+			"out": "2013-10-10T10:01:01Z"
+		}
+	}]
+}, {
+	"name": "Tech",
+	"inventory": [{
+		"name": "", "hull": "1",
+		"loan": {
+			"purpose": "Day Sailing",
+			"out": "2013-10-10T10:01:01Z"
+		}
+	}]
+}, {
+	"name": "Scow",
+	"inventory": [{
+		"name": "", "hull": "1",
+		"loan": {
+			"purpose": "Day Sailing",
+			"out": "2013-10-10T10:01:01Z"
+		}
+	}]
+}, {
+	"name": "Laser/Byte",
+	"inventory": [{
+		"name": "", "hull": "1",
+		"loan": {
+			"purpose": "Day Sailing",
+			"out": "2013-10-10T10:01:01Z"
+		}
+	}]
+}, {
+	"name": "Light Keelboat",
+	"inventory": [{
+		"name": "", "hull": "1",
+		"loan": {
+			"purpose": "Day Sailing",
+			"out": "2013-10-10T10:01:01Z"
+		}
+	}]
+}, {
+	"name": "Keelboat",
+	"inventory": [{
+		"name": "", "hull": "1",
+		"loan": {
+			"purpose": "Day Sailing",
+			"out": "2013-10-10T10:01:01Z"
+		}
+	}]
+}, {
+	"name": "Windsurfer",
+	"inventory": [{
+		"name": "", "hull": "1",
+		"loan": {
+			"purpose": "Day Sailing",
+			"out": "2013-10-10T10:01:01Z"
 		}
 	}]
 }]
