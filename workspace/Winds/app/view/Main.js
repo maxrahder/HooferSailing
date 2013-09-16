@@ -1,11 +1,13 @@
 Ext.define('Winds.view.Main', {
 	extend: 'Ext.panel.Panel',
 	requires: [
-		'Ext.layout.container.Fit', 
-		'Ext.tab.Panel', 
-		'Winds.view.WindGrid', 
-		'Winds.view.WindChart', 
-		'Winds.view.CompassRose'
+		'Ext.layout.container.Fit',
+		'Ext.tab.Panel',
+		'Winds.view.WindGrid',
+		'Winds.view.WindChart',
+		'Winds.view.CompassRose',
+		'Ext.panel.Panel',
+		'Ext.form.field.Display'
 	],
 	layout: 'fit',
 	xtype: 'app-main',
@@ -28,8 +30,32 @@ Ext.define('Winds.view.Main', {
 			store: 'WindData'
 		}, {
 			title: 'Chart',
-			xtype: 'windchart',
-			store: 'WindData'
+			tbar: [{
+				xtype: 'button',
+				enableToggle: true,
+				text: 'Moving Average',
+				pressed: true,
+				itemId: 'movingAverage',
+				glyph: '51@Pictos',
+				handler: function(button){
+					button.setGlyph(button.pressed?'51@Pictos':'42@Pictos')
+				}
+			},{
+				xtype: 'displayfield',
+				fieldLabel: 'Average',
+				itemId: 'average',
+				labelWidth: 30
+			},{
+				xtype: 'displayfield',
+				fieldLabel: 'Gusting',
+				itemId: 'gusting',
+				labelWidth: 30
+			}],
+			layout: 'fit',
+			items: [{
+				xtype: 'windchart',
+				store: 'WindData'
+			}]
 		}, {
 			title: 'Compass',
 			xtype: 'compassrose',

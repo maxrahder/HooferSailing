@@ -9,11 +9,9 @@ Ext.define('Winds.view.CompassRose', {
 		x: 100,
 		y: 100
 	}, {
-		type: "path",
-		path: "M 500 50 l 100 100 l -100 0 l 0 -100",
-		stroke: "none",
-		rotate: '45',
-		fill: "#000",
+		type: 'text',
+		text: '64',
+		'font-family': 'Pictos',
 		x: 100,
 		y: 100
 	}]
