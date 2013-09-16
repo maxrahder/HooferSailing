@@ -11,7 +11,7 @@ Ext.define('Winds.view.Main', {
 	],
 	layout: 'fit',
 	xtype: 'app-main',
-	tbar: [{
+	tbar: [{ 
 		text: 'Reload',
 		itemId: 'reload',
 		handler: function(button) {
