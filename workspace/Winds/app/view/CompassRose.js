@@ -6,7 +6,7 @@ Ext.define('Winds.view.CompassRose', {
 		type: 'circle',
 		fill: '#79BB3F',
 		radius: 100,
-		x: 100,
+		x: 100,   
 		y: 100
 	}, {
 		type: 'text',
