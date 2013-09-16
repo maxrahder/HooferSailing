@@ -29,7 +29,7 @@ Ext.define('HooferSailingMobile.view.Main', {
                 ].join("")
             },
             {
-                title: 'Get Started',
+                title: 'Boats',
                 iconCls: 'action',
 
                 items: [
