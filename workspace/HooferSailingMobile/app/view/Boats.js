@@ -4,6 +4,7 @@ Ext.define('HooferSailingMobile.view.Boats', {
 	
 	items: [{
 		store: {
+			/*
 	        fields: ['name', 'age'],
 	        data: [
 	            {name: 'Jamie Avins',  age: 100},
@@ -12,6 +13,7 @@ Ext.define('HooferSailingMobile.view.Boats', {
 	            {name: 'Jacky Nguyen', age: 24},
 	            {name: 'Ed Spencer',   age: 26}
 	        ]
+	        */
     	},
 		//fullscreen: true,
 		//title: 'Boats View',
