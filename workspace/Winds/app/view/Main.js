@@ -50,7 +50,25 @@ Ext.define('Winds.view.Main', {
 				fieldLabel: 'Gusting',
 				itemId: 'gusting',
 				labelWidth: 30
-			}],
+			},{
+		xtype: 'slider',
+		fieldLabel: 'Rotate',
+		width: 200,
+		minValue: 0,
+		maxValue: 360,
+		value: 315,
+		listeners: {
+			change: function(slider, value) {
+				var draw = slider.up('compassrose draw');
+				var sprite = draw.surface.items.first();
+				sprite.setAttributes({
+					rotation: {
+						degrees: value
+					}
+				}, true);
+			}
+		}
+	}],
 			layout: 'fit',
 			items: [{
 				xtype: 'windchart',
