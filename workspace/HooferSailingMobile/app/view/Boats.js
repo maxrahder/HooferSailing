@@ -8,7 +8,6 @@ Ext.define('HooferSailingMobile.view.Boats', {
 			xtype: 'dataview',
 			store: 'Fleets',
 			itemTpl: '{name}<hr/>',
-			text: 'Push a new view!',
 		}]
 	}
 });

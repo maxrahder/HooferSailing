@@ -3,7 +3,6 @@ Ext.define('HooferSailingMobile.view.Main', {
     xtype: 'main',
     requires: [
         'Ext.TitleBar',
-        'Ext.Video',
         'HooferSailingMobile.view.Boats'
     ],
     config: {
