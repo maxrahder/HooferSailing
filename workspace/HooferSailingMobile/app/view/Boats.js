@@ -4,6 +4,7 @@ Ext.define('HooferSailingMobile.view.Boats', {
 	xtype: 'boats',
 	config: {
 		items: [{
+			title: 'Boats',
 			xtype: 'dataview',
 			store: 'Fleets',
 			itemTpl: '{name}<hr/>',
