@@ -3,6 +3,7 @@ Ext.define('HooferSailingMobile.view.Boats', {
 	xtype: 'boats',
 	
 	items: [{
+		xtype: 'dataview',
 		store: {
 			/*
 	        fields: ['name', 'age'],
@@ -15,10 +16,7 @@ Ext.define('HooferSailingMobile.view.Boats', {
 	        ]
 	        */
     	},
-		//fullscreen: true,
-		//title: 'Boats View',
-        //html: 'This is a dataview within the navigationview. The list of boat categories, drawn from boats.json, goes here',
-		xtype: 'dataview',
+		
 		itemTpl: '{name} is {age} years old'
 	}]
 });

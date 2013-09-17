@@ -24,7 +24,7 @@ Ext.define('HooferSailingMobile.view.Main', {
                 },
 
                 html: [
-                    "You've just generated a new Sencha Touch 2 project. What you're looking at right now is the ",
+                    "First tab of the HooferSailingMobile app. What you're looking at right now is the ",
                     "contents of <a target='_blank' href=\"app/view/Main.js\">app/view/Main.js</a> - edit that file ",
                     "and refresh to change what's rendered here."
                 ].join("")
@@ -34,7 +34,8 @@ Ext.define('HooferSailingMobile.view.Main', {
             {
                 title: 'Boats',
                 iconCls: 'action',
-                xtype: 'boats'
+                xtype: 'boats',
+                store: 'Fleet'
             }
         ]
     }
