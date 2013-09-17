@@ -13,7 +13,7 @@ Ext.define('HooferSailingMobile.view.Main', {
         }, {
             iconCls: 'anchor',
             text: 'Boats',
-            title: 'Boats',
+            //title: 'Boats',
             xtype: 'boats'
         }]
     }
