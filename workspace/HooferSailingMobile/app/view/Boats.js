@@ -21,7 +21,7 @@ Ext.define('HooferSailingMobile.view.Boats', {
 						});
 					}
 				}
-			}
+			} 
 		]
 	}
 });
