@@ -4,8 +4,6 @@ Ext.define('HooferSailingMobile.view.Boats', {
 	
 	items: [{
 		xtype: 'dataview',
-		
-		
 		itemTpl: '{name}'
 	}]
 });
