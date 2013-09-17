@@ -4,7 +4,7 @@ Ext.define('User', {
         fields: [
             { name: 'name', type: 'string' },
             { name: 'hull', type: 'string' },
-            { name: 'loan' },
+            { name: 'loan', type: 'auto' }
         ],
         belongsTo: 'Fleet'
     }
