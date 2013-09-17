@@ -2,9 +2,9 @@ Ext.define('Fleet', {
     extend: 'Ext.data.Model',
     config: {
         fields: [
-            { name: 'fleetId', type: 'int' },
-            { name: 'fleetName', type: 'string' }
-        ]
+            { name: 'name', type: 'string' },
+            { name: 'boats' }
+        ],
         hasMany: 'Boat' 
     }
 });

@@ -1,6 +1,6 @@
 [{
 	"name": "Badger Sloop",
-	"inventory": [{
+	"boats": [{
 		"name": "",
 		"hull": "1",
 		"loan": {
@@ -47,7 +47,7 @@
 	}]
 }, {
 	"name": "420",
-	"inventory": [{
+	"boats": [{
 		"name": "",
 		"hull": "1",
 		"loan": {
@@ -57,7 +57,7 @@
 	}]
 }, {
 	"name": "Tech",
-	"inventory": [{
+	"boats": [{
 		"name": "",
 		"hull": "1",
 		"loan": {
@@ -67,7 +67,7 @@
 	}]
 }, {
 	"name": "Scow",
-	"inventory": [{
+	"boats": [{
 		"name": "",
 		"hull": "1",
 		"loan": {
@@ -77,7 +77,7 @@
 	}]
 }, {
 	"name": "Laser/Byte",
-	"inventory": [{
+	"boats": [{
 		"name": "",
 		"hull": "1",
 		"loan": {
@@ -87,7 +87,7 @@
 	}]
 }, {
 	"name": "Light Keelboat",
-	"inventory": [{
+	"boats": [{
 		"name": "",
 		"hull": "1",
 		"loan": {
@@ -97,7 +97,7 @@
 	}]
 }, {
 	"name": "Keelboat",
-	"inventory": [{
+	"boats": [{
 		"name": "",
 		"hull": "1",
 		"loan": {
@@ -107,7 +107,7 @@
 	}]
 }, {
 	"name": "Windsurfer",
-	"inventory": [{
+	"boats": [{
 		"name": "",
 		"hull": "1",
 		"loan": {
