@@ -1,4 +1,4 @@
-Ext.define('Loan', {
+Ext.define('HooferSailingMobile.model.Loan', {
 	extend: 'Ext.data.Model',
 	config: {
 		fields: ['purpose', {
