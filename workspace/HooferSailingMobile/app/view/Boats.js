@@ -1,9 +1,13 @@
 Ext.define('HooferSailingMobile.view.Boats', {
 	extend: 'Ext.navigation.View',
+	requires: ['Ext.dataview.DataView'],
 	xtype: 'boats',
-	
-	items: [{
-		xtype: 'dataview',
-		itemTpl: '{name}'
-	}]
+	config: {
+		items: [{
+			xtype: 'dataview',
+			store: 'Fleets',
+			itemTpl: '{name}<hr/>',
+			text: 'Push a new view!',
+		}]
+	}
 });
