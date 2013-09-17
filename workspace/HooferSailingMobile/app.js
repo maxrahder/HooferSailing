@@ -14,7 +14,7 @@ Ext.application({
     name: 'HooferSailingMobile',
 
     requires: [
-        'Ext.MessageBox'
+        'Ext.MessageBox', 'HooferSailingMobile.util.Util'
     ],
 
     controllers: ['Boats'],
