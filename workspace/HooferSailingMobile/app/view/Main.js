@@ -8,7 +8,10 @@ Ext.define('HooferSailingMobile.view.Main', {
     config: {
         tabBarPosition: 'bottom',
         items: [{
-            iconCls: 'action',
+            iconCls: 'flag',
+            title: 'Conditions'
+        }, {
+            iconCls: 'anchor',
             text: 'Boats',
             title: 'Boats',
             xtype: 'boats'
