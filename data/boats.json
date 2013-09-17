@@ -5,41 +5,50 @@
 		"hull": "1",
 		"loan": {
 			"purpose": "Day Sailing",
-			"out": "2013-10-10T10:01:01Z 10:01:01Z"
+			"out": "2013-10-10T10:01:01Z"
 		}
 	}, {
 		"name": "",
 		"hull": "2",
 		"loan": {
 			"purpose": "Instruction",
-			"out": "2013-10-10T10:01:01Z 10:01:01Z"
+			"out": "2013-10-10T10:01:01Z"
 		}
 	}, {
 		"name": "",
 		"hull": "3",
 		"loan": {
 			"purpose": "Day Sailing",
-			"out": "2013-10-10T10:01:01Z 10:01:01Z"
+			"out": "2013-10-10T10:01:01Z"
 		}
 	}, {
 		"name": "",
 		"hull": "4",
 		"loan": {
 			"purpose": "Day Sailing",
-			"out": "2013-10-10T10:01:01Z 10:01:01Z"
+			"out": "2013-10-10T10:01:01Z"
 		}
 	}, {
 		"name": "",
 		"hull": "5",
-		"loan:": {}
+		"loan": {
+			"purpose": "Day Sailing",
+			"out": "2013-10-10T10:01:01Z"
+		}
 	}, {
 		"name": "",
 		"hull": "6",
-		"loan": {}
+		"loan": {
+			"purpose": "Day Sailing",
+			"out": "2013-10-10T10:01:01Z"
+		}
 	}, {
 		"name": "",
 		"hull": "7",
-		"loan": {}
+		"loan": {
+			"purpose": "Day Sailing",
+			"out": "2013-10-10T10:01:01Z"
+		}
 	}, {
 		"name": "",
 		"hull": "7",
