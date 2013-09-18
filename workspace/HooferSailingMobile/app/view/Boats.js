@@ -17,7 +17,8 @@ Ext.define('HooferSailingMobile.view.Boats', {
 							xtype: 'dataview',
 							title: 'Availability',
 							store: boats,
-							itemTpl: '{hull}'
+							itemTpl: '{hull}' // is {status}'
+							
 						});
 					}
 				}
