@@ -1,0 +1,1 @@
+["/*319568bbb5575df1723e8f0324a281f4be278839",42,487570,"listeners:{itemtap:function(b,d,f,a){var c=b.up(\"navigationview\");var e=a.boats();c.push({xtype:\"dataview\",title:\"Availability\",store:e,itemTpl:\"{hull}\"})}}}",488558,37,487650,152,487816,1880]
