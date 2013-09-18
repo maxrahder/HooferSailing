@@ -16,27 +16,33 @@ Ext.define('HooferSailingMobile.view.Boats', {
 						property: 'isOut',
 						direction: 'ASC'
 					}, {
-						property: 'hull',
+						property: 'outTime',
 						direction: 'ASC'
+					},{
+						property: 'hull',
+						direction: 'DESC'
 					}]);
 					navigationView.push({
 						xtype: 'dataview',
-						title: 'Availability',
+						title: record.get('name'),
 						store: boats,
 						itemTpl: [
 							'<table',
 							'    style="',
-							'    height: 64px; ',
+							'    height: 60px; ',
 							'    border-bottom: solid 1px #555555; ',
 							'    width: 100%',
 							'">',
-							'<tr>',
+							'<tr ',
+							'    style="',
+							'    background-color: {[values.isOut ? "#cccccc" : "#ffffff"]}"',
+							'>',
 							'<td valign="middle" ',
 							'    style="',
 							'    font-family: Pictos; ',
 							'    font-size: 200%; ',
 							'    width: 38px; ' ,
-							'    valign: middle; ',
+							'    padding: 4px; ' ,
 							'    color: {[values.isOut ? "red" : "green"]}; ',
 							'">',
 							'{[values.isOut ? "&#42;" : "&#51;"]}',
