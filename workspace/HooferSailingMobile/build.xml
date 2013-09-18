@@ -63,4 +63,20 @@
         <property name="build.options.native.product" value="product:touch"/>
     </target>
     -->
+
+    <target name="-after-build">
+        <copy todir="${build.dir}/data" overwrite="false">
+          <fileset dir="${app.dir}/data">
+            <include name="**/*" />
+          </fileset>
+        </copy>
+        <copy todir="${build.dir}" overwrite="false">
+          <fileset dir="${app.dir}">
+            <include name="moment.min.js" />
+          </fileset>
+        </copy>
+    </target>
+
+
+
 </project>

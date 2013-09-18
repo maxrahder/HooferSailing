@@ -5,7 +5,7 @@ Ext.define('HooferSailingMobile.store.Fleets', {
 		model: 'HooferSailingMobile.model.Fleet',
 		proxy: {
 			type: 'ajax',
-			url: '../../data/boats.json'
+			url: 'data/boats.json'
 		},
 		autoLoad: true,
 		sorters: ['name']
