@@ -1,6 +1,5 @@
 Ext.define('HooferSailingMobile.model.Boat', {
 	extend: 'Ext.data.Model',
-	requires: ['HooferSailingMobile.model.Loan'],
 
 	config: {
 		fields: [{

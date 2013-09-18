@@ -626,8 +626,8 @@ Ext.ClassManager.addNameAlternateMappings({
   "HooferSailingMobile.controller.Boats": [],
   "HooferSailingMobile.model.Boat": [],
   "HooferSailingMobile.model.Fleet": [],
-  "HooferSailingMobile.model.Loan": [],
   "HooferSailingMobile.store.Fleets": [],
+  "HooferSailingMobile.util.Util": [],
   "HooferSailingMobile.view.Boats": [],
   "HooferSailingMobile.view.Main": []
 });
@@ -1466,8 +1466,8 @@ Ext.ClassManager.addNameAliasMappings({
   "HooferSailingMobile.controller.Boats": [],
   "HooferSailingMobile.model.Boat": [],
   "HooferSailingMobile.model.Fleet": [],
-  "HooferSailingMobile.model.Loan": [],
   "HooferSailingMobile.store.Fleets": [],
+  "HooferSailingMobile.util.Util": [],
   "HooferSailingMobile.view.Boats": [
     "widget.boats"
   ],
