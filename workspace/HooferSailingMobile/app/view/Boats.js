@@ -3,6 +3,9 @@ Ext.define('HooferSailingMobile.view.Boats', {
 	requires: ['Ext.dataview.DataView'],
 	xtype: 'boats',
 	config: {
+		// Initially, the navigation view has one thing in it --
+		// a dataview showing the itemTpl for each record in the
+		// Fleets store.
 		items: [{
 			title: 'Boats',
 			xtype: 'dataview',
@@ -21,7 +24,7 @@ Ext.define('HooferSailingMobile.view.Boats', {
 			],
 			listeners: {
 				itemtap: function(dataview, index, target, record) {
-					var navigationView = dataview.up('navigationview');
+					var navigationView = dataview.up('boats');
 					var boats = record.boats();
 					boats.sort([{
 						property: 'isOut',
@@ -33,6 +36,9 @@ Ext.define('HooferSailingMobile.view.Boats', {
 						property: 'hull',
 						direction: 'DESC'
 					}]);
+					// Push a new dataview onto this navigation view. 
+					// The dataview will show the itemTpl for each 
+					// record in the fleet record's list of boats.
 					navigationView.push({
 						xtype: 'dataview',
 						title: record.get('name'),

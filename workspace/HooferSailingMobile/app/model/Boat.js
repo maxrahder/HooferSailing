@@ -20,8 +20,8 @@ Ext.define('HooferSailingMobile.model.Boat', {
 				console.log('outTime');
 				var result = null;
 				if (record.data.loan.out) {
+					// We're using the momenent.js library. See http://momentjs.com/
 					result = moment(record.data.loan.out).toDate();
-					console.log('outTime: ' + result);
 				}
 				return result;
 			}
@@ -33,7 +33,6 @@ Ext.define('HooferSailingMobile.model.Boat', {
 		}, {
 			name: 'outAgo',
 			convert: function(value, record){
-				console.log('outAgo');
 				var outTime = record.get('outTime');
 				if (outTime){
 					var pluralize = HooferSailingMobile.util.Util.pluralize;
