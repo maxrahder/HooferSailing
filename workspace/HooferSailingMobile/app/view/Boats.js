@@ -7,7 +7,18 @@ Ext.define('HooferSailingMobile.view.Boats', {
 			title: 'Boats',
 			xtype: 'dataview',
 			store: 'Fleets',
-			itemTpl: '{name}<hr/>',
+			itemTpl: [
+				'<div ',
+				'    style="',
+				'    height: 60px; ',
+				'    border-bottom: solid 1px #555555; ',
+				'    display:-webkit-box; ',
+				'    padding: 4px; ',
+				'    -webkit-box-align:center; ',
+				'">',
+				'{name}',
+				'</div>'
+			],
 			listeners: {
 				itemtap: function(dataview, index, target, record) {
 					var navigationView = dataview.up('navigationview');
@@ -18,7 +29,7 @@ Ext.define('HooferSailingMobile.view.Boats', {
 					}, {
 						property: 'outTime',
 						direction: 'ASC'
-					},{
+					}, {
 						property: 'hull',
 						direction: 'DESC'
 					}]);
@@ -41,8 +52,8 @@ Ext.define('HooferSailingMobile.view.Boats', {
 							'    style="',
 							'    font-family: Pictos; ',
 							'    font-size: 200%; ',
-							'    width: 38px; ' ,
-							'    padding: 4px; ' ,
+							'    width: 38px; ',
+							'    padding: 4px; ',
 							'    color: {[values.isOut ? "red" : "green"]}; ',
 							'">',
 							'{[values.isOut ? "&#42;" : "&#51;"]}',
