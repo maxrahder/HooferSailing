@@ -27,7 +27,7 @@ Ext.define('Winds.view.WindChart', {
 		type: 'line',
         axis : ['left', 'bottom'],
 		xField: 'time',
-		yField: 'knots',
+		yField: 'windSpeedKnots',
 		smooth: true
 	}]
 });

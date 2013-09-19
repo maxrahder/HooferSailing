@@ -19,7 +19,7 @@ Ext.define('Winds.store.WindData', {
 		weightedAverage: true,
 		windDirectionRose: ''
 	},
-	groupField: 'windDirectionRose',
+	//groupField: 'windDirectionRose',
 	fields: ['windDirectionDegrees', 'metersPerSecond', 'time', 'windDirectionRose', 'windSpeedKnots'],
 
 	fetch: function() {

@@ -36,7 +36,7 @@ Ext.define('HooferSailingMobile.view.Conditions', {
                 '    margin-top: .5em; ',
                 '    text-align: center; ',
                 '    font-size: 4em; ',
-                '    background-color: white',
+                //'    background-color: white',
                 '">',
                 '<span style="',
                 '    color: green; ',

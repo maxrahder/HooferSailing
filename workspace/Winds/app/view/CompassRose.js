@@ -28,7 +28,6 @@ Ext.define('Winds.view.CompassRose', {
 	items: [{
 		xtype: 'draw',
 		viewBox: false,
-		style: {}
 		padding: 20,
 		items: [{
 			type: 'path',
