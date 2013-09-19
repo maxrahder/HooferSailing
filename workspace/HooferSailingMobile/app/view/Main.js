@@ -3,13 +3,16 @@ Ext.define('HooferSailingMobile.view.Main', {
     xtype: 'main',
     requires: [
         'Ext.TitleBar',
-        'HooferSailingMobile.view.Boats'
+        'HooferSailingMobile.view.Boats',
+        'HooferSailingMobile.view.Conditions'
     ],
     config: {
         tabBarPosition: 'bottom',
         items: [{
             iconCls: 'flag',
-            title: 'Conditions'
+            title: 'Conditions',
+            xtype: 'conditions',
+            store: 'Winds'
         }, {
             iconCls: 'anchor',
             title: 'Boats',

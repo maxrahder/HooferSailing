@@ -12,17 +12,17 @@ Ext.define('Winds.view.WindGrid', {
 		format: 'G:i:s'
 	}, {
 		text: 'Degrees',
-		dataIndex: 'degrees',
+		dataIndex: 'windDirectionDegrees',
 		xtype: 'numbercolumn',
 		align: 'right',
 		format: '0'
 	}, {
 		text: 'Compass',
-		dataIndex: 'direction',
+		dataIndex: 'windDirectionRose',
 		align: 'center'
 	}, {
 		text: 'Speed (knots)',
-		dataIndex: 'knots',
+		dataIndex: 'windSpeedKnots',
 		xtype: 'numbercolumn',
 		align: 'right',
 		format: '0'

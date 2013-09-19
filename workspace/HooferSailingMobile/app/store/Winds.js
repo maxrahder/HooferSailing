@@ -1,6 +1,6 @@
-Ext.define('Winds.store.WindData', {
+Ext.define('HooferSailingMobile.store.Winds', {
 	extend: 'Ext.data.ArrayStore',
-	requires: ['Ext.data.JsonP', 'Winds.util.Compass'],
+	requires: ['Ext.data.JsonP', 'HooferSailingMobile.util.Compass'],
 	// Gets the past five minutes of buoy data to calculate current
 	// speed and direction. We're averaging the speeds.
 	// TODO: Average the direction, which obviously, will be a 
@@ -17,10 +17,11 @@ Ext.define('Winds.store.WindData', {
 		averageKnots: 0,
 		gusts: 0,
 		weightedAverage: true,
-		windDirectionRose: ''
+		windDirectionRose: '',
+
+		groupField: 'windDirectionRose',
+		fields: ['windDirectionDegrees', 'metersPerSecond', 'time', 'windDirectionRose', 'windSpeedKnots'],
 	},
-	groupField: 'windDirectionRose',
-	fields: ['windDirectionDegrees', 'metersPerSecond', 'time', 'windDirectionRose', 'windSpeedKnots'],
 
 	fetch: function() {
 		var me = this;
@@ -80,7 +81,7 @@ Ext.define('Winds.store.WindData', {
 
 					var time = moment(stamps[i] + 'Z').toDate();
 
-					var windDirectionRose = Winds.util.Compass.degreesToRose(windDirectionDegrees);
+					var windDirectionRose = HooferSailingMobile.util.Compass.degreesToRose(windDirectionDegrees);
 
 					var windSpeedKnots = (windSpeedMetersPerSecond * 1.94384);
 
@@ -104,22 +105,22 @@ Ext.define('Winds.store.WindData', {
 						}
 					}
 				}
-				me.loadData(d);
+				me.setData(d);
 
 				// Figure out the most common wind direction
 				var groups = me.getGroups();
 				var biggestGroup = groups[0];
-				Ext.Array.forEach(groups, function(g){
-					if (g.children.length > biggestGroup.children.length){
+				Ext.Array.forEach(groups, function(g) {
+					if (g.children.length > biggestGroup.children.length) {
 						biggestGroup = g;
 					}
 				});
 				me.setWindDirectionRose(biggestGroup.name);
 
 				var knots = Ext.Array.pluck(d, 'knots');
-				me.setAverageKnots(knotsSum / d.length);
-				me.setGusts(Ext.Array.mean(topSpeeds));
-				me.fireEvent('fetched', me);
+				me.setAverageKnots(Math.round(knotsSum / d.length));
+				me.setGusts(Math.round(Ext.Array.mean(topSpeeds)));
+				me.fireEvent('fetch', me);
 			}
 		});
 	}
