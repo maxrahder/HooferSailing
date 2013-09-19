@@ -627,8 +627,12 @@ Ext.ClassManager.addNameAlternateMappings({
   "HooferSailingMobile.model.Boat": [],
   "HooferSailingMobile.model.Fleet": [],
   "HooferSailingMobile.store.Fleets": [],
+  "HooferSailingMobile.store.Winds": [],
+  "HooferSailingMobile.util.Compass": [],
+  "HooferSailingMobile.util.Date": [],
   "HooferSailingMobile.util.Util": [],
   "HooferSailingMobile.view.Boats": [],
+  "HooferSailingMobile.view.Conditions": [],
   "HooferSailingMobile.view.Main": []
 });
 Ext.ClassManager.addNameAliasMappings({
@@ -1467,9 +1471,15 @@ Ext.ClassManager.addNameAliasMappings({
   "HooferSailingMobile.model.Boat": [],
   "HooferSailingMobile.model.Fleet": [],
   "HooferSailingMobile.store.Fleets": [],
+  "HooferSailingMobile.store.Winds": [],
+  "HooferSailingMobile.util.Compass": [],
+  "HooferSailingMobile.util.Date": [],
   "HooferSailingMobile.util.Util": [],
   "HooferSailingMobile.view.Boats": [
     "widget.boats"
+  ],
+  "HooferSailingMobile.view.Conditions": [
+    "widget.conditions"
   ],
   "HooferSailingMobile.view.Main": [
     "widget.main"
