@@ -15,28 +15,45 @@ Ext.define('HooferSailingMobile.view.Conditions', {
         tpl: [
             '<div style="',
             '    vertical-align: middle;',
-            '    margin-top: 1em; ',
+            '    margin-top: .7em; ',
             '">',
+
             '<p style="',
             '    text-align: center; ',
-            '    font-size: 4em; ',
+            '    font-size: 3em; ',
             '">',
             '<b>{windDirection}</b>',
-            '<br><b>{knots}</b> kn',
             '</p>',
+
             '<p style="',
             '    text-align: center; ',
-            '    margin-top: .5em; ',
-            '    font-size: 2em; ',
+            '    margin-top: 0em; ',
+            '    font-size: 3em; ',
+            '">',
+            '<b>{knots}</b> kn',
+            '</p>',
+
+            '<p style="',
+            '    text-align: center; ',
+            '    font-size: 1.5em; ',
             '">',
             '{gusts} kn gusts</span>',
             '</p>',
+
+            '<p style="',
+            '    margin-top: .3em; ',
+            '    text-align: center; ',
+            '    font-size: 1.5em; ',
+            '">',
+            'Water temp. ',
+            '{waterTemperature}&deg;F',
+            '</p>',
+
             '<p style="',
             '    font-family: Pictos; ',
-            '    margin-top: .5em; ',
+            '    margin-top: .3em; ',
             '    text-align: center; ',
             '    font-size: 4em; ',
-            //'    background-color: white',
             '">',
             '<span style="',
             '    color: green; ',
@@ -48,7 +65,6 @@ Ext.define('HooferSailingMobile.view.Conditions', {
             '    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black; ',
             '">^</span>',
             '</p>',
-
 
             '</div>'
         ],
@@ -64,7 +80,8 @@ Ext.define('HooferSailingMobile.view.Conditions', {
             me.setData({
                 windDirection: store.getWindDirectionRose(),
                 knots: store.getAverageKnots(),
-                gusts: store.getGusts()
+                gusts: store.getGusts(),
+                waterTemperature: Math.round( ( (9 / 5) * store.getWaterTemperature() ) + 32 )
             });
         });
         this.callParent();

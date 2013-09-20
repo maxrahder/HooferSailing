@@ -11,16 +11,17 @@ Ext.define('HooferSailingMobile.store.Winds', {
 	// ten second intervals is probably fine.
 	config: {
 		url: 'http://metobs.ssec.wisc.edu/app/mendota/buoy/data/jsonp',
-		symbols: 'dir:spd',
+		symbols: 'dir:spd:wt_1.0',
 		interval: '00:00:00',
 		begin: '-00:05:00',
 		averageKnots: 0,
 		gusts: 0,
 		weightedAverage: true,
 		windDirectionRose: '',
+		waterTemperature: 0,
 
 		groupField: 'windDirectionRose',
-		fields: ['windDirectionDegrees', 'metersPerSecond', 'time', 'windDirectionRose', 'windSpeedKnots'],
+		fields: ['windDirectionDegrees', 'metersPerSecond', 'time', 'windDirectionRose', 'windSpeedKnots', 'waterTemperature'],
 	},
 
 	fetch: function() {
@@ -65,6 +66,7 @@ Ext.define('HooferSailingMobile.store.Winds', {
 					// Assert: 
 					// buoyData[i][0] = wind direction (degrees)
 					// buoyData[i][1] = wind speed (meters per second)
+					// buoyData[i][2] = water temperature at 1 meter (celsius)
 
 					if (me.getWeightedAverage() && ((i == 0) || ((i + 1) == length))) {
 						continue;
@@ -85,13 +87,15 @@ Ext.define('HooferSailingMobile.store.Winds', {
 
 					var windSpeedKnots = (windSpeedMetersPerSecond * 1.94384);
 
+					var waterTemperature = buoyData[i][2];
 
 					d.push([
 						windDirectionDegrees,
 						windSpeedMetersPerSecond,
 						time,
 						windDirectionRose,
-						windSpeedKnots
+						windSpeedKnots,
+						waterTemperature
 					]);
 
 
@@ -106,6 +110,8 @@ Ext.define('HooferSailingMobile.store.Winds', {
 					}
 				}
 				me.setData(d);
+
+				me.setWaterTemperature(waterTemperature);
 
 				// Figure out the most common wind direction
 				var groups = me.getGroups();
