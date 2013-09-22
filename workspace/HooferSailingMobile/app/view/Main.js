@@ -4,7 +4,9 @@ Ext.define('HooferSailingMobile.view.Main', {
     requires: [
         'Ext.TitleBar',
         'HooferSailingMobile.view.Boats',
-        'HooferSailingMobile.view.Conditions'
+        'HooferSailingMobile.view.Conditions',
+        'HooferSailingMobile.view.WindsChart',
+
     ],
     config: {
         tabBarPosition: 'bottom',
@@ -17,6 +19,10 @@ Ext.define('HooferSailingMobile.view.Main', {
             iconCls: 'anchor',
             title: 'Boats',
             xtype: 'boats'
+        }, {
+            iconCls: 'action',
+            title: 'Chart',
+            xtype: 'windschart'
         }]
     }
 });

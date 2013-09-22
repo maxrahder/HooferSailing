@@ -1,4 +1,4 @@
-Ext.define('HooferSailingMobile.util.Compass', {
+ Ext.define('HooferSailingMobile.util.Compass', {
 	singleton: true,
 	fromTo: [
 		[11.25, 'N'],
