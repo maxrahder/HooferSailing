@@ -122,7 +122,6 @@ Ext.define('HooferSailingMobile.store.Winds', {
 				});
 				me.setWindDirectionRose(biggestGroup.name);
 
-				var knots = Ext.Array.pluck(d, 'knots');
 				me.setAverageKnots(Math.round(knotsSum / d.length));
 				me.setGusts(Math.round(Ext.Array.mean(topSpeeds)));
 				me.fireEvent('fetch', me);
