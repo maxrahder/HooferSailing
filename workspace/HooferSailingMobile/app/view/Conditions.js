@@ -72,11 +72,19 @@ Ext.define('HooferSailingMobile.view.Conditions', {
     },
     initialize: function() {
         var me = this;
+        // The calling routine specifies the store. That may be an actual Ext.data.Store
+        // object, or the string name of a store. So take a look and if it's a string
+        // then get the actual store object via Ext.getStore() and have the Condition's
+        // store property reference that, rather than the string.
         var store = me.getStore();
         if (Ext.isString(store)) {
             store = Ext.getStore(store);
             me.setStore(store);
         }
+
+        // Assert: store (and me.getStore()) reference a store object for the winds.
+        // When it's reloaded the fetch event is fired. When that happens update the
+        // contents of the Conditions tpl with properties from the store.
         store.on('fetch', function(store) {
             me.setData({
                 windDirection: store.getWindDirectionRose(),
@@ -85,6 +93,7 @@ Ext.define('HooferSailingMobile.view.Conditions', {
                 waterTemperature: Math.round(((9 / 5) * store.getWaterTemperature()) + 32)
             });
         });
+
         this.callParent();
     }
 });

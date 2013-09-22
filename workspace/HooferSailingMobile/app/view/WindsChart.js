@@ -82,7 +82,22 @@ Ext.define('HooferSailingMobile.view.WindsChart', {
       yField: 'frequency',
       style: {
         fillStyle: 'rgba(0, 0, 255, 0.1)',
-        strokeStyle: 'rgba(0, 0, 0, 0.8)'
+        strokeStyle: 'rgba(0, 0, 0, 0.8)',
+        render: function() {
+          return {};
+        }
+      },
+      render: function() {
+        alert('sdfs');
+        return {};
+      },
+      marker: {
+        type: 'circle',
+        radius: 5,
+        render: function() {
+          alert('hi');
+          return {};
+        }
       }
     }],
     axes: [{
