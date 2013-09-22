@@ -4,6 +4,9 @@ Ext.define('HooferSailingMobile.view.WindsChart', {
   requires: [
     'Ext.TitleBar', ,
     'Ext.chart.Chart',
+    'Ext.chart.axis.Category',
+    'Ext.chart.axis.Numeric',
+    'Ext.chart.series.Radar',
   ],
   config: {
     padding: 24,

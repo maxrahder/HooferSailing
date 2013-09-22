@@ -21,7 +21,7 @@ Ext.define('HooferSailingMobile.store.Winds', {
 		waterTemperature: 0,
 
 		groupField: 'windDirectionRose',
-		fields: ['windDirectionDegrees', 'metersPerSecond', 'time', 'windDirectionRose', 'windSpeedKnots', 'waterTemperature'],
+		fields: ['windDirectionDegrees', 'metersPerSecond', 'time', 'windDirectionRose', 'windSpeedKnots'],
 	},
 
 	fetch: function() {
@@ -87,15 +87,12 @@ Ext.define('HooferSailingMobile.store.Winds', {
 
 					var windSpeedKnots = (windSpeedMetersPerSecond * 1.94384);
 
-					var waterTemperature = buoyData[i][2];
-
 					d.push([
 						windDirectionDegrees,
 						windSpeedMetersPerSecond,
 						time,
 						windDirectionRose,
-						windSpeedKnots,
-						waterTemperature
+						windSpeedKnots
 					]);
 
 
@@ -111,7 +108,9 @@ Ext.define('HooferSailingMobile.store.Winds', {
 				}
 				me.setData(d);
 
-				me.setWaterTemperature(waterTemperature);
+				if (i > 0) {
+					me.setWaterTemperature(buoyData[i-1][2]);
+				}
 
 				// Figure out the most common wind direction
 				var groups = me.getGroups();

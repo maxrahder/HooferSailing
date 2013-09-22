@@ -10,7 +10,8 @@ Ext.define('HooferSailingMobile.view.Conditions', {
         data: {
             windDirection: '',
             knots: '',
-            gusts: ''
+            gusts: '',
+            waterTemperature: ''
         },
         tpl: [
             '<div style="',
