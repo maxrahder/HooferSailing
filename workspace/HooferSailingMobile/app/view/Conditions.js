@@ -81,7 +81,7 @@ Ext.define('HooferSailingMobile.view.Conditions', {
                 windDirection: store.getWindDirectionRose(),
                 knots: store.getAverageKnots(),
                 gusts: store.getGusts(),
-                waterTemperature: Math.round( ( (9 / 5) * store.getWaterTemperature() ) + 32 )
+                waterTemperature: Math.round(((9 / 5) * store.getWaterTemperature()) + 32)
             });
         });
         this.callParent();
