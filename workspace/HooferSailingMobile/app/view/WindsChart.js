@@ -1,11 +1,11 @@
 
 
 Ext.define('HooferSailingMobile.view.WindsChart', {
-    extend: 'Ext.Component',
+    extend: 'Ext.chart.PolarChart',
     xtype: 'windschart',
     requires: [
         'Ext.TitleBar',
-        'Ext.chart.PolarChart',
+        ,
         'Ext.chart.Chart',
 
     ],
@@ -36,8 +36,8 @@ Ext.define('HooferSailingMobile.view.WindsChart', {
 
 		      ]
 		    }, // End of store,
-		data: {chart: {
-			//xtype: chart,
+
+
 		    animate: true,
 		    interactions: ['rotate'],
 		    
@@ -69,15 +69,7 @@ Ext.define('HooferSailingMobile.view.WindsChart', {
 		        grid: true
 		      }
 		    ], 
-		}}, // End of data
-		tpl: [
-	    '<p style="',
-	    '    text-align: center; ',
-	    '    font-size: 3em; ',
-	    '">',
-	    '{chart}</p>'
-	   
-	    ]
+
 	}, //End of config
 
 });
