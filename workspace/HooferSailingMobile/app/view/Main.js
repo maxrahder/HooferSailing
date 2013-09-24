@@ -22,7 +22,11 @@ Ext.define('HooferSailingMobile.view.Main', {
         }, {
             iconCls: 'action',
             title: 'Chart',
-            xtype: 'windschart'
+            layout: 'fit',
+            bodyPadding: 16,
+            items: [{
+                xtype: 'windschart'
+            }]
         }]
     }
 });

@@ -125,6 +125,7 @@ Ext.define('HooferSailingMobile.store.Winds', {
 				me.setAverageKnots(Math.round(knotsSum / d.length));
 				me.setGusts(Math.round(Ext.Array.mean(topSpeeds)));
 				me.fireEvent('fetch', me);
+				
 			}
 		});
 	}
