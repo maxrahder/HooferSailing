@@ -37,7 +37,7 @@ Ext.define('HooferSailingMobile.controller.Boats', {
 
         function recursiveRefresh() {
             if (me.getAutoRefresh()) {
-                // Only do this if the flag is autorefresh flag is still true
+                // Only do this if the autorefresh flag is still true
                 me.refresh();
                 Ext.defer(recursiveRefresh, interval, me);
             }
