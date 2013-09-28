@@ -50,28 +50,6 @@ Ext.define('HooferSailingMobile.view.WindsChart', {
         fontWeight: 'bold'
       }
     }]
-<<<<<<< HEAD
-
-  }, // End of config
-  
-  initialize: function() {
-        var me = this;
-
-        var store = me.getStore();
-        if (Ext.isString(store)) {
-            store = Ext.getStore(store);
-            me.setStore(store);
-        }
-
-        //store.setData(data);
-
-        this.callParent();
-    }
-    
-});
-
-
-=======
   }
+
 });
->>>>>>> 9944ed3b170208667872b174da6fdfb6057eb915
