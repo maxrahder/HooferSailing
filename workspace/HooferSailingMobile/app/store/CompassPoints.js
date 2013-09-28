@@ -2,7 +2,7 @@ Ext.define('HooferSailingMobile.store.CompassPoints', {
 	extend: 'Ext.data.Store',
 	requires: ['HooferSailingMobile.util.Compass'],
 	config: {
-	      fields: ['direction', 'frequency'],
+	      fields: ['direction', 'frequency', 'averageKnots'],
 	      data: [
 
 	        {
@@ -87,7 +87,8 @@ Ext.define('HooferSailingMobile.store.CompassPoints', {
 
 			var recordData = Ext.Array.pluck(group.children, 'data');
 			var allKnots = Ext.Array.pluck(recordData, 'windSpeedKnots');
-			var averageKnots = Ext.Array.mean(allKnots);
+			var averageKnots = Math.round(Ext.Array.mean(allKnots));
+			console.log('Rounded: ' + averageKnots);
 
 			var index = me.findExact('direction', direction);
 			var r = me.getAt(index);

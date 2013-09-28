@@ -14,31 +14,32 @@ Ext.define('HooferSailingMobile.view.WindsChart', {
     series: [{
       type: 'radar',
       xField: 'direction',
-      yField: 'frequency',
+      yField: 'averageKnots',
       style: {
-        fillStyle: 'rgba(0, 0, 255, 0.1)',
+        fillStyle: 'rgba(255, 0, 0, 0.5)',
         strokeStyle: 'rgba(0, 0, 0, 0.8)'
       }
     },{
       type: 'radar',
       xField: 'direction',
-      yField: 'averageKnots',
+      yField: 'frequency',
       style: {
-        fillStyle: 'rgba(0, 0, 255, 0.1)',
+        fillStyle: 'rgba(0, 0, 255, 0.5)',
         strokeStyle: 'rgba(0, 0, 0, 0.8)'
       }
     }],
     axes: [{
       type: 'numeric',
       position: 'radial',
-      fields: 'frequency',
+      fields: ['frequency'],
+      //fields: ['averageKnots'],
       grid: true,
       style: {
         estStepSize: 200
       },
-      renderer: function(lable) {
-        return '';
-      }
+      // renderer: function(lable) {
+      //   return '';
+      // }
     }, {
       type: 'category',
       position: 'angular',

@@ -10,7 +10,7 @@
     will need to resolve manually.
 */
 Ext.Loader.setConfig({
-    disableCaching: false
+    disableCaching: true
 });
 Ext.application({
     name: 'HooferSailingMobile',
