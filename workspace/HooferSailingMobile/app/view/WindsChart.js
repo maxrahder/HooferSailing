@@ -141,7 +141,7 @@ Ext.define('HooferSailingMobile.view.WindsChart', {
             me.setStore(store);
         }
 
-        store.setData(data);
+        //store.setData(data);
 
         this.callParent();
     }

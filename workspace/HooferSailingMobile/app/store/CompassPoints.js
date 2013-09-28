@@ -2,8 +2,6 @@ Ext.define('HooferSailingMobile.store.CompassPoints', {
 	extend: 'Ext.data.Store',
 	requires: ['HooferSailingMobile.util.Compass'],
 	config: {
-		//autoLoad: true,
-		store: {
 	      fields: ['direction', 'frequency'],
 	      data: [
 
@@ -75,10 +73,10 @@ Ext.define('HooferSailingMobile.store.CompassPoints', {
 	          'knots': 0
 	        }
 
-      ]
+      	]
 
-    }, // End of store
 
-	},
+
+	}
 
 });
