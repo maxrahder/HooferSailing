@@ -7,19 +7,19 @@ Ext.define('HooferSailingMobile.store.CompassPoints', {
 
 	        {
 	          'direction': 'E',
-	          'frequency': .1,
+	          'frequency': 0,
 	          'knots': 0
 	        }, {
 	          'direction': 'ESE',
-	          'frequency': .1,
+	          'frequency': 0,
 	          'knots': 0
 	        }, {
 	          'direction': 'SE',
-	          'frequency': .1,
+	          'frequency': 0,
 	          'knots': 0
 	        }, {
 	          'direction': 'SSE',
-	          'frequency': .1,
+	          'frequency': 0,
 	          'knots': 0
 	        },
 
@@ -37,39 +37,43 @@ Ext.define('HooferSailingMobile.store.CompassPoints', {
 	          'knots': 20
 	        }, {
 	          'direction': 'WSW',
-	          'frequency': .1,
+	          'frequency': 0,
 	          'knots': 0
 	        },
 
 	        {
 	          'direction': 'W',
-	          'frequency': 3
+	          'frequency': ,
+	          'knots': 0
 	        }, {
 	          'direction': 'WNW',
-	          'frequency': 3
+	          'frequency': 0,
+	          'knots': 0
 	        }, {
 	          'direction': 'NW',
-	          'frequency': 3
+	          'frequency': 0,
+	          'knots': 0
 	        }, {
 	          'direction': 'NNW',
-	          'frequency': 3
+	          'frequency': 0,
+	          'knots': 0
 	        },
 
 	        {
 	          'direction': 'N',
-	          'frequency': .1,
+	          'frequency': 0,
 	          'knots': 0
 	        }, {
 	          'direction': 'NNE',
-	          'frequency': .1,
+	          'frequency': 0,
 	          'knots': 0
 	        }, {
 	          'direction': 'NE',
-	          'frequency': .1,
+	          'frequency': 0,
 	          'knots': 0
 	        }, {
 	          'direction': 'ENE',
-	          'frequency': .1,
+	          'frequency': 0,
 	          'knots': 0
 	        }
 

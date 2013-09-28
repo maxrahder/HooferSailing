@@ -19,10 +19,10 @@ Ext.define('HooferSailingMobile.view.WindsChart', {
         fillStyle: 'rgba(0, 0, 255, 0.1)',
         strokeStyle: 'rgba(0, 0, 0, 0.8)'
       },
-      marker: {
-        type: 'circle',
-        radius: 5
-      },
+      // marker: {
+      //   type: 'circle',
+      //   radius: 5
+      // },
       renderer: function() {
         debugger; // ?? How to render the marker?
       }
