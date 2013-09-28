@@ -23,7 +23,7 @@ Ext.define('HooferSailingMobile.view.Main', {
             iconCls: 'action',
             title: 'Chart',
             layout: 'fit',
-            bodyPadding: 16,
+            margin: 40,
             items: [{
                 xtype: 'windschart'
             }]
