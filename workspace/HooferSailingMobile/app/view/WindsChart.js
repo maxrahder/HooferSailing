@@ -7,8 +7,12 @@ Ext.define('HooferSailingMobile.view.WindsChart', {
     'Ext.chart.axis.Category',
     'Ext.chart.axis.Numeric',
     'Ext.chart.series.Radar',
+    'HooferSailingMobile.store.CompassPoints',
+
   ],
   config: {
+    // The store is assigned in Main.js
+    /*
     store: {
       fields: ['direction', 'frequency'],
       data: [
@@ -83,21 +87,27 @@ Ext.define('HooferSailingMobile.view.WindsChart', {
 
       ]
 
-    },
+    }, // End of store
+    */
+
     animate: true,
     interactions: ['rotate'],
+    
     series: [{
       type: 'radar',
+      // center : [0, 0],
+      // label : {textBaseline: 'middle', textAlign: 'center', font: '14px Helvetica'}, // These are the defaults
+      // label : {display : 'none', field : [null, null], orientation : 'vertical'}, // More label configuration. Also see renderer property
       xField: 'direction',
       yField: 'frequency',
       style: {
         fillStyle: 'rgba(0, 0, 255, 0.1)',
         strokeStyle: 'rgba(0, 0, 0, 0.8)'
       },
-      // marker: {
-      //   type: 'circle',
-      //   radius: 5
-      // }
+      marker: {    
+         type: 'circle',
+         radius: 5
+        }
     }],
     axes: [{
       type: 'numeric',
@@ -119,5 +129,23 @@ Ext.define('HooferSailingMobile.view.WindsChart', {
       },
       grid: true
     }]
-  }
+
+  }, // End of config
+  
+  initialize: function() {
+        var me = this;
+
+        var store = me.getStore();
+        if (Ext.isString(store)) {
+            store = Ext.getStore(store);
+            me.setStore(store);
+        }
+
+        store.setData(data);
+
+        this.callParent();
+    }
+    
 });
+
+

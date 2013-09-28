@@ -2,7 +2,7 @@ Ext.define('HooferSailingMobile.controller.Boats', {
     extend: 'Ext.app.Controller',
 
     config: {
-        stores: ['Fleets', 'Winds'],
+        stores: ['Fleets', 'Winds', 'CompassPoints'],
         refs: {
 
         },

@@ -14,7 +14,7 @@ Ext.define('HooferSailingMobile.store.Winds', {
 		symbols: 'dir:spd:wt_1.0',
 		interval: '00:00:00',
 		begin: '-00:05:00',
-		averageKnots: 0,
+		averageKnots: 0,		
 		gusts: 0,
 		weightedAverage: true,
 		windDirectionRose: '',
