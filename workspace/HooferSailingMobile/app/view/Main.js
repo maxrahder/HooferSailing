@@ -3,8 +3,8 @@ Ext.define('HooferSailingMobile.view.Main', {
     xtype: 'main',
     requires: [
         'Ext.TitleBar',
-        'HooferSailingMobile.view.Conditions',
         'HooferSailingMobile.view.Boats',
+        'HooferSailingMobile.view.Conditions',
         'HooferSailingMobile.view.WindsChart',
 
     ],
@@ -22,11 +22,11 @@ Ext.define('HooferSailingMobile.view.Main', {
         }, {
             iconCls: 'action',
             title: 'Chart',
-            layout: {type: 'fit'},
-            bodyPadding: 16,
-            store: 'CompassPoints',
+            layout: 'fit',
+            margin: 40,
             items: [{
-                xtype: 'windschart'
+                xtype: 'windschart',
+                store: 'CompassPoints'
             }]
         }]
     }

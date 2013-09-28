@@ -7,107 +7,25 @@ Ext.define('HooferSailingMobile.view.WindsChart', {
     'Ext.chart.axis.Category',
     'Ext.chart.axis.Numeric',
     'Ext.chart.series.Radar',
-    'HooferSailingMobile.store.CompassPoints',
-
   ],
   config: {
-    // The store is assigned in Main.js
-    /*
-    store: {
-      fields: ['direction', 'frequency'],
-      data: [
-
-        {
-          'direction': 'E',
-          'frequency': 3,
-          'knots': 0
-        }, {
-          'direction': 'ESE',
-          'frequency': 3,
-          'knots': 0
-        }, {
-          'direction': 'SE',
-          'frequency': 3,
-          'knots': 0
-        }, {
-          'direction': 'SSE',
-          'frequency': 3,
-          'knots': 0
-        },
-
-        {
-          'direction': 'S',
-          'frequency': 50,
-          'knots': 10
-        }, {
-          'direction': 'SSW',
-          'frequency': 40,
-          'knots': 15
-        }, {
-          'direction': 'SW',
-          'frequency': 30,
-          'knots': 20
-        }, {
-          'direction': 'WSW',
-          'frequency': 3,
-          'knots': 0
-        },
-
-        {
-          'direction': 'W',
-          'frequency': 3
-        }, {
-          'direction': 'WNW',
-          'frequency': 3
-        }, {
-          'direction': 'NW',
-          'frequency': 3
-        }, {
-          'direction': 'NNW',
-          'frequency': 3
-        },
-
-        {
-          'direction': 'N',
-          'frequency': 3,
-          'knots': 0
-        }, {
-          'direction': 'NNE',
-          'frequency': 3,
-          'knots': 0
-        }, {
-          'direction': 'NE',
-          'frequency': 3,
-          'knots': 0
-        }, {
-          'direction': 'ENE',
-          'frequency': 3,
-          'knots': 0
-        }
-
-      ]
-
-    }, // End of store
-    */
-
     animate: true,
     interactions: ['rotate'],
-    
     series: [{
       type: 'radar',
-      // center : [0, 0],
-      // label : {textBaseline: 'middle', textAlign: 'center', font: '14px Helvetica'}, // These are the defaults
-      // label : {display : 'none', field : [null, null], orientation : 'vertical'}, // More label configuration. Also see renderer property
       xField: 'direction',
       yField: 'frequency',
       style: {
         fillStyle: 'rgba(0, 0, 255, 0.1)',
         strokeStyle: 'rgba(0, 0, 0, 0.8)'
       },
-      marker: {    
-         type: 'circle',
-         radius: 5
-        }
+      marker: {
+        type: 'circle',
+        radius: 5
+      },
+      renderer: function() {
+        debugger; // ?? How to render the marker?
+      }
     }],
     axes: [{
       type: 'numeric',
@@ -115,10 +33,10 @@ Ext.define('HooferSailingMobile.view.WindsChart', {
       fields: 'frequency',
       grid: true,
       style: {
-        estStepSize: 100
+        estStepSize: 200
       },
-      label: {
-        fontSize: 0
+      renderer: function(lable) {
+        return '';
       }
     }, {
       type: 'category',
@@ -127,8 +45,12 @@ Ext.define('HooferSailingMobile.view.WindsChart', {
       style: {
         estStepSize: 1
       },
-      grid: true
+      grid: true,
+      label: {
+        fontWeight: 'bold'
+      }
     }]
+<<<<<<< HEAD
 
   }, // End of config
   
@@ -149,3 +71,7 @@ Ext.define('HooferSailingMobile.view.WindsChart', {
 });
 
 
+=======
+  }
+});
+>>>>>>> 9944ed3b170208667872b174da6fdfb6057eb915
