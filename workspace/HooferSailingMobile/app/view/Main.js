@@ -25,7 +25,8 @@ Ext.define('HooferSailingMobile.view.Main', {
             layout: 'fit',
             margin: 40,
             items: [{
-                xtype: 'windschart'
+                xtype: 'windschart',
+                store: 'CompassPoints'
             }]
         }]
     }

@@ -9,81 +9,6 @@ Ext.define('HooferSailingMobile.view.WindsChart', {
     'Ext.chart.series.Radar',
   ],
   config: {
-    store: {
-      fields: ['direction', 'frequency'],
-      data: [
-
-        {
-          'direction': 'E',
-          'frequency': 0.1,
-          'knots': 0
-        }, {
-          'direction': 'ESE',
-          'frequency': 0.1,
-          'knots': 0
-        }, {
-          'direction': 'SE',
-          'frequency': 0.1,
-          'knots': 0
-        }, {
-          'direction': 'SSE',
-          'frequency': 0.1,
-          'knots': 0
-        },
-
-        {
-          'direction': 'S',
-          'frequency': 50,
-          'knots': 10
-        }, {
-          'direction': 'SSW',
-          'frequency': 40,
-          'knots': 15
-        }, {
-          'direction': 'SW',
-          'frequency': 0.10,
-          'knots': 20
-        }, {
-          'direction': 'WSW',
-          'frequency': 0.1,
-          'knots': 0
-        },
-
-        {
-          'direction': 'W',
-          'frequency': 0.1
-        }, {
-          'direction': 'WNW',
-          'frequency': 0.1
-        }, {
-          'direction': 'NW',
-          'frequency': 0.1
-        }, {
-          'direction': 'NNW',
-          'frequency': 0.1
-        },
-
-        {
-          'direction': 'N',
-          'frequency': 0.1,
-          'knots': 0
-        }, {
-          'direction': 'NNE',
-          'frequency': 0.1,
-          'knots': 0
-        }, {
-          'direction': 'NE',
-          'frequency': 0.1,
-          'knots': 0
-        }, {
-          'direction': 'ENE',
-          'frequency': 0.1,
-          'knots': 0
-        }
-
-      ]
-
-    },
     animate: true,
     interactions: ['rotate'],
     series: [{
@@ -98,7 +23,7 @@ Ext.define('HooferSailingMobile.view.WindsChart', {
         type: 'circle',
         radius: 5
       },
-      renderer: function(){
+      renderer: function() {
         debugger; // ?? How to render the marker?
       }
     }],
@@ -110,7 +35,7 @@ Ext.define('HooferSailingMobile.view.WindsChart', {
       style: {
         estStepSize: 200
       },
-      renderer: function(lable){
+      renderer: function(lable) {
         return '';
       }
     }, {
@@ -121,8 +46,9 @@ Ext.define('HooferSailingMobile.view.WindsChart', {
         estStepSize: 1
       },
       grid: true,
-      label : {fontWeight: 'bold'}
-
+      label: {
+        fontWeight: 'bold'
+      }
     }]
   }
 });
