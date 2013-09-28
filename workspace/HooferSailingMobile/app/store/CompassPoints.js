@@ -43,7 +43,7 @@ Ext.define('HooferSailingMobile.store.CompassPoints', {
 
 	        {
 	          'direction': 'W',
-	          'frequency': ,
+	          'frequency': 0,
 	          'knots': 0
 	        }, {
 	          'direction': 'WNW',
