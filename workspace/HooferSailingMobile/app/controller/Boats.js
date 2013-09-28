@@ -18,7 +18,6 @@ Ext.define('HooferSailingMobile.controller.Boats', {
 
         Ext.getStore('Fleets').on('load', this.fleetsLoadHandler, this);
         Ext.getStore('Winds').on('fetch', this.updateCompassPoints, this);
-        Ext.getStore('Winds').fetch();
         this.setAutoRefresh(true);
     },
 

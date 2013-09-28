@@ -25,16 +25,16 @@ Ext.define('HooferSailingMobile.store.CompassPoints', {
 
 	        {
 	          'direction': 'S',
-	          'frequency': 50,
-	          'averageKnots': 10
+	          'frequency': 0,
+	          'averageKnots': 0
 	        }, {
 	          'direction': 'SSW',
-	          'frequency': 40,
-	          'averageKnots': 15
+	          'frequency': 0,
+	          'averageKnots': 0
 	        }, {
 	          'direction': 'SW',
-	          'frequency': 30,
-	          'averageKnots': 20
+	          'frequency': 0,
+	          'averageKnots': 0
 	        }, {
 	          'direction': 'WSW',
 	          'frequency': 0,
@@ -90,10 +90,10 @@ Ext.define('HooferSailingMobile.store.CompassPoints', {
 			var averageKnots = Ext.Array.mean(allKnots);
 
 			var index = me.findExact('direction', direction);
-			var r = me.get(index);
+			var r = me.getAt(index);
 			r.set({frequency: frequency, averageKnots: averageKnots});
+			console.log(r.data);
 		});
-		console.log(me);
 	}
 
 });
