@@ -78,9 +78,23 @@ Ext.define('HooferSailingMobile.store.CompassPoints', {
 	        }
       	]
 	},
+
 	updateDataUsingWinds: function(windsStore){
+		
 		var me = this;
 		var groups = windsStore.getGroups();
+
+		///*
+		var biggestGroup = groups[0];
+		Ext.Array.forEach(groups, function(g) {
+			if (g.children.length > biggestGroup.children.length) {
+				biggestGroup = g;
+			}
+		});
+		var radiusUnit = biggestGroup.children.length;
+		//*/
+
+
 		Ext.Array.forEach(groups, function(group){
 			var direction = group.name;
 			var frequency = group.children.length;
@@ -92,8 +106,10 @@ Ext.define('HooferSailingMobile.store.CompassPoints', {
 
 			var index = me.findExact('direction', direction);
 			var r = me.getAt(index);
-			r.set({frequency: frequency, averageKnots: averageKnots});
-			console.log(r.data);
+			r.set({frequency: frequency, averageKnots: (averageKnots / 30) * radiusUnit});
+			//r.set({frequency: frequency, averageKnots: averageKnots});
+
+			console.log(r.data, radiusUnit);
 		});
 	}
 
