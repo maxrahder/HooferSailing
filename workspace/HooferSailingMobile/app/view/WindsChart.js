@@ -29,29 +29,32 @@ Ext.define('HooferSailingMobile.view.WindsChart', {
       }
     }],
     axes: [{
+      type: 'category',
+      position: 'angular',
+      fields: 'direction',
+      grid: true,
+      style: {
+        estStepSize: 1
+      },
+      label: {
+        fontWeight: 'bold'
+      }
+    },{
       type: 'numeric',
       position: 'radial',
       fields: ['frequency'],
-      //fields: ['averageKnots'],
+      //fields: ['averageKnots', 'frequency'],
       grid: true,
       style: {
         estStepSize: 200
       },
-      // renderer: function(lable) {
-      //   return '';
-      // }
-    }, {
-      type: 'category',
-      position: 'angular',
-      fields: 'direction',
-      style: {
-        estStepSize: 1
-      },
-      grid: true,
       label: {
         fontWeight: 'bold'
-      }
-    }]
+      },
+       renderer: function(label) {
+         return 'test';
+       }
+    } ]
   }
 
 });
