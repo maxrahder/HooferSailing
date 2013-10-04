@@ -7,7 +7,6 @@ Ext.define('HooferSailingMobile.store.Fleets', {
 			type: 'ajax',
 			url: 'data/boats.json'
 		},
-		autoLoad: true,
 		sorters: ['name']
 	}
 })
