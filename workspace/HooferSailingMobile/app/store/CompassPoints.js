@@ -102,14 +102,12 @@ Ext.define('HooferSailingMobile.store.CompassPoints', {
 			var recordData = Ext.Array.pluck(group.children, 'data');
 			var allKnots = Ext.Array.pluck(recordData, 'windSpeedKnots');
 			var averageKnots = Math.round(Ext.Array.mean(allKnots));
-			console.log('Rounded: ' + averageKnots);
 
 			var index = me.findExact('direction', direction);
 			var r = me.getAt(index);
 			r.set({frequency: frequency, averageKnots: (averageKnots / 30) * radiusUnit});
 			//r.set({frequency: frequency, averageKnots: averageKnots});
 
-			console.log(r.data, radiusUnit);
 		});
 	}
 

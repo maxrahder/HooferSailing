@@ -16,7 +16,6 @@ Ext.define('HooferSailingMobile.model.Boat', {
 		}, {
 			name: 'outTime',
 			convert: function(value, record) {
-				console.log('outTime');
 				var result = null;
 				if (record.data.loan.out) {
 					// We're using the moment.js library. See http://momentjs.com/

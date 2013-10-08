@@ -14,7 +14,6 @@ Ext.define('HooferSailingMobile.util.Date', {
 		var second = s.substr(17, 2);
 		var timestamp = Date.UTC(year, month, day, hour, minute, second);
 		var result = new Date(timestamp);
-		console.log(result);
 		return result;
 	}
 });

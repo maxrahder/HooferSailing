@@ -16,14 +16,17 @@ Ext.define('HooferSailingMobile.view.WindsChart', {
       xField: 'direction',
       yField: 'averageKnots',
       //marker: {
-            //type: 'circle',
-            //radius: 10
-        //},
+      //type: 'circle',
+      //radius: 10
+      //},
+      renderer: function() {
+        debugger;
+      },
       style: {
         fillStyle: 'rgba(255, 0, 0, 0.5)',
         strokeStyle: 'rgba(0, 0, 0, 0.8)'
       }
-    },{
+    }, {
       type: 'radar',
       xField: 'direction',
       yField: 'frequency',
@@ -43,7 +46,7 @@ Ext.define('HooferSailingMobile.view.WindsChart', {
       label: {
         fontWeight: 'bold'
       }
-    },{
+    }, {
       type: 'numeric',
       position: 'radial',
       fields: ['frequency'],
@@ -55,10 +58,10 @@ Ext.define('HooferSailingMobile.view.WindsChart', {
       label: {
         fontWeight: 'bold'
       },
-       renderer: function(label) {
-         return '';
-       }
-    } ]
+      renderer: function(label) {
+        return '';
+      }
+    }]
   }
 
 });

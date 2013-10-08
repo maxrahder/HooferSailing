@@ -626,6 +626,7 @@ Ext.ClassManager.addNameAlternateMappings({
   "HooferSailingMobile.controller.Boats": [],
   "HooferSailingMobile.model.Boat": [],
   "HooferSailingMobile.model.Fleet": [],
+  "HooferSailingMobile.store.CompassPoints": [],
   "HooferSailingMobile.store.Fleets": [],
   "HooferSailingMobile.store.Winds": [],
   "HooferSailingMobile.util.Compass": [],
@@ -633,7 +634,9 @@ Ext.ClassManager.addNameAlternateMappings({
   "HooferSailingMobile.util.Util": [],
   "HooferSailingMobile.view.Boats": [],
   "HooferSailingMobile.view.Conditions": [],
-  "HooferSailingMobile.view.Main": []
+  "HooferSailingMobile.view.Main": [],
+  "HooferSailingMobile.view.Rose": [],
+  "HooferSailingMobile.view.WindsChart": []
 });
 Ext.ClassManager.addNameAliasMappings({
   "Ext.AbstractComponent": [],
@@ -1470,6 +1473,7 @@ Ext.ClassManager.addNameAliasMappings({
   "HooferSailingMobile.controller.Boats": [],
   "HooferSailingMobile.model.Boat": [],
   "HooferSailingMobile.model.Fleet": [],
+  "HooferSailingMobile.store.CompassPoints": [],
   "HooferSailingMobile.store.Fleets": [],
   "HooferSailingMobile.store.Winds": [],
   "HooferSailingMobile.util.Compass": [],
@@ -1483,5 +1487,11 @@ Ext.ClassManager.addNameAliasMappings({
   ],
   "HooferSailingMobile.view.Main": [
     "widget.main"
+  ],
+  "HooferSailingMobile.view.Rose": [
+    "widget.rose"
+  ],
+  "HooferSailingMobile.view.WindsChart": [
+    "widget.windschart"
   ]
 });

@@ -3,9 +3,12 @@ Ext.define('HooferSailingMobile.controller.Boats', {
 
     config: {
         stores: ['Fleets', 'Winds', 'CompassPoints'],
-        refs: {
+        models: ['Flag'],
 
+        refs: {
+            'conditions': 'conditions'
         },
+
         control: {
 
         },
@@ -19,14 +22,19 @@ Ext.define('HooferSailingMobile.controller.Boats', {
         Ext.getStore('Fleets').on('load', this.fleetsLoadHandler, this);
         Ext.getStore('Winds').on('fetch', this.updateCompassPoints, this);
         this.setAutoRefresh(true);
+        HooferSailingMobile.model.Flag.on('load', this.updateFlag, this);
     },
 
-    updateCompassPoints: function(){
+    updateFlag: function(flag, color, updated){
+        color = color.toLowerCase();
+        this.getConditions().updateConditions({color: color});
+    },
+
+    updateCompassPoints: function() {
         Ext.getStore('CompassPoints').updateDataUsingWinds(Ext.getStore('Winds'));
     },
 
     fleetsLoadHandler: function(store) {
-        console.log(store);
     },
 
     //called when the Application is launched, remove if not needed
@@ -51,6 +59,7 @@ Ext.define('HooferSailingMobile.controller.Boats', {
     refresh: function() {
         Ext.getStore('Winds').fetch();
         Ext.getStore('Fleets').load();
+        HooferSailingMobile.model.Flag.load();
     },
     updateAutoRefresh: function(newValue, oldValue) {
         this.doAutoRefresh();

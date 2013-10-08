@@ -1,0 +1,161 @@
+===
+Q. Which button will display an alert when clicked? Select all that apply.
+var one = Ext.create('Ext.button.Button', {
+    text : 'One',
+    click: function(button){
+        alert('hi');
+    }
+});
+var two = Ext.create('Ext.button.Button', {
+    text : 'Two',
+    handler: function(button){
+        alert('hi');
+    }
+});
+var three = Ext.create('Ext.button.Button', {
+    text : 'Three',
+    listeners: {
+        click: function(button){
+            alert('hi');
+        }
+    }
+});
+var four = Ext.create('Ext.button.Button', {
+    text : 'Four',
+    listeners: {
+        all: function(button){
+            alert('hi');
+        }
+    }
+});
+var five = Ext.create('Ext.button.Button', {
+    text : 'Five'
+});
+five.click = function(button){
+    alert('hi');
+});
+Ext.create('Ext.Container', {
+    height: 100,
+    width: 100,
+    renderTo : Ext.getBody(),
+    layout : 'vbox',
+    items : [ one, two, three, four, five ]
+});
+
+a. One
+b. Two
+c. Three
+d. Four 
+d. Five 
+
+
+===
+Q. What's the container config used to arrange items horizonally?
+
+a. layout : {
+    type: 'linearlayout',
+    orientation: 'horizontal'
+}
+b. layout : {
+    type: 'flow',
+    orientation: 'horizontal'
+}
+c. layout : {
+    type: 'horizontal'
+}
+d. layout : {
+    horizontal: true
+}
+e. None of the above
+
+
+===
+Q. What's the panel config used to create a button in a top toolbar?
+a. tbar: [{
+    text: 'Button'
+}]
+b. toolbar: [{
+    text: 'Button',
+    position: 'top'
+}]
+c. toptoolbar: [{
+    text: 'Button'
+}]
+d. dock: [{
+    text: 'Button',
+    position: 'top'
+}]
+e. None of the above
+
+
+===
+Q. Given the following panel, what's the syntax to add a button in a toolbar?
+var p = Ext.create('Ext.panel.Panel', {
+    height: 100,
+    width: 100,
+    renderTo : Ext.getBody(),
+    layout : 'vbox',
+    items : [{
+        text: 'Button'
+    }]
+});
+a. p.add({
+    xtype: 'button',
+    test: 'Button'
+});
+b. p.add({
+    xtype: 'tbar',
+    buttons: [{
+        text: 'Button'
+    }]
+});
+c. p.add({
+    toolbar: true,
+    position: 'top',
+    buttons: [{
+        text: 'Button'
+    }]
+});
+d. p.addToolbar({
+    buttons: [{
+        text: 'Button'
+    }]
+});
+e. None of the above
+
+
+===
+Q. In the following panel config, what will happen when the tool is clicked?
+{
+    xtype: 'panel',
+    tools: [{
+        type: 'pin',
+        handler: function(event, el, owner, tool){
+            tool.setType((tool.type==='pin')?'unpin':'pin');
+        }
+    }]
+}
+a. Nothing
+b. The tool will switch between being draggable or un-draggable
+c. The tool will switch between the pin and the unpin icon
+d. There will be a runtime error
+e. None of the above
+
+
+===
+Q. What config name and value is needed in this Ext.window.Window definition to have it appear immidiately when it is created?
+Ext.create('Ext.window.Window', {
+    title: 'Hello',
+    bodyPadding: 8,
+    items: {
+        xtype: 'button',
+        text: 'Button'
+    },
+    _____:_____
+});
+(Fill in the blank)
+
+
+
+
+

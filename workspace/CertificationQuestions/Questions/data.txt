@@ -1,0 +1,130 @@
+===
+Q. What alert messages appear in the following code?
+Ext.define('MyApp.model.Person', {
+	extend: 'Ext.data.Model',
+	fields: ['instruments', 'name']
+});
+var p = Ext.create('MyApp.model.Person', {
+	instruments: ['base', 'guitar', 'vocals', 'keyboards'],
+	name: 'Paul McCartney'
+});
+alert(p.get('name'));
+alert(p.get('instruments')[3]);
+
+a. "undefined" then "undefined"
+b. "Paul McCartney", then a runtime error
+c. "Paul McCartney", then "vocals"
+d. "Paul McCartney", then "keyboards"
+e. None of the above
+
+===
+Q. What alert messages appear in the following code?
+Ext.define('MyApp.model.Person', {
+	extend: 'Ext.data.Model',
+	fields: ['instrument', 'name'],
+    isGuitarist: function(){
+        return (this.get('instrument') === 'guitarist');
+    }
+});
+var p = Ext.create('MyApp.model.Person', {
+	instrument: 'drums',
+	name: 'Ringo Starr'
+});
+alert(p.get('name'));
+alert(p.get('instrument'));
+alert(p.isGuitarist());
+
+a. "undefined", "undefined" then "undefined"
+b. "Ringo Starr", "drums" then "undefined"
+c. "Ringo Starr", "drums" then a runtime error
+d. "Ringo Starr", "drums" then "false"
+e. None of the above
+
+
+
+===
+Q. What alert messages appear in the following code?
+Ext.define('MyApp.model.Person', {
+	extend: 'Ext.data.Model',
+	fields: ['name', {
+        name: 'dob',
+        type: 'date',
+        dateFormat: 'day month year'
+    }]
+});
+var p = Ext.create('MyApp.model.Person', {
+	name: 'George Harrison',
+    dob: '25 February 1943'
+});
+alert(p.get('name'));
+alert(Ext.Date.format(p.get('dob'), 'month'));
+
+a. "undefined" then "undefined"
+b. "George Harrison" then "undefined"
+c. "George Harrison" then a runtime error
+d. "George Harrison" then "February"
+e. None of the above
+
+
+
+===
+Q. What alert messages appear in the following code?
+var store = Ext.create('Ext.data.Store', {
+	fields: [ 'name' ],
+    data: [{
+        name: 'George Harrison',
+        guitarist: true
+    },{
+        name: 'Ringo Starr',
+        guitarist: false
+    }]
+});
+alert(store.getAt(0).get('guitarist'));
+alert(store.getAt(1).get('name'));
+a. No messages because of a runtime error
+b. Just "Ringo Starr"
+c. "undefined" then "Ringo Starr"
+d. "true" then "Ringo Starr"
+e. None of the above
+
+
+
+===
+Q. What is missing from this Ext.data.Store definition?
+Ext.define('MyApp.store.Users', {
+     model: 'MyApp.model.User',
+     proxy: {
+         type: 'ajax',
+         url: '/users.json',
+         reader: {
+             type: 'json',
+             ____: 'users'
+         }
+     },
+     autoLoad: true
+ });
+(Fill in the blank.)
+
+===
+Q. What will happen when this code is run?
+Ext.define('MyApp.model.Person', {
+    extend : 'Ext.data.Model',
+    fields : [ 'first' , 'last' ],
+    proxy : {
+        type : 'ajax',
+        url : 'save.php'
+    }
+
+});
+var record = Ext.create('MyApp.model.Person',{
+    first: 'Paul', last: 'McCartney'
+});
+record.set('first', 'James Paul');
+record.save();
+
+a. Runtime error
+b. {first: 'James Paul'} is sent to the server
+c. {first: 'James Paul', last: 'McCartney'} is sent to the server
+d. The "first" property of the record is updated in memory -- nothing is sent to the server
+e. None of the above
+

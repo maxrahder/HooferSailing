@@ -11,7 +11,8 @@ Ext.define('HooferSailingMobile.view.Conditions', {
             windDirection: '',
             knots: '',
             gusts: '',
-            waterTemperature: ''
+            waterTemperature: '',
+            color: ''
         },
         tpl: [
             '<div style="',
@@ -50,25 +51,21 @@ Ext.define('HooferSailingMobile.view.Conditions', {
             '{waterTemperature}&deg;F',
             '</p>',
 
-            '<p style="',
-            '    font-family: Pictos; ',
-            '    margin-top: .3em; ',
-            '    text-align: center; ',
-            '    font-size: 4em; ',
-            '">',
-            '<span style="',
-            '    color: green; ',
-            '    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black; ',
-            '">^</span>',
-            '&nbsp;',
-            '<span style="',
-            '    color: yellow; ',
-            '    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black; ',
-            '">^</span>',
-            '</p>',
+            '<tpl if="color">',
+            '<img src="resources/images/Flags/{color}.png" ',
+            'style="',
+            'display: block;',
+            'margin-left: auto;',
+            'margin-right: auto',
+            '"/>',
+            '</tpl>',
 
             '</div>'
         ],
+    },
+    updateConditions: function(data){
+        data = Ext.apply(this.getData(), data);
+        this.setData(data);
     },
     initialize: function() {
         var me = this;
@@ -86,7 +83,7 @@ Ext.define('HooferSailingMobile.view.Conditions', {
         // When it's reloaded the fetch event is fired. When that happens update the
         // contents of the Conditions tpl with properties from the store.
         store.on('fetch', function(store) {
-            me.setData({
+            me.updateConditions({
                 windDirection: store.getWindDirectionRose(),
                 knots: store.getAverageKnots(),
                 gusts: store.getGusts(),
