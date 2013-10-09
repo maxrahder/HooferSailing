@@ -4,9 +4,11 @@ Ext.define('HooferSailingMobile.controller.Boats', {
     config: {
         stores: ['Fleets', 'Winds', 'CompassPoints'],
         models: ['Flag'],
+        views: ['HooferSailingMobile.view.Rose'],
 
         refs: {
-            'conditions': 'conditions'
+            conditions: 'conditions',
+            rose: 'rose'
         },
 
         control: {
@@ -30,8 +32,8 @@ Ext.define('HooferSailingMobile.controller.Boats', {
         this.getConditions().updateConditions({color: color});
     },
 
-    updateCompassPoints: function() {
-        Ext.getStore('CompassPoints').updateDataUsingWinds(Ext.getStore('Winds'));
+    updateCompassPoints: function(winds) {
+        Ext.getStore('CompassPoints').updateDataUsingWinds(winds);
     },
 
     fleetsLoadHandler: function(store) {
