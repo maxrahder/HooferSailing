@@ -9,7 +9,13 @@ Ext.define('HooferSailingMobile.view.Rose', {
 	rotate: function(degrees) {
 		//debugger;
 		var draw = this.down('draw');
-		draw.getSprites();
+		var surface = draw.getSurface();
+		var image = surface.getItems().get('image');
+		image.setAttributes({
+			rotation: degrees
+		});
+		image.repaint();
+		surface.repaint();
 	},
 	config: {
 
@@ -18,27 +24,20 @@ Ext.define('HooferSailingMobile.view.Rose', {
 		layout: 'fit',
 
 		items: [
-		// {
-		// 	xtype: 'component',
-		// 	html: '8kn'
-		// }, 
-		// {
-		// 	xtype: 'component',
-		// 	html: '8kn'
-		// }, 
+			{
+				xtype: 'draw',
+				viewBox: true,
+				items: [{
+					type: 'image',
+					height: 100,
+					width: 100,
+					rotation: 0,
+					id: 'image',
+					src: 'resources/images/CompassRoseWindDirectionSimple.png'
+				}]
 
-		{
-			xtype: 'draw',
-			viewBox: true,
-			items: [{
-				type: 'image',
-				height: 200,
-				width: 200,
-				rotationRads: 45,
-				src: 'resources/images/CompassRoseWindDirection.png'
-			}]
-
-		}]
+			}
+		]
 
 	},
 	initialize: function() {
@@ -54,9 +53,18 @@ Ext.define('HooferSailingMobile.view.Rose', {
 		}
 
 		// Assert: store (and me.getStore()) reference a store object for the winds.
+<<<<<<< HEAD
 		// When it's reloaded the fetch event is fired. 
 		store.on('fetch', function(store) {
 			me.rotate();
+=======
+		// When it's reloaded the fetch event is fired. When that happens update the
+		// contents of the Conditions tpl with properties from the store.
+		store.on('fetch', function(winds) {
+			var roseDirection = winds.getWindDirectionRose();
+			var degrees = HooferSailingMobile.util.Compass.roseToDegrees(roseDirection);
+			me.rotate(degrees);
+>>>>>>> 50c14c2453fe79c81c81edf1d01d2c2ad26fe262
 		});
 
 		this.callParent();

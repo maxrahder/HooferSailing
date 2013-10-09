@@ -7,17 +7,22 @@
 Ext.Loader.addClassPathMappings({
   "Ext": "../touch/src",
   "Ext.device.Purchases.Product": "../touch/src/device/purchases/Sencha.js",
-  "Ext.device.Purchases.Purchase": "../touch/src/device/purchases/Sencha.js",
-  "Ext.device.SQLite.Database": "../touch/src/device/sqlite/Sencha.js",
-  "Ext.device.SQLite.SQLResultSet": "../touch/src/device/sqlite/Sencha.js",
-  "Ext.device.SQLite.SQLResultSetRowList": "../touch/src/device/sqlite/Sencha.js",
-  "Ext.device.SQLite.SQLTransaction": "../touch/src/device/sqlite/Sencha.js",
+  "Ext.device.filesystem.DirectoryEntry": "../touch/src/device/filesystem/HTML5.js",
+  "Ext.device.filesystem.Entry": "../touch/src/device/filesystem/HTML5.js",
+  "Ext.device.filesystem.FileEntry": "../touch/src/device/filesystem/HTML5.js",
+  "Ext.device.filesystem.FileSystem": "../touch/src/device/filesystem/HTML5.js",
+  "Ext.device.purchases.Purchase": "../touch/src/device/purchases/Sencha.js",
+  "Ext.device.sqlite.Database": "../touch/src/device/sqlite/Sencha.js",
+  "Ext.device.sqlite.SQLResultSet": "../touch/src/device/sqlite/Sencha.js",
+  "Ext.device.sqlite.SQLResultSetRowList": "../touch/src/device/sqlite/Sencha.js",
+  "Ext.device.sqlite.SQLTransaction": "../touch/src/device/sqlite/Sencha.js",
   "Ext.draw.engine.SvgContext.Gradient": "../touch/src/draw/engine/SvgContext.js",
   "HooferSailingMobile": "app"
 });
 Ext.ClassManager.addNameAlternateMappings({
   "Ext.AbstractComponent": [],
   "Ext.AbstractManager": [],
+  "Ext.AbstractPlugin": [],
   "Ext.ActionSheet": [],
   "Ext.Ajax": [],
   "Ext.Anim": [],
@@ -46,10 +51,13 @@ Ext.ClassManager.addNameAlternateMappings({
   "Ext.Map": [],
   "Ext.Mask": [],
   "Ext.Media": [],
+  "Ext.Menu": [],
   "Ext.MessageBox": [],
   "Ext.Panel": [
     "Ext.lib.Panel"
   ],
+  "Ext.ProgressIndicator": [],
+  "Ext.Promise": [],
   "Ext.SegmentedButton": [],
   "Ext.Sheet": [],
   "Ext.Sortable": [],
@@ -196,6 +204,7 @@ Ext.ClassManager.addNameAlternateMappings({
   "Ext.data.identifier.Sequential": [],
   "Ext.data.identifier.Simple": [],
   "Ext.data.identifier.Uuid": [],
+  "Ext.data.plugin.Buffered": [],
   "Ext.data.proxy.Ajax": [
     "Ext.data.HttpProxy",
     "Ext.data.AjaxProxy"
@@ -276,53 +285,134 @@ Ext.ClassManager.addNameAlternateMappings({
   "Ext.dataview.component.SimpleListItem": [],
   "Ext.dataview.element.Container": [],
   "Ext.dataview.element.List": [],
+  "Ext.device.Accelerometer": [],
+  "Ext.device.Browser": [],
   "Ext.device.Camera": [],
+  "Ext.device.Capture": [],
   "Ext.device.Communicator": [],
+  "Ext.device.Compass": [],
   "Ext.device.Connection": [],
   "Ext.device.Contacts": [],
   "Ext.device.Device": [],
+  "Ext.device.FileSystem": [],
   "Ext.device.Geolocation": [],
+  "Ext.device.Globalization": [],
+  "Ext.device.Media": [],
   "Ext.device.Notification": [],
   "Ext.device.Orientation": [],
   "Ext.device.Purchases": [],
   "Ext.device.Purchases.Product": [],
-  "Ext.device.Purchases.Purchase": [],
   "Ext.device.Push": [],
   "Ext.device.SQLite": [],
-  "Ext.device.SQLite.Database": [],
-  "Ext.device.SQLite.SQLResultSet": [],
-  "Ext.device.SQLite.SQLResultSetRowList": [],
-  "Ext.device.SQLite.SQLTransaction": [],
+  "Ext.device.Splashscreen": [],
+  "Ext.device.Storage": [],
+  "Ext.device.Tunnel": [],
+  "Ext.device.accelerometer.Abstract": [],
+  "Ext.device.accelerometer.Cordova": [
+    "Ext.device.accelerometer.PhoneGap"
+  ],
+  "Ext.device.accelerometer.Simulator": [],
+  "Ext.device.browser.Abstract": [],
+  "Ext.device.browser.Cordova": [],
+  "Ext.device.browser.Simulator": [],
+  "Ext.device.browser.Window": [],
   "Ext.device.camera.Abstract": [],
-  "Ext.device.camera.PhoneGap": [],
+  "Ext.device.camera.Cordova": [
+    "Ext.device.camera.PhoneGap"
+  ],
   "Ext.device.camera.Sencha": [],
   "Ext.device.camera.Simulator": [],
+  "Ext.device.capture.Abstract": [
+    "Ext.device.capture.Simulator"
+  ],
+  "Ext.device.capture.Cordova": [],
   "Ext.device.communicator.Android": [],
   "Ext.device.communicator.Default": [],
+  "Ext.device.compass.Abstract": [],
+  "Ext.device.compass.Cordova": [
+    "Ext.device.compass.PhoneGap"
+  ],
+  "Ext.device.compass.Simulator": [],
   "Ext.device.connection.Abstract": [],
-  "Ext.device.connection.PhoneGap": [],
+  "Ext.device.connection.Cordova": [
+    "Ext.device.connection.PhoneGap"
+  ],
   "Ext.device.connection.Sencha": [],
   "Ext.device.connection.Simulator": [],
   "Ext.device.contacts.Abstract": [],
+  "Ext.device.contacts.Cordova": [
+    "Ext.device.contacts.PhoneGap"
+  ],
   "Ext.device.contacts.Sencha": [],
   "Ext.device.device.Abstract": [],
-  "Ext.device.device.PhoneGap": [],
+  "Ext.device.device.Cordova": [
+    "Ext.device.device.PhoneGap"
+  ],
   "Ext.device.device.Sencha": [],
   "Ext.device.device.Simulator": [],
+  "Ext.device.filesystem.Abstract": [],
+  "Ext.device.filesystem.Chrome": [],
+  "Ext.device.filesystem.Cordova": [
+    "Ext.device.filesystem.PhoneGap"
+  ],
+  "Ext.device.filesystem.DirectoryEntry": [],
+  "Ext.device.filesystem.Entry": [],
+  "Ext.device.filesystem.FileEntry": [],
+  "Ext.device.filesystem.FileSystem": [],
+  "Ext.device.filesystem.HTML5": [],
+  "Ext.device.filesystem.Sencha": [],
+  "Ext.device.filesystem.Simulator": [],
   "Ext.device.geolocation.Abstract": [],
+  "Ext.device.geolocation.Cordova": [
+    "Ext.device.geolocation.PhoneGap"
+  ],
   "Ext.device.geolocation.Sencha": [],
   "Ext.device.geolocation.Simulator": [],
+  "Ext.device.globalization.Abstract": [],
+  "Ext.device.globalization.Cordova": [
+    "Ext.device.globalization.PhoneGap"
+  ],
+  "Ext.device.globalization.Simulator": [],
+  "Ext.device.media.Abstract": [],
+  "Ext.device.media.Cordova": [
+    "Ext.device.media.PhoneGap"
+  ],
   "Ext.device.notification.Abstract": [],
-  "Ext.device.notification.PhoneGap": [],
+  "Ext.device.notification.Cordova": [
+    "Ext.device.notification.PhoneGap"
+  ],
   "Ext.device.notification.Sencha": [],
   "Ext.device.notification.Simulator": [],
   "Ext.device.orientation.Abstract": [],
   "Ext.device.orientation.HTML5": [],
   "Ext.device.orientation.Sencha": [],
+  "Ext.device.purchases.Purchase": [],
   "Ext.device.purchases.Sencha": [],
   "Ext.device.push.Abstract": [],
+  "Ext.device.push.Cordova": [],
   "Ext.device.push.Sencha": [],
+  "Ext.device.splashscreen.Abstract": [],
+  "Ext.device.splashscreen.Cordova": [
+    "Ext.device.splashscreen.PhoneGap"
+  ],
+  "Ext.device.splashscreen.Simulator": [],
+  "Ext.device.sqlite.Database": [],
+  "Ext.device.sqlite.SQLResultSet": [],
+  "Ext.device.sqlite.SQLResultSetRowList": [],
+  "Ext.device.sqlite.SQLTransaction": [],
   "Ext.device.sqlite.Sencha": [],
+  "Ext.device.storage.Abstract": [],
+  "Ext.device.storage.Cordova": [
+    "Ext.device.storage.PhoneGap"
+  ],
+  "Ext.device.storage.HTML5.Database": [],
+  "Ext.device.storage.HTML5.HTML5": [],
+  "Ext.device.storage.HTML5.SQLStatement": [],
+  "Ext.device.storage.Simulator": [],
+  "Ext.device.tunnel.Abstract": [],
+  "Ext.device.tunnel.Connection": [],
+  "Ext.device.tunnel.Sencha": [],
+  "Ext.device.tunnel.Simulator": [],
   "Ext.direct.Event": [],
   "Ext.direct.ExceptionEvent": [],
   "Ext.direct.JsonProvider": [],
@@ -397,6 +487,7 @@ Ext.ClassManager.addNameAlternateMappings({
   "Ext.event.publisher.TouchGesture": [],
   "Ext.event.recognizer.DoubleTap": [],
   "Ext.event.recognizer.Drag": [],
+  "Ext.event.recognizer.EdgeSwipe": [],
   "Ext.event.recognizer.HorizontalSwipe": [],
   "Ext.event.recognizer.LongPress": [],
   "Ext.event.recognizer.MultiTouch": [],
@@ -424,6 +515,7 @@ Ext.ClassManager.addNameAlternateMappings({
     "Ext.form.Field"
   ],
   "Ext.field.File": [],
+  "Ext.field.FileInput": [],
   "Ext.field.Hidden": [
     "Ext.form.Hidden"
   ],
@@ -530,6 +622,7 @@ Ext.ClassManager.addNameAlternateMappings({
   "Ext.mixin.Observable": [
     "Ext.util.Observable"
   ],
+  "Ext.mixin.Progressable": [],
   "Ext.mixin.Selectable": [],
   "Ext.mixin.Sortable": [],
   "Ext.mixin.Templatable": [],
@@ -547,8 +640,10 @@ Ext.ClassManager.addNameAlternateMappings({
   "Ext.picker.Slot": [
     "Ext.Picker.Slot"
   ],
+  "Ext.plugin.BufferedList": [],
   "Ext.plugin.ListPaging": [],
   "Ext.plugin.PullRefresh": [],
+  "Ext.plugin.SortableList": [],
   "Ext.scroll.Indicator": [
     "Ext.util.Indicator"
   ],
@@ -576,6 +671,8 @@ Ext.ClassManager.addNameAlternateMappings({
   "Ext.table.Row": [],
   "Ext.table.Table": [],
   "Ext.util.AbstractMixedCollection": [],
+  "Ext.util.Audio": [],
+  "Ext.util.BufferedCollection": [],
   "Ext.util.Collection": [],
   "Ext.util.DelayedTask": [],
   "Ext.util.Draggable": [],
@@ -588,7 +685,9 @@ Ext.ClassManager.addNameAlternateMappings({
   "Ext.util.Grouper": [],
   "Ext.util.HashMap": [],
   "Ext.util.Inflector": [],
-  "Ext.util.InputBlocker": [],
+  "Ext.util.InputBlocker": [
+    "InputBlocker"
+  ],
   "Ext.util.LineSegment": [],
   "Ext.util.MixedCollection": [],
   "Ext.util.Offset": [],
@@ -616,6 +715,26 @@ Ext.ClassManager.addNameAlternateMappings({
   "Ext.util.translatable.CssTransform": [],
   "Ext.util.translatable.Dom": [],
   "Ext.util.translatable.ScrollPosition": [],
+  "Ext.ux.ActionOverFlowMenuButton": [],
+  "Ext.ux.ApplicationMenu": [],
+  "Ext.ux.ContextMenu": [],
+  "Ext.ux.MenuButton": [],
+  "Ext.ux.TabMenuButton": [],
+  "Ext.ux.device.Analytics": [],
+  "Ext.ux.device.Twitter": [],
+  "Ext.ux.device.analytics.Abstract": [],
+  "Ext.ux.device.analytics.Cordova": [],
+  "Ext.ux.device.twitter.Abstract": [],
+  "Ext.ux.device.twitter.Cordova": [],
+  "Ext.ux.parse.Helper": [
+    "ParseHelper"
+  ],
+  "Ext.ux.parse.Model": [],
+  "Ext.ux.parse.Proxy": [],
+  "Ext.ux.parse.Reader": [],
+  "Ext.ux.parse.Store": [],
+  "Ext.ux.parse.association.Pointer": [],
+  "Ext.ux.parse.association.Relation": [],
   "Ext.viewport.Android": [],
   "Ext.viewport.Default": [],
   "Ext.viewport.Ios": [],
@@ -625,6 +744,7 @@ Ext.ClassManager.addNameAlternateMappings({
   ],
   "HooferSailingMobile.controller.Boats": [],
   "HooferSailingMobile.model.Boat": [],
+  "HooferSailingMobile.model.Flag": [],
   "HooferSailingMobile.model.Fleet": [],
   "HooferSailingMobile.store.CompassPoints": [],
   "HooferSailingMobile.store.Fleets": [],
@@ -636,11 +756,13 @@ Ext.ClassManager.addNameAlternateMappings({
   "HooferSailingMobile.view.Conditions": [],
   "HooferSailingMobile.view.Main": [],
   "HooferSailingMobile.view.Rose": [],
+  "HooferSailingMobile.view.RoseImage": [],
   "HooferSailingMobile.view.WindsChart": []
 });
 Ext.ClassManager.addNameAliasMappings({
   "Ext.AbstractComponent": [],
   "Ext.AbstractManager": [],
+  "Ext.AbstractPlugin": [],
   "Ext.ActionSheet": [
     "widget.actionsheet"
   ],
@@ -686,10 +808,17 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.Media": [
     "widget.media"
   ],
+  "Ext.Menu": [
+    "widget.menu"
+  ],
   "Ext.MessageBox": [],
   "Ext.Panel": [
     "widget.panel"
   ],
+  "Ext.ProgressIndicator": [
+    "widget.progressindicator"
+  ],
+  "Ext.Promise": [],
   "Ext.SegmentedButton": [
     "widget.segmentedbutton"
   ],
@@ -936,6 +1065,9 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.data.identifier.Uuid": [
     "data.identifier.uuid"
   ],
+  "Ext.data.plugin.Buffered": [
+    "plugin.storebuffered"
+  ],
   "Ext.data.proxy.Ajax": [
     "proxy.ajax"
   ],
@@ -1013,53 +1145,106 @@ Ext.ClassManager.addNameAliasMappings({
   ],
   "Ext.dataview.element.Container": [],
   "Ext.dataview.element.List": [],
+  "Ext.device.Accelerometer": [],
+  "Ext.device.Browser": [],
   "Ext.device.Camera": [],
+  "Ext.device.Capture": [],
   "Ext.device.Communicator": [],
+  "Ext.device.Compass": [],
   "Ext.device.Connection": [],
   "Ext.device.Contacts": [],
   "Ext.device.Device": [],
+  "Ext.device.FileSystem": [],
   "Ext.device.Geolocation": [],
+  "Ext.device.Globalization": [],
+  "Ext.device.Media": [],
   "Ext.device.Notification": [],
   "Ext.device.Orientation": [],
   "Ext.device.Purchases": [],
   "Ext.device.Purchases.Product": [],
-  "Ext.device.Purchases.Purchase": [],
   "Ext.device.Push": [],
   "Ext.device.SQLite": [],
-  "Ext.device.SQLite.Database": [],
-  "Ext.device.SQLite.SQLResultSet": [],
-  "Ext.device.SQLite.SQLResultSetRowList": [],
-  "Ext.device.SQLite.SQLTransaction": [],
+  "Ext.device.Splashscreen": [],
+  "Ext.device.Storage": [],
+  "Ext.device.Tunnel": [],
+  "Ext.device.accelerometer.Abstract": [],
+  "Ext.device.accelerometer.Cordova": [],
+  "Ext.device.accelerometer.Simulator": [],
+  "Ext.device.browser.Abstract": [],
+  "Ext.device.browser.Cordova": [],
+  "Ext.device.browser.Simulator": [],
+  "Ext.device.browser.Window": [],
   "Ext.device.camera.Abstract": [],
-  "Ext.device.camera.PhoneGap": [],
+  "Ext.device.camera.Cordova": [],
   "Ext.device.camera.Sencha": [],
   "Ext.device.camera.Simulator": [],
+  "Ext.device.capture.Abstract": [],
+  "Ext.device.capture.Cordova": [],
   "Ext.device.communicator.Android": [],
   "Ext.device.communicator.Default": [],
+  "Ext.device.compass.Abstract": [],
+  "Ext.device.compass.Cordova": [],
+  "Ext.device.compass.Simulator": [],
   "Ext.device.connection.Abstract": [],
-  "Ext.device.connection.PhoneGap": [],
+  "Ext.device.connection.Cordova": [],
   "Ext.device.connection.Sencha": [],
   "Ext.device.connection.Simulator": [],
   "Ext.device.contacts.Abstract": [],
+  "Ext.device.contacts.Cordova": [],
   "Ext.device.contacts.Sencha": [],
   "Ext.device.device.Abstract": [],
-  "Ext.device.device.PhoneGap": [],
+  "Ext.device.device.Cordova": [],
   "Ext.device.device.Sencha": [],
   "Ext.device.device.Simulator": [],
+  "Ext.device.filesystem.Abstract": [],
+  "Ext.device.filesystem.Chrome": [],
+  "Ext.device.filesystem.Cordova": [],
+  "Ext.device.filesystem.DirectoryEntry": [],
+  "Ext.device.filesystem.Entry": [],
+  "Ext.device.filesystem.FileEntry": [],
+  "Ext.device.filesystem.FileSystem": [],
+  "Ext.device.filesystem.HTML5": [],
+  "Ext.device.filesystem.Sencha": [],
+  "Ext.device.filesystem.Simulator": [],
   "Ext.device.geolocation.Abstract": [],
+  "Ext.device.geolocation.Cordova": [],
   "Ext.device.geolocation.Sencha": [],
   "Ext.device.geolocation.Simulator": [],
+  "Ext.device.globalization.Abstract": [],
+  "Ext.device.globalization.Cordova": [],
+  "Ext.device.globalization.Simulator": [],
+  "Ext.device.media.Abstract": [],
+  "Ext.device.media.Cordova": [],
   "Ext.device.notification.Abstract": [],
-  "Ext.device.notification.PhoneGap": [],
+  "Ext.device.notification.Cordova": [],
   "Ext.device.notification.Sencha": [],
   "Ext.device.notification.Simulator": [],
   "Ext.device.orientation.Abstract": [],
   "Ext.device.orientation.HTML5": [],
   "Ext.device.orientation.Sencha": [],
+  "Ext.device.purchases.Purchase": [],
   "Ext.device.purchases.Sencha": [],
   "Ext.device.push.Abstract": [],
+  "Ext.device.push.Cordova": [],
   "Ext.device.push.Sencha": [],
+  "Ext.device.splashscreen.Abstract": [],
+  "Ext.device.splashscreen.Cordova": [],
+  "Ext.device.splashscreen.Simulator": [],
+  "Ext.device.sqlite.Database": [],
+  "Ext.device.sqlite.SQLResultSet": [],
+  "Ext.device.sqlite.SQLResultSetRowList": [],
+  "Ext.device.sqlite.SQLTransaction": [],
   "Ext.device.sqlite.Sencha": [],
+  "Ext.device.storage.Abstract": [],
+  "Ext.device.storage.Cordova": [],
+  "Ext.device.storage.HTML5.Database": [],
+  "Ext.device.storage.HTML5.HTML5": [],
+  "Ext.device.storage.HTML5.SQLStatement": [],
+  "Ext.device.storage.Simulator": [],
+  "Ext.device.tunnel.Abstract": [],
+  "Ext.device.tunnel.Connection": [],
+  "Ext.device.tunnel.Sencha": [],
+  "Ext.device.tunnel.Simulator": [],
   "Ext.direct.Event": [
     "direct.event"
   ],
@@ -1176,6 +1361,7 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.event.publisher.TouchGesture": [],
   "Ext.event.recognizer.DoubleTap": [],
   "Ext.event.recognizer.Drag": [],
+  "Ext.event.recognizer.EdgeSwipe": [],
   "Ext.event.recognizer.HorizontalSwipe": [],
   "Ext.event.recognizer.LongPress": [],
   "Ext.event.recognizer.MultiTouch": [],
@@ -1203,7 +1389,10 @@ Ext.ClassManager.addNameAliasMappings({
     "widget.field"
   ],
   "Ext.field.File": [
-    "widget.file"
+    "widget.filefield"
+  ],
+  "Ext.field.FileInput": [
+    "widget.fileinput"
   ],
   "Ext.field.Hidden": [
     "widget.hiddenfield"
@@ -1369,6 +1558,7 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.mixin.Filterable": [],
   "Ext.mixin.Mixin": [],
   "Ext.mixin.Observable": [],
+  "Ext.mixin.Progressable": [],
   "Ext.mixin.Selectable": [],
   "Ext.mixin.Sortable": [],
   "Ext.mixin.Templatable": [],
@@ -1386,11 +1576,17 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.picker.Slot": [
     "widget.pickerslot"
   ],
+  "Ext.plugin.BufferedList": [
+    "plugin.bufferedlist"
+  ],
   "Ext.plugin.ListPaging": [
     "plugin.listpaging"
   ],
   "Ext.plugin.PullRefresh": [
     "plugin.pullrefresh"
+  ],
+  "Ext.plugin.SortableList": [
+    "plugin.sortablelist"
   ],
   "Ext.scroll.Indicator": [],
   "Ext.scroll.Scroller": [],
@@ -1425,6 +1621,8 @@ Ext.ClassManager.addNameAliasMappings({
     "widget.table"
   ],
   "Ext.util.AbstractMixedCollection": [],
+  "Ext.util.Audio": [],
+  "Ext.util.BufferedCollection": [],
   "Ext.util.Collection": [],
   "Ext.util.DelayedTask": [],
   "Ext.util.Draggable": [],
@@ -1463,6 +1661,32 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.util.translatable.CssTransform": [],
   "Ext.util.translatable.Dom": [],
   "Ext.util.translatable.ScrollPosition": [],
+  "Ext.ux.ActionOverFlowMenuButton": [],
+  "Ext.ux.ApplicationMenu": [],
+  "Ext.ux.ContextMenu": [],
+  "Ext.ux.MenuButton": [],
+  "Ext.ux.TabMenuButton": [],
+  "Ext.ux.device.Analytics": [],
+  "Ext.ux.device.Twitter": [],
+  "Ext.ux.device.analytics.Abstract": [],
+  "Ext.ux.device.analytics.Cordova": [],
+  "Ext.ux.device.twitter.Abstract": [],
+  "Ext.ux.device.twitter.Cordova": [],
+  "Ext.ux.parse.Helper": [],
+  "Ext.ux.parse.Model": [],
+  "Ext.ux.parse.Proxy": [
+    "proxy.parse"
+  ],
+  "Ext.ux.parse.Reader": [
+    "reader.parse"
+  ],
+  "Ext.ux.parse.Store": [],
+  "Ext.ux.parse.association.Pointer": [
+    "association.pointer"
+  ],
+  "Ext.ux.parse.association.Relation": [
+    "association.relation"
+  ],
   "Ext.viewport.Android": [],
   "Ext.viewport.Default": [
     "widget.viewport"
@@ -1472,6 +1696,7 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.viewport.WindowsPhone": [],
   "HooferSailingMobile.controller.Boats": [],
   "HooferSailingMobile.model.Boat": [],
+  "HooferSailingMobile.model.Flag": [],
   "HooferSailingMobile.model.Fleet": [],
   "HooferSailingMobile.store.CompassPoints": [],
   "HooferSailingMobile.store.Fleets": [],
@@ -1490,6 +1715,9 @@ Ext.ClassManager.addNameAliasMappings({
   ],
   "HooferSailingMobile.view.Rose": [
     "widget.rose"
+  ],
+  "HooferSailingMobile.view.RoseImage": [
+    "widget.roseimage"
   ],
   "HooferSailingMobile.view.WindsChart": [
     "widget.windschart"

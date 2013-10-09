@@ -9,8 +9,8 @@ Ext.define('HooferSailingMobile.view.Main', {
         'HooferSailingMobile.view.WindsChart',
         'Ext.draw.Component',
         'Ext.draw.sprite.Image',
-        'Ext.draw.Component'
-
+        'Ext.draw.Component',
+        'HooferSailingMobile.view.RoseImage'
     ],
     config: {
         tabBarPosition: 'bottom',
@@ -24,12 +24,7 @@ Ext.define('HooferSailingMobile.view.Main', {
             title: 'Boats',
             xtype: 'boats'
         }, {
-            iconCls: 'settings',
-            title: 'Rose',
-            xtype: 'rose',
-            store: 'Winds'
-        }, {
-            iconCls: 'action',
+            iconCls: 'chart',
             title: 'Chart',
             layout: 'fit',
             margin: 40,
