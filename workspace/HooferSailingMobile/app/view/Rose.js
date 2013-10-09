@@ -24,15 +24,6 @@ Ext.define('HooferSailingMobile.view.Rose', {
 		layout: 'fit',
 
 		items: [
-			// {
-			// 	xtype: 'component',
-			// 	html: '8kn'
-			// }, 
-			// {
-			// 	xtype: 'component',
-			// 	html: '8kn'
-			// }, 
-
 			{
 				xtype: 'draw',
 				viewBox: true,

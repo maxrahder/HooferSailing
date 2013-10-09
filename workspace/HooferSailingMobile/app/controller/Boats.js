@@ -28,6 +28,7 @@ Ext.define('HooferSailingMobile.controller.Boats', {
     },
 
     updateFlag: function(flag, color, updated){
+        //debugger;
         color = color.toLowerCase();
         this.getConditions().updateConditions({color: color});
     },

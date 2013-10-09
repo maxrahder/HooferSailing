@@ -1,0 +1,127 @@
+[{
+	"name": "Badger Sloop",
+	"boats": [{
+		"name": "",
+		"hull": "1",
+		"loan": {
+			"purpose": "Day Sailing",
+			"out": "2013-10-10T11:50:01Z"
+		}
+	}, {
+		"name": "",
+		"hull": "2",
+		"loan": {
+			"purpose": "Instruction",
+			"out": "2013-10-10T11:00:01Z"
+		}
+	}, {
+		"name": "",
+		"hull": "3",
+		"loan": {
+			"purpose": "Day Sailing",
+			"out": "2013-10-10T11:13:01Z"
+		}
+	}, {
+		"name": "",
+		"hull": "4",
+		"loan": {
+			"purpose": "Day Sailing",
+			"out": "2013-10-10T10:50:01Z"
+		}
+	}, {
+		"name": "",
+		"hull": "5",
+		"loan": {
+			"purpose": "Day Sailing",
+			"out": "2013-10-10T10:11:41Z"
+		}
+	}, {
+		"name": "",
+		"hull": "6",
+		"loan": {
+			"purpose": "Day Sailing",
+			"out": "2013-10-10T11:10:01Z"
+		}
+	}, {
+		"name": "",
+		"hull": "7",
+		"loan": {
+			"purpose": "Day Sailing",
+			"out": "2013-10-10T10:34:01Z"
+		}
+	}, {
+		"name": "",
+		"hull": "7",
+		"loan": {}
+	}]
+}, {
+	"name": "420",
+	"boats": [{
+		"name": "",
+		"hull": "1",
+		"loan": {
+			"purpose": "Day Sailing",
+			"out": "2013-10-10T10:01:01Z"
+		}
+	}]
+}, {
+	"name": "Tech",
+	"boats": [{
+		"name": "",
+		"hull": "1",
+		"loan": {
+			"purpose": "Day Sailing",
+			"out": "2013-10-10T10:01:01Z"
+		}
+	}]
+}, {
+	"name": "Scow",
+	"boats": [{
+		"name": "",
+		"hull": "1",
+		"loan": {
+			"purpose": "Day Sailing",
+			"out": "2013-10-10T10:01:01Z"
+		}
+	}]
+}, {
+	"name": "Laser/Byte",
+	"boats": [{
+		"name": "",
+		"hull": "1",
+		"loan": {
+			"purpose": "Day Sailing",
+			"out": "2013-10-10T10:01:01Z"
+		}
+	}]
+}, {
+	"name": "Light Keelboat",
+	"boats": [{
+		"name": "",
+		"hull": "1",
+		"loan": {
+			"purpose": "Day Sailing",
+			"out": "2013-10-10T10:01:01Z"
+		}
+	}]
+}, {
+	"name": "Keelboat",
+	"boats": [{
+		"name": "",
+		"hull": "1",
+		"loan": {
+			"purpose": "Day Sailing",
+			"out": "2013-10-10T10:01:01Z"
+		}
+	}]
+}, {
+	"name": "Windsurfer",
+	"boats": [{
+		"name": "",
+		"hull": "1",
+		"loan": {
+			"purpose": "Day Sailing",
+			"out": "2013-10-10T10:01:01Z"
+		}
+	}]
+}]

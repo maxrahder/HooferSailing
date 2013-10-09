@@ -1,71 +1,84 @@
 Ext.define('HooferSailingMobile.view.Conditions', {
-    extend: 'Ext.Component',
+    extend: 'Ext.Container',
     xtype: 'conditions',
     requires: [
         'Ext.TitleBar',
-        'HooferSailingMobile.view.Boats'
+        'HooferSailingMobile.view.Boats', 
+        'HooferSailingMobile.view.RoseImage'
     ],
     config: {
         store: null,
-        data: {
-            windDirection: '',
-            knots: '',
-            gusts: '',
-            waterTemperature: '',
-            color: ''
-        },
-        tpl: [
-            '<div style="',
-            '    vertical-align: middle;',
-            '    margin-top: .7em; ',
-            '">',
+        layout: 'vbox',
+        items: [{
+            xtype: 'roseimage',
+            margin: 6,
+            itemId: 'roseImage'
+        }, {
+            xtype: 'component',
+            itemId: 'tpl',
+            data: {
+                windDirection: '',
+                knots: '',
+                gusts: '',
+                waterTemperature: '',
+                color: ''
+            },
+            tpl: [
+                '<div style="',
+                '    vertical-align: middle;',
+                '    margin-top: 0em; ',
+                '">',
 
-            '<p style="',
-            '    text-align: center; ',
-            '    font-size: 3em; ',
-            '">',
-            '<b>{windDirection}</b>',
-            '</p>',
+                // '<p style="',
+                // '    text-align: center; ',
+                // '    font-size: 3em; ',
+                // '">',
+                // '<b>{windDirection}</b>',
+                // '</p>',
 
-            '<p style="',
-            '    text-align: center; ',
-            '    margin-top: 0em; ',
-            '    font-size: 3em; ',
-            '">',
-            '<b>{knots}</b> kn',
-            '</p>',
+                '<p style="',
+                '    text-align: center; ',
+                '    margin-top: 0em; ',
+                '    font-size: 3em; ',
+                '">',
+                '<b>{knots}</b> kn',
+                '</p>',
 
-            '<p style="',
-            '    text-align: center; ',
-            '    font-size: 1.5em; ',
-            '">',
-            '{gusts} kn gusts</span>',
-            '</p>',
+                '<p style="',
+                '    text-align: center; ',
+                '    font-size: 1.5em; ',
+                '">',
+                '{gusts} kn gusts</span>',
+                '</p>',
 
-            '<p style="',
-            '    margin-top: .3em; ',
-            '    text-align: center; ',
-            '    font-size: 1.5em; ',
-            '">',
-            'Water temp. ',
-            '{waterTemperature}&deg;F',
-            '</p>',
+                '<p style="',
+                '    margin-top: .3em; ',
+                '    text-align: center; ',
+                '    font-size: 1.5em; ',
+                '">',
+                'Water temp. ',
+                '{waterTemperature}&deg;F',
+                '</p>',
 
-            '<tpl if="color">',
-            '<img src="resources/images/Flags/{color}.png" ',
-            'style="',
-            'display: block;',
-            'margin-left: auto;',
-            'margin-right: auto',
-            '"/>',
-            '</tpl>',
+                '<tpl if="color">',
+                '<img src="resources/images/Flags/{color}.png" ',
+                'style="',
+                'display: block;',
+                'margin-left: auto;',
+                'margin-right: auto; ' ,
+                'height: 120px; ',
+                '"/>',
+                '</tpl>',
 
-            '</div>'
-        ],
+                '</div>'
+            ]
+        }]
+
     },
-    updateConditions: function(data){
-        data = Ext.apply(this.getData(), data);
-        this.setData(data);
+    updateConditions: function(data) {
+        var tplComponent = this.down('#tpl');
+        data = Ext.apply(tplComponent.getData(), data);
+        tplComponent.setData(data);
     },
     initialize: function() {
         var me = this;
@@ -83,6 +96,12 @@ Ext.define('HooferSailingMobile.view.Conditions', {
         // When it's reloaded the fetch event is fired. When that happens update the
         // contents of the Conditions tpl with properties from the store.
         store.on('fetch', function(store) {
+
+            var image = me.down('#roseImage');
+            var roseDirection = store.getWindDirectionRose();
+            var degrees = HooferSailingMobile.util.Compass.roseToDegrees(roseDirection);
+            image.rotate(degrees);
+
             me.updateConditions({
                 windDirection: store.getWindDirectionRose(),
                 knots: store.getAverageKnots(),
