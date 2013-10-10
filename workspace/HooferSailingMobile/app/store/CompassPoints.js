@@ -107,7 +107,6 @@ Ext.define('HooferSailingMobile.store.CompassPoints', {
 			var r = me.getAt(index);
 			r.set({frequency: frequency, averageKnots: (averageKnots / 30) * radiusUnit});
 			//r.set({frequency: frequency, averageKnots: averageKnots});
-
 		});
 	}
 
