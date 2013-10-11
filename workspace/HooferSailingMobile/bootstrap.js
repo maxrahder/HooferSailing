@@ -756,7 +756,7 @@ Ext.ClassManager.addNameAlternateMappings({
   "HooferSailingMobile.view.Conditions": [],
   "HooferSailingMobile.view.Main": [],
   "HooferSailingMobile.view.Rose": [],
-  "HooferSailingMobile.view.RoseImage": [],
+  "HooferSailingMobile.view.RotatingImage": [],
   "HooferSailingMobile.view.WindsChart": []
 });
 Ext.ClassManager.addNameAliasMappings({
@@ -1716,8 +1716,8 @@ Ext.ClassManager.addNameAliasMappings({
   "HooferSailingMobile.view.Rose": [
     "widget.rose"
   ],
-  "HooferSailingMobile.view.RoseImage": [
-    "widget.roseimage"
+  "HooferSailingMobile.view.RotatingImage": [
+    "widget.rotatingimage"
   ],
   "HooferSailingMobile.view.WindsChart": [
     "widget.windschart"

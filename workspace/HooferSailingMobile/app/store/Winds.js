@@ -12,7 +12,7 @@ Ext.define('HooferSailingMobile.store.Winds', {
 	config: {
 		url: 'http://metobs.ssec.wisc.edu/app/mendota/buoy/data/jsonp',
 		symbols: 'dir:spd:wt_1.0',
-		interval: '00:00:00',
+		interval: '00:00:10',
 		begin: '-00:05:00',
 		averageKnots: 0,		
 		gusts: 0,

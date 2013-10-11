@@ -4,15 +4,16 @@ Ext.define('HooferSailingMobile.view.Conditions', {
     requires: [
         'Ext.TitleBar',
         'HooferSailingMobile.view.Boats', 
-        'HooferSailingMobile.view.RoseImage'
+        'HooferSailingMobile.view.RotatingImage'
     ],
     config: {
         store: null,
         layout: 'vbox',
         items: [{
-            xtype: 'roseimage',
+            xtype: 'rotatingimage',
             margin: 6,
-            itemId: 'roseImage'
+            itemId: 'rotatingImage',
+            src: 'resources/images/CompassRoseWindDirectionSimple.png'
         }, {
             xtype: 'component',
             itemId: 'tpl',
@@ -63,6 +64,7 @@ Ext.define('HooferSailingMobile.view.Conditions', {
                 '<tpl if="color">',
                 '<img src="resources/images/Flags/{color}.png" ',
                 'style="',
+                'margin-top: .3em; ',
                 'display: block;',
                 'margin-left: auto;',
                 'margin-right: auto; ' ,
@@ -97,7 +99,7 @@ Ext.define('HooferSailingMobile.view.Conditions', {
         // contents of the Conditions tpl with properties from the store.
         store.on('fetch', function(store) {
 
-            var image = me.down('#roseImage');
+            var image = me.down('#rotatingImage');
             var roseDirection = store.getWindDirectionRose();
             var degrees = HooferSailingMobile.util.Compass.roseToDegrees(roseDirection);
             image.rotate(degrees);

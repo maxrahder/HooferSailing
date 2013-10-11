@@ -9,8 +9,7 @@ Ext.define('HooferSailingMobile.view.Main', {
         'HooferSailingMobile.view.WindsChart',
         'Ext.draw.Component',
         'Ext.draw.sprite.Image',
-        'Ext.draw.Component',
-        'HooferSailingMobile.view.RoseImage'
+        'Ext.draw.Component'
     ],
     config: {
         tabBarPosition: 'bottom',

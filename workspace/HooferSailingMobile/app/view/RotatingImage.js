@@ -1,10 +1,10 @@
-Ext.define('HooferSailingMobile.view.RoseImage', {
+Ext.define('HooferSailingMobile.view.RotatingImage', {
 	extend: 'Ext.Component',
-	xtype: 'roseimage',
+	xtype: 'rotatingimage',
 	config: {
 		height: 100,
 		degrees: 0,
-		src: 'resources/images/CompassRoseWindDirectionSimple.png',
+		src: '',
 		tpl: [
 			'<div style="',
 			'text-align: center; ',

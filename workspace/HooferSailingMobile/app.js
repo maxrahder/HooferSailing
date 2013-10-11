@@ -26,10 +26,10 @@ Ext.application({
     ],
 
     icon: {
-        '57': 'resources/icons/Icon.png',
-        '72': 'resources/icons/Icon~ipad.png',
-        '114': 'resources/icons/Icon@2x.png',
-        '144': 'resources/icons/Icon~ipad@2x.png'
+        '57': 'resources/images/Burgee_57x57.jpg',
+        '72': 'resources/images/Burgee_72x72.jpg',
+        '114': 'resources/images/Burgee_114x114.jpg',
+        '144': 'resources/images/Burgee_144x144.jpg'
     },
 
     isIconPrecomposed: true,
