@@ -13,7 +13,8 @@ Ext.define('HooferSailingMobile.view.Conditions', {
             xtype: 'rotatingimage',
             margin: 6,
             itemId: 'rotatingImage',
-            src: 'resources/images/CompassRoseWindDirectionSimple.png'
+            backgroundSrc: 'resources/images/RoseBackground.png',
+            src: 'resources/images/RoseForeground.png'
         }, {
             xtype: 'component',
             itemId: 'tpl',

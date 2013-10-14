@@ -8,6 +8,7 @@ Ext.define('HooferSailingMobile.controller.Boats', {
 
         refs: {
             conditions: 'conditions',
+            rotatingImage: 'rotatingimage',
             rose: 'rose'
         },
 

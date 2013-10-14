@@ -1,0 +1,1332 @@
+<!DOCTYPE html>
+<!-- saved from url=(0025)http://hoofersailing.org/ -->
+<html class="js js csstransforms3d csstransitions csstransforms webkit chrome mac js" lang="en" dir="ltr" style=""><script type="text/javascript" async="" src="./Hoofer Sailing Club   A UW social club with a bit of a sailing problem_files/ga.js" style=""></script><script id="tinyhippos-injected">if (window.top.ripple) { window.top.ripple("bootstrap").inject(window, document); }</script><!--<![endif]--><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<script 
+	type="text/javascript" 
+	src="http://cdn.sencha.com/ext/gpl/4.2.1/ext-all.js"></script>
+
+<script type="text/javascript">
+Ext.onReady(function(){
+	Ext.data.JsonP.request({
+		url: 'http://ehs.wisc.edu/current-flag.php',
+		success: function(result, request) {
+			debugger;
+			var f = {
+				'green': 'GreenFlag.png', 
+				'green-yellow': 'GreenYellowFlag.png',
+				'blue': 'BlueFlag.png', 
+				'blue-yellow':'BlueYellowFlag.png',
+				'blue-red': 'BlueRedFlag.png', 
+				'red': 'RedFlag.png',
+				'none': 'Closed.png'
+			};
+			var color = result.color.toLowerCase();
+			var flagUrlPrefix = 'http://ehs.wisc.edu/lake/';
+			var image = f[color];
+			var flagURl = flagUrlPrefix + image;
+			var img = '<img src="' + flagURl + '"/>';
+			var element = Ext.fly('flagimage');
+			Ext.DomHelper.append(element, img);
+		},
+			failure: function() {
+				
+		}
+	});
+})
+</script
+
+
+<link rel="shortcut icon" href="http://hoofersailing.org/sites/hoofersailing.org/files/hoofer_sailing_favicon.ico" type="image/vnd.microsoft.icon">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<link rel="alternate" type="application/rss+xml" title="Hoofer Sailing Club RSS" href="http://hoofersailing.org/?q=rss.xml">
+<link href="./Hoofer Sailing Club   A UW social club with a bit of a sailing problem_files/bootstrap.css" rel="stylesheet" type="text/css" media="screen">
+<link href="./Hoofer Sailing Club   A UW social club with a bit of a sailing problem_files/flexslider.css" rel="stylesheet" type="text/css" media="screen">
+<link href="./Hoofer Sailing Club   A UW social club with a bit of a sailing problem_files/font-awesome.css" rel="stylesheet" type="text/css" media="screen">
+<link href="./Hoofer Sailing Club   A UW social club with a bit of a sailing problem_files/prettyPhoto.css" rel="stylesheet" type="text/css" media="screen">
+<link href="./Hoofer Sailing Club   A UW social club with a bit of a sailing problem_files/component.css" rel="stylesheet" type="text/css" media="screen">
+<link href="./Hoofer Sailing Club   A UW social club with a bit of a sailing problem_files/jquery.isotope.css" rel="stylesheet" type="text/css" media="screen">
+<link href="./Hoofer Sailing Club   A UW social club with a bit of a sailing problem_files/theme.css" rel="stylesheet" type="text/css" media="screen">
+<link href="./Hoofer Sailing Club   A UW social club with a bit of a sailing problem_files/drupal-styles.css" rel="stylesheet" type="text/css" media="screen">
+<link href="./Hoofer Sailing Club   A UW social club with a bit of a sailing problem_files/theme-elements.css" rel="stylesheet" type="text/css" media="screen">
+<link href="./Hoofer Sailing Club   A UW social club with a bit of a sailing problem_files/theme-blog.css" rel="stylesheet" type="text/css" media="screen">
+<link href="./Hoofer Sailing Club   A UW social club with a bit of a sailing problem_files/bootstrap-responsive-boxed.css" rel="stylesheet" type="text/css" media="screen">
+<link href="./Hoofer Sailing Club   A UW social club with a bit of a sailing problem_files/theme-responsive.css" rel="stylesheet" type="text/css" media="screen">
+<style type="text/css">body {background-image:url(/sites/hoofersailing.org/themes/porto/img/patterns/bright_squares.png);}</style> <title>Hoofer Sailing Club | A UW social club with a bit of a sailing problem</title>
+<style type="text/css" media="all">@import url("http://hoofersailing.org/modules/system/system.base.css?mtaxv5");
+@import url("http://hoofersailing.org/modules/system/system.menus.css?mtaxv5");
+@import url("http://hoofersailing.org/modules/system/system.messages.css?mtaxv5");
+@import url("http://hoofersailing.org/modules/system/system.theme.css?mtaxv5");</style>
+<style type="text/css" media="all">@import url("http://hoofersailing.org/modules/field/theme/field.css?mtaxv5");
+@import url("http://hoofersailing.org/modules/node/node.css?mtaxv5");
+@import url("http://hoofersailing.org/modules/search/search.css?mtaxv5");
+@import url("http://hoofersailing.org/modules/user/user.css?mtaxv5");
+@import url("http://hoofersailing.org/sites/hoofersailing.org/modules/views/css/views.css?mtaxv5");</style>
+<style type="text/css" media="all">@import url("http://hoofersailing.org/sites/hoofersailing.org/modules/ctools/css/ctools.css?mtaxv5");
+@import url("http://hoofersailing.org/sites/all/modules/dhtml_menu/dhtml_menu.css?mtaxv5");
+@import url("http://hoofersailing.org/sites/hoofersailing.org/modules/views_slideshow/views_slideshow.css?mtaxv5");
+@import url("http://hoofersailing.org/sites/hoofersailing.org/modules/md_slider/css/animate.css?mtaxv5");
+@import url("http://hoofersailing.org/sites/hoofersailing.org/modules/md_slider/css/md-slider.css?mtaxv5");
+@import url("http://hoofersailing.org/sites/hoofersailing.org/files/md-slider-rythym-and-booms-layers.css?mtaxv5");
+@import url("http://hoofersailing.org/sites/hoofersailing.org/modules/md_slider/css/md-slider-style.css?mtaxv5");
+@import url("http://hoofersailing.org/sites/hoofersailing.org/modules/views_slideshow/contrib/views_slideshow_cycle/views_slideshow_cycle.css?mtaxv5");</style>
+
+<!--[if lt IE 10]>
+<style type="text/css" media="all">@import url("http://hoofersailing.org/sites/hoofersailing.org/files/ctools/css/d41d8cd98f00b204e9800998ecf8427e.css?mtaxv5");</style>
+<![endif]-->
+<style type="text/css" media="all">@import url("http://hoofersailing.org/sites/hoofersailing.org/themes/porto_sub/css/custom.css?mtaxv5");</style>
+<link type="text/css" rel="stylesheet" href="./Hoofer Sailing Club   A UW social club with a bit of a sailing problem_files/skin.KYhN-zfboWPf5qkT6pF17Q2dGjuJ0Gc9RSWHKFy5V5U.css" media="all">
+<script type="text/javascript" src="./Hoofer Sailing Club   A UW social club with a bit of a sailing problem_files/jquery.min.js"></script>
+<script type="text/javascript" src="./Hoofer Sailing Club   A UW social club with a bit of a sailing problem_files/jquery.once.js"></script>
+<script type="text/javascript" src="./Hoofer Sailing Club   A UW social club with a bit of a sailing problem_files/drupal.js"></script>
+<script type="text/javascript" src="./Hoofer Sailing Club   A UW social club with a bit of a sailing problem_files/jquery.cookie.js"></script>
+<script type="text/javascript" src="./Hoofer Sailing Club   A UW social club with a bit of a sailing problem_files/jquery.form.min.js"></script>
+<script type="text/javascript" src="./Hoofer Sailing Club   A UW social club with a bit of a sailing problem_files/ajax.js"></script>
+<script type="text/javascript" src="./Hoofer Sailing Club   A UW social club with a bit of a sailing problem_files/dhtml_menu.js"></script>
+<script type="text/javascript" src="./Hoofer Sailing Club   A UW social club with a bit of a sailing problem_files/views_slideshow.js"></script>
+<script type="text/javascript" src="./Hoofer Sailing Club   A UW social club with a bit of a sailing problem_files/jquery.touchwipe.js"></script>
+<script type="text/javascript" src="./Hoofer Sailing Club   A UW social club with a bit of a sailing problem_files/md-slider.min.js"></script>
+<script type="text/javascript">
+<!--//--><![CDATA[//><!--
+(function($) {
+      $(document).ready(function() {
+          effectsIn = Drupal.settings.inEffects;
+          effectsOut = Drupal.settings.outEffects;
+          var options = Drupal.settings.md_slider_options_1;
+          $("#md-slider-1").mdSlider(options);
+      });
+    })(jQuery);
+//--><!]]>
+</script>
+<script type="text/javascript" src="./Hoofer Sailing Club   A UW social club with a bit of a sailing problem_files/jquery.cycle.all.js"></script>
+<script type="text/javascript" src="./Hoofer Sailing Club   A UW social club with a bit of a sailing problem_files/json2.js"></script>
+<script type="text/javascript" src="./Hoofer Sailing Club   A UW social club with a bit of a sailing problem_files/views_slideshow_cycle.js"></script>
+<script type="text/javascript" src="./Hoofer Sailing Club   A UW social club with a bit of a sailing problem_files/base.js"></script>
+<script type="text/javascript" src="./Hoofer Sailing Club   A UW social club with a bit of a sailing problem_files/progress.js"></script>
+<script type="text/javascript" src="./Hoofer Sailing Club   A UW social club with a bit of a sailing problem_files/ajax_view.js"></script>
+<script type="text/javascript" src="./Hoofer Sailing Club   A UW social club with a bit of a sailing problem_files/googleanalytics.js"></script>
+<script type="text/javascript">
+<!--//--><![CDATA[//><!--
+var _gaq = _gaq || [];_gaq.push(["_setAccount", "UA-43179007-1"]);_gaq.push(["_trackPageview"]);(function() {var ga = document.createElement("script");ga.type = "text/javascript";ga.async = true;ga.src = ("https:" == document.location.protocol ? "https://ssl" : "http://www") + ".google-analytics.com/ga.js";var s = document.getElementsByTagName("script")[0];s.parentNode.insertBefore(ga, s);})();
+//--><!]]>
+</script>
+<script type="text/javascript" src="./Hoofer Sailing Club   A UW social club with a bit of a sailing problem_files/modernizr.js"></script>
+<script type="text/javascript" src="./Hoofer Sailing Club   A UW social club with a bit of a sailing problem_files/bootstrap.js"></script>
+<script type="text/javascript" src="./Hoofer Sailing Club   A UW social club with a bit of a sailing problem_files/jquery.easing.js"></script>
+<script type="text/javascript" src="./Hoofer Sailing Club   A UW social club with a bit of a sailing problem_files/jquery.cookie(1).js"></script>
+<script type="text/javascript" src="./Hoofer Sailing Club   A UW social club with a bit of a sailing problem_files/jquery.tweet.js"></script>
+<script type="text/javascript" src="./Hoofer Sailing Club   A UW social club with a bit of a sailing problem_files/jquery.flexslider.js"></script>
+<script type="text/javascript" src="./Hoofer Sailing Club   A UW social club with a bit of a sailing problem_files/jquery.flipshow.js"></script>
+<script type="text/javascript" src="./Hoofer Sailing Club   A UW social club with a bit of a sailing problem_files/jquery.isotope.js"></script>
+<script type="text/javascript" src="./Hoofer Sailing Club   A UW social club with a bit of a sailing problem_files/jquery.prettyPhoto.js"></script>
+<script type="text/javascript" src="./Hoofer Sailing Club   A UW social club with a bit of a sailing problem_files/jflickrfeed.js"></script>
+<script type="text/javascript" src="./Hoofer Sailing Club   A UW social club with a bit of a sailing problem_files/jquery.mapmarker.js"></script>
+<script type="text/javascript" src="./Hoofer Sailing Club   A UW social club with a bit of a sailing problem_files/jquery.validate.js"></script>
+<script type="text/javascript" src="./Hoofer Sailing Club   A UW social club with a bit of a sailing problem_files/mobile-menu.js"></script>
+<script type="text/javascript" src="./Hoofer Sailing Club   A UW social club with a bit of a sailing problem_files/plugins.js"></script>
+<script type="text/javascript" src="./Hoofer Sailing Club   A UW social club with a bit of a sailing problem_files/porto.js"></script>
+<script type="text/javascript">
+<!--//--><![CDATA[//><!--
+jQuery.extend(Drupal.settings, {"basePath":"\/","pathPrefix":"","ajaxPageState":{"theme":"hooferporto","theme_token":"pdYs40K6dCfk3Fosl0ODk1sL-R7TFmGOQDyp_sH01Pk","jquery_version":"1.8","js":{"sites\/hoofersailing.org\/modules\/jquery_update\/replace\/jquery\/1.8\/jquery.min.js":1,"misc\/jquery.once.js":1,"misc\/drupal.js":1,"sites\/hoofersailing.org\/modules\/jquery_update\/replace\/ui\/external\/jquery.cookie.js":1,"sites\/hoofersailing.org\/modules\/jquery_update\/replace\/misc\/jquery.form.min.js":1,"misc\/ajax.js":1,"sites\/all\/modules\/dhtml_menu\/dhtml_menu.js":1,"sites\/hoofersailing.org\/modules\/views_slideshow\/js\/views_slideshow.js":1,"sites\/hoofersailing.org\/modules\/md_slider\/js\/jquery.touchwipe.js":1,"sites\/hoofersailing.org\/modules\/md_slider\/js\/md-slider.min.js":1,"0":1,"sites\/all\/libraries\/jquery.cycle\/jquery.cycle.all.js":1,"sites\/hoofersailing.org\/libraries\/json2\/json2.js":1,"sites\/hoofersailing.org\/modules\/views_slideshow\/contrib\/views_slideshow_cycle\/js\/views_slideshow_cycle.js":1,"sites\/hoofersailing.org\/modules\/views\/js\/base.js":1,"misc\/progress.js":1,"sites\/hoofersailing.org\/modules\/views\/js\/ajax_view.js":1,"sites\/all\/modules\/google_analytics\/googleanalytics.js":1,"1":1,"sites\/hoofersailing.org\/themes\/porto\/vendor\/modernizr.js":1,"sites\/hoofersailing.org\/themes\/porto\/vendor\/bootstrap.js":1,"sites\/hoofersailing.org\/themes\/porto\/vendor\/jquery.easing.js":1,"sites\/hoofersailing.org\/themes\/porto\/vendor\/jquery.cookie.js":1,"sites\/hoofersailing.org\/themes\/porto\/includes\/twitter\/jquery.tweet.js":1,"sites\/hoofersailing.org\/themes\/porto\/vendor\/flexslider\/jquery.flexslider.js":1,"sites\/hoofersailing.org\/themes\/porto\/vendor\/circle-flip-slideshow\/js\/jquery.flipshow.js":1,"sites\/hoofersailing.org\/themes\/porto\/vendor\/isotope\/jquery.isotope.js":1,"sites\/hoofersailing.org\/themes\/porto\/vendor\/prettyPhoto\/js\/jquery.prettyPhoto.js":1,"sites\/hoofersailing.org\/themes\/porto\/vendor\/jflickrfeed\/jflickrfeed.js":1,"sites\/hoofersailing.org\/themes\/porto\/vendor\/jquery.mapmarker.js":1,"sites\/hoofersailing.org\/themes\/porto\/vendor\/jquery.validate.js":1,"sites\/hoofersailing.org\/themes\/porto\/js\/mobile-menu.js":1,"sites\/hoofersailing.org\/themes\/porto\/js\/plugins.js":1,"sites\/hoofersailing.org\/themes\/porto\/js\/porto.js":1},"css":{"modules\/system\/system.base.css":1,"modules\/system\/system.menus.css":1,"modules\/system\/system.messages.css":1,"modules\/system\/system.theme.css":1,"modules\/field\/theme\/field.css":1,"modules\/node\/node.css":1,"modules\/search\/search.css":1,"modules\/user\/user.css":1,"sites\/hoofersailing.org\/modules\/views\/css\/views.css":1,"sites\/hoofersailing.org\/modules\/ctools\/css\/ctools.css":1,"sites\/all\/modules\/dhtml_menu\/dhtml_menu.css":1,"sites\/hoofersailing.org\/modules\/views_slideshow\/views_slideshow.css":1,"sites\/hoofersailing.org\/modules\/md_slider\/css\/animate.css":1,"sites\/hoofersailing.org\/modules\/md_slider\/css\/md-slider.css":1,"public:\/\/md-slider-rythym-and-booms-layers.css":1,"sites\/hoofersailing.org\/modules\/md_slider\/css\/md-slider-style.css":1,"sites\/hoofersailing.org\/modules\/views_slideshow\/contrib\/views_slideshow_cycle\/views_slideshow_cycle.css":1,"public:\/\/ctools\/css\/d41d8cd98f00b204e9800998ecf8427e.css":1,"sites\/hoofersailing.org\/themes\/porto_sub\/css\/custom.css":1,"sites\/hoofersailing.org\/themes\/porto\/css\/less\/skin.less":1}},"dhtmlMenu":{"nav":"open","animation":{"effects":{"height":"height","opacity":"opacity"},"speed":500},"effects":{"siblings":"close-same-tree","children":"none","remember":0},"filter":{"type":"blacklist","list":[]}},"inEffects":["fadeIn","fadeInUp","fadeInDown","fadeInLeft","fadeInRight","fadeInUpBig","fadeInDownBig","fadeInLeftBig","fadeInRightBig","bounceIn","bounceInDown","bounceInUp","bounceInLeft","bounceInRight","rotateIn","rotateInDownLeft","rotateInDownRight","rotateInUpLeft","rotateInUpRight","lightSpeedIn","rollIn"],"outEffects":["fadeOut","fadeOutUp","fadeOutDown","fadeOutLeft","fadeOutRight","fadeOutUpBig","fadeOutDownBig","fadeOutLeftBig","fadeOutRightBig","bounceOut","bounceOutDown","bounceOutUp","bounceOutLeft","bounceOutRight","rotateOut","rotateOutDownLeft","rotateOutDownRight","rotateOutUpLeft","rotateOutUpRight","lightSpeedOut","rollOut"],"md_slider_options_1":{"fullwidth":false,"transitions":"fade","transitionsSpeed":"800","width":"940","height":"470","enableDrag":false,"responsive":true,"loop":true,"showLoading":true,"loadingPosition":"bottom","showArrow":true,"showBullet":false,"posBullet":"5","showThumb":false,"posThumb":"1","slideShowDelay":"8000","slideShow":true,"styleBorder":"0","styleShadow":"0"},"viewsSlideshow":{"instructor_bios-block":{"methods":{"goToSlide":["viewsSlideshowPager","viewsSlideshowSlideCounter","viewsSlideshowCycle"],"nextSlide":["viewsSlideshowPager","viewsSlideshowSlideCounter","viewsSlideshowCycle"],"pause":["viewsSlideshowControls","viewsSlideshowCycle"],"play":["viewsSlideshowControls","viewsSlideshowCycle"],"previousSlide":["viewsSlideshowPager","viewsSlideshowSlideCounter","viewsSlideshowCycle"],"transitionBegin":["viewsSlideshowPager","viewsSlideshowSlideCounter"],"transitionEnd":[]},"paused":0}},"viewsSlideshowCycle":{"#views_slideshow_cycle_main_instructor_bios-block":{"num_divs":32,"id_prefix":"#views_slideshow_cycle_main_","div_prefix":"#views_slideshow_cycle_div_","vss_id":"instructor_bios-block","effect":"fade","transition_advanced":1,"timeout":8000,"speed":500,"delay":1000,"sync":0,"random":0,"pause":1,"pause_on_click":0,"action_advanced":1,"start_paused":0,"remember_slide":0,"remember_slide_days":1,"pause_when_hidden":0,"pause_when_hidden_type":"full","amount_allowed_visible":"","nowrap":0,"fixed_height":0,"items_per_slide":1,"wait_for_image_load":1,"wait_for_image_load_timeout":3000,"cleartype":0,"cleartypenobg":0,"advanced_options":"{}","advanced_options_choices":0,"advanced_options_entry":""}},"views":{"ajax_path":"\/?q=views\/ajax","ajaxViews":{"views_dom_id:8c7e8b054a34da906512f44a14499d28":{"view_name":"instructor_bios","view_display_id":"block","view_args":"","view_path":"node","view_base_path":"about\/bios","view_dom_id":"8c7e8b054a34da906512f44a14499d28","pager_element":0}}},"googleanalytics":{"trackOutbound":1,"trackMailto":1,"trackDownload":1,"trackDownloadExtensions":"7z|aac|arc|arj|asf|asx|avi|bin|csv|doc|exe|flv|gif|gz|gzip|hqx|jar|jpe?g|js|mp(2|3|4|e?g)|mov(ie)?|msi|msp|pdf|phps|png|ppt|qtm?|ra(m|r)?|sea|sit|tar|tgz|torrent|txt|wav|wma|wmv|wpd|xls|xml|z|zip"}});
+//--><!]]>
+</script>
+  
+  <!-- IE Fix for HTML5 Tags -->
+  <!--[if lt IE 9]>
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  
+  <!--[if IE]>
+		<link rel="stylesheet" href="/sites/hoofersailing.org/themes/porto/css/ie.css">
+	<![endif]-->
+
+	<!--[if lte IE 8]>
+		<script src="/sites/hoofersailing.org/themes/porto/vendor/respond.js"></script>
+	<![endif]-->
+
+	<!-- Web Fonts  -->
+	<link href="./Hoofer Sailing Club   A UW social club with a bit of a sailing problem_files/css" rel="stylesheet" type="text/css">
+	<script src="./Hoofer Sailing Club   A UW social club with a bit of a sailing problem_files/js"></script><script src="./Hoofer Sailing Club   A UW social club with a bit of a sailing problem_files/main.js" type="text/javascript"></script>
+	
+		<script type="text/javascript">jQuery(document).ready(function ($) { $('body').addClass('boxed'); });</script>
+		
+		
+<!-- User defined CSS --><style type="text/css">.front #block-system-main{
+  display:none;
+}
+
+#block-views-front-page-content-block{
+  margin-left: 5%;
+  margin-right: 5%;
+}
+
+</style><!-- End user defined CSS -->  
+
+<script type="text/javascript" charset="UTF-8" src="./Hoofer Sailing Club   A UW social club with a bit of a sailing problem_files/{common,util,stats}.js"></script></head>
+
+<body class="html front not-logged-in no-sidebars page-node boxed">
+
+<div class="body">
+  <header>
+    <div class="container">
+
+      	      	        
+              <h1 class="logo">
+		      <a href="./Hoofer Sailing Club   A UW social club with a bit of a sailing problem_files/Hoofer Sailing Club   A UW social club with a bit of a sailing problem.html" title="Home" rel="home" id="logo">
+		        <img src="./Hoofer Sailing Club   A UW social club with a bit of a sailing problem_files/hooferlogo_1.png" alt="Home">
+		      </a>
+        </h1>
+	    	    
+	    	      <div id="name-and-slogan" class="hidden">
+	
+	        	          <h1 id="site-name" class="hidden">
+	            <a href="./Hoofer Sailing Club   A UW social club with a bit of a sailing problem_files/Hoofer Sailing Club   A UW social club with a bit of a sailing problem.html" title="Home" rel="home"><span>Hoofer Sailing Club</span></a>
+	          </h1>
+	        	
+	        	          <div id="site-slogan" class="hidden">
+	            A UW social club with a bit of a sailing problem	          </div>
+	        	
+	      </div> <!-- /#name-and-slogan -->
+	    
+      <!-- /branding --> 
+      <div id="header-top">
+              </div>
+        <div class="region region-header-icons">
+    <div id="block-block-4" class="block block-block">
+
+    
+  <div class="content">
+    <div class="social-icons">
+<ul class="social-icons"><li class="facebook"><a href="https://www.facebook.com/HooferSailingClub" target="_blank_" title="Check out our Facebook Page!"></a></li>
+<li class="twitter"><a href="https://twitter.com/UWHarvey" target="_blank_" title="UW Lifesaving Twitter Feed"></a></li>
+</ul></div>
+  </div>
+</div>
+<div id="block-block-3" class="block block-block">
+
+    
+  <div class="content">
+    <div id="login-block" style="float:right">
+<div class="form-item">
+<form method="post" action="http://lessons.hoofersailing.org/login.php">
+                           <input type="hidden" value="/" name="redirect"><br><input type="hidden" value="login" name="action"><p style="float:left"><input type="text" style="width:auto" name="username" size="15" id="username" placeholder="Username"></p>
+<p style="float:left"><input type="password" style="float:right" name="password" size="15" id="password" placeholder="Password"></p>
+<p style="float:left"><input type="submit" value="Lessons Login"></p>
+</form>
+</div>
+</div>
+  </div>
+</div>
+  </div>
+      <nav>
+          <div class="region region-header-menu">
+    <div id="block-system-main-menu" class="block block-system block-menu">
+
+    
+  <div class="content">
+    <ul class="nav nav-pills nav-main sub-menu"><li id="dhtml_menu-362" class="dropdown"><a href="http://hoofersailing.org/?q=about">About Us<i class="icon-angle-down"></i></a><ul class="dropdown-menu sub-menu"><li id="dhtml_menu-410" class="dropdown-submenu"><a href="http://hoofersailing.org/?q=about/administration">Administration<i class="icon-angle-down"></i></a><ul class="dropdown-menu sub-menu"><li id="dhtml_menu-752"><a href="http://hoofersailing.org/?q=about/administration/bylaws">Club By-Laws<i class="icon-angle-down"></i></a></li><li id="dhtml_menu-751"><a href="http://hoofersailing.org/?q=about/administration/constitution">Club Constitution<i class="icon-angle-down"></i></a></li><li id="dhtml_menu-430"><a href="http://hoofersailing.org/?q=about/administration/minutes">BOC Minutes<i class="icon-angle-down"></i></a><ul class="dropdown-menu sub-menu"><li id="dhtml_menu-431"><a href="http://hoofersailing.org/?q=about/administration/minutes/2004-2005">2004-2005<i class="icon-angle-down"></i></a></li><li id="dhtml_menu-432"><a href="http://hoofersailing.org/?q=about/administration/minutes/2008-2009">2008-2009<i class="icon-angle-down"></i></a></li><li id="dhtml_menu-433"><a href="http://hoofersailing.org/?q=about/administration/minutes/2009-2010">2009-2010<i class="icon-angle-down"></i></a></li><li id="dhtml_menu-434"><a href="http://hoofersailing.org/?q=about/administration/minutes/2010-2011">2010-2011<i class="icon-angle-down"></i></a></li><li id="dhtml_menu-435"><a href="http://hoofersailing.org/?q=about/administration/minutes/2012-2013">2012-2013<i class="icon-angle-down"></i></a></li></ul></li></ul></li><li id="dhtml_menu-489" class="dropdown-submenu"><a href="http://hoofersailing.org/?q=social">Social and Special Events<i class="icon-angle-down"></i></a><ul class="dropdown-menu sub-menu"><li id="dhtml_menu-490"><a href="http://hoofersailing.org/?q=social/friday">Friday Night Socials<i class="icon-angle-down"></i></a></li><li id="dhtml_menu-491"><a href="http://hoofersailing.org/?q=social/piratesday">Pirate's Day<i class="icon-angle-down"></i></a></li><li id="dhtml_menu-492"><a href="http://hoofersailing.org/?q=social/commodorescup">Commodore's Cup<i class="icon-angle-down"></i></a></li><li id="dhtml_menu-493"><a href="http://hoofersailing.org/?q=social/pumpkin">Pumpkin Regatta<i class="icon-angle-down"></i></a></li><li id="dhtml_menu-494"><a href="http://hoofersailing.org/?q=social/buccaneersball">Buccaneer's Ball<i class="icon-angle-down"></i></a></li><li id="dhtml_menu-495"><a href="http://hoofersailing.org/?q=social/instructorauction">Instructor's Auction<i class="icon-angle-down"></i></a></li><li id="dhtml_menu-496"><a href="http://hoofersailing.org/?q=social/snowball">Winter Socials<i class="icon-angle-down"></i></a></li></ul></li><li id="dhtml_menu-497" class="dropdown-submenu"><a href="http://hoofersailing.org/?q=racing">Racing and Regattas<i class="icon-angle-down"></i></a><ul class="dropdown-menu sub-menu"><li id="dhtml_menu-498"><a href="http://hoofersailing.org/?q=racing/myc">Mendota Yacht Club Racing<i class="icon-angle-down"></i></a></li><li id="dhtml_menu-499"><a href="http://hoofersailing.org/?q=racing/springchicken">Spring Chicken Regatta<i class="icon-angle-down"></i></a></li><li id="dhtml_menu-500"><a href="http://hoofersailing.org/?q=racing/techigs">Intergalactic Tech Regatta<i class="icon-angle-down"></i></a></li></ul></li><li id="dhtml_menu-780"><a href="http://hoofersailing.org/?q=about/bios" title="">Staff Bios<i class="icon-angle-down"></i></a></li><li id="dhtml_menu-501"><a href="http://hoofersailing.org/?q=sailingteam">Sailing Team<i class="icon-angle-down"></i></a></li><li id="dhtml_menu-503"><a href="http://hoofersailing.org/?q=accessible">Accessible Sailing<i class="icon-angle-down"></i></a></li><li id="dhtml_menu-781"><a href="http://hoofersailing.org/?q=conference">Conference Sailing<i class="icon-angle-down"></i></a></li><li id="dhtml_menu-502"><a href="http://hoofersailing.org/?q=youth">Youth Program<i class="icon-angle-down"></i></a></li><li id="dhtml_menu-504"><a href="http://hoofersailing.org/?q=contact/donations">Donations<i class="icon-angle-down"></i></a></li><li id="dhtml_menu-436"><a href="http://hoofersailing.org/?q=about/history">Club History<i class="icon-angle-down"></i></a></li><li id="dhtml_menu-486"><a href="http://hoofersailing.org/?q=about/hours">Club/Lifesaving Hours<i class="icon-angle-down"></i></a></li></ul></li><li id="dhtml_menu-455" class="dropdown"><a href="http://hoofersailing.org/?q=fleets">Our Fleets<i class="icon-angle-down"></i></a><ul class="dropdown-menu sub-menu"><li id="dhtml_menu-456"><a href="http://hoofersailing.org/?q=fleets/techs">Techs<i class="icon-angle-down"></i></a></li><li id="dhtml_menu-457"><a href="http://hoofersailing.org/?q=fleets/sloops">Sloops<i class="icon-angle-down"></i></a></li><li id="dhtml_menu-458"><a href="http://hoofersailing.org/?q=fleets/420s">420s<i class="icon-angle-down"></i></a></li><li id="dhtml_menu-459"><a href="http://hoofersailing.org/?q=fleets/scows">Scows<i class="icon-angle-down"></i></a></li><li id="dhtml_menu-464"><a href="http://hoofersailing.org/?q=fleets/lasers">Lasers/ Bytes<i class="icon-angle-down"></i></a></li><li id="dhtml_menu-460"><a href="http://hoofersailing.org/?q=fleets/jfleet">Light Keelboats (J-Fleet)<i class="icon-angle-down"></i></a></li><li id="dhtml_menu-461" class="dropdown-submenu"><a href="http://hoofersailing.org/?q=fleets/keelboats">Keelboats<i class="icon-angle-down"></i></a><ul class="dropdown-menu sub-menu"><li id="dhtml_menu-467"><a href="http://hoofersailing.org/?q=fleets/keelboats/cruising/knottyrascal">Knotty Rascal<i class="icon-angle-down"></i></a></li><li id="dhtml_menu-773"><a href="http://hoofersailing.org/?q=fleets/keelboats/cruising/salam">Salam<i class="icon-angle-down"></i></a></li><li id="dhtml_menu-469"><a href="http://hoofersailing.org/?q=fleets/keelboats/racing/toyboat">Toy Boat<i class="icon-angle-down"></i></a></li><li id="dhtml_menu-471"><a href="http://hoofersailing.org/?q=fleets/keelboats/racing/soma">Soma<i class="icon-angle-down"></i></a></li><li id="dhtml_menu-470"><a href="http://hoofersailing.org/?q=fleets/keelboats/cruising/spray">Spray<i class="icon-angle-down"></i></a></li><li id="dhtml_menu-472"><a href="http://hoofersailing.org/?q=fleets/keelboats/racing/decoy">Decoy<i class="icon-angle-down"></i></a></li></ul></li><li id="dhtml_menu-465"><a href="http://hoofersailing.org/?q=fleets/windsurfing">Windsurfing<i class="icon-angle-down"></i></a></li><li id="dhtml_menu-466"><a href="http://hoofersailing.org/?q=fleets/kiting">Snow Kiting<i class="icon-angle-down"></i></a></li></ul></li><li id="dhtml_menu-473" class="dropdown"><a href="http://hoofersailing.org/?q=instruction">Instruction<i class="icon-angle-down"></i></a><ul class="dropdown-menu sub-menu"><li id="dhtml_menu-484" class="dropdown-submenu"><a href="http://hoofersailing.org/?q=instruction/safety">Safety<i class="icon-angle-down"></i></a><ul class="dropdown-menu sub-menu"><li id="dhtml_menu-778"><a href="http://hoofersailing.org/?q=instruction/safety/flags">Flags<i class="icon-angle-down"></i></a></li></ul></li><li id="dhtml_menu-474" class="dropdown-submenu"><a href="http://hoofersailing.org/?q=instruction/asa">American Sailing Association<i class="icon-angle-down"></i></a><ul class="dropdown-menu sub-menu"><li id="dhtml_menu-475"><a href="http://hoofersailing.org/?q=instruction/asa/curriculum">ASA Curriculum<i class="icon-angle-down"></i></a></li><li id="dhtml_menu-476"><a href="http://hoofersailing.org/?q=instruction/asa/courses">ASA Courses<i class="icon-angle-down"></i></a></li></ul></li><li id="dhtml_menu-477"><a href="http://lessons.hoofersailing.org/" title="">Lessons<i class="icon-angle-down"></i></a></li><li id="dhtml_menu-480"><a href="http://hoofersailing.org/?q=instruction/flowchart">Rating Flowchart<i class="icon-angle-down"></i></a></li><li id="dhtml_menu-478"><a href="http://hoofersailing.org/?q=instruction/groundschool">Ground School<i class="icon-angle-down"></i></a></li><li id="dhtml_menu-479"><a href="http://hoofersailing.org/?q=instruction/sailingintro">Intro to Sailing<i class="icon-angle-down"></i></a></li><li id="dhtml_menu-482"><a href="http://hoofersailing.org/?q=instruction/keelboat">Keelboat Progress<i class="icon-angle-down"></i></a></li><li id="dhtml_menu-483"><a href="http://hoofersailing.org/?q=instruction/seminar">Sailing Seminar/ Winter Education<i class="icon-angle-down"></i></a></li><li id="dhtml_menu-485"><a href="http://hoofersailing.org/?q=instruction/manuals">Manuals<i class="icon-angle-down"></i></a></li><li id="dhtml_menu-782"><a href="http://hoofersailing.org/?q=instruction/teaching">Teach Sailing<i class="icon-angle-down"></i></a></li></ul></li><li id="dhtml_menu-388" class="dropdown"><a href="http://hoofersailing.org/?q=membership">Membership<i class="icon-angle-down"></i></a><ul class="dropdown-menu sub-menu"><li id="dhtml_menu-783"><a href="http://www.hoofersailing.org/?q=membership#rates" title="">Membership Rates<i class="icon-angle-down"></i></a></li><li id="dhtml_menu-487" class="dropdown-submenu"><a href="http://hoofersailing.org/?q=volunteer">Volunteer Information<i class="icon-angle-down"></i></a><ul class="dropdown-menu sub-menu"><li id="dhtml_menu-488"><a href="http://hoofersailing.org/?q=volunteer/workhours">Work Hours and Deposit<i class="icon-angle-down"></i></a></li></ul></li></ul></li><li id="dhtml_menu-363"><a href="http://hoofersailing.org/?q=contact">Contact Us</a></li></ul>  </div>
+</div>
+  </div><select class="mobile-menu"><option value="#">Navigate to...</option><option value="http://hoofersailing.org/?q=about">–&nbsp;About Us</option><option value="http://hoofersailing.org/?q=about/administration">––&nbsp;Administration</option><option value="http://hoofersailing.org/?q=about/administration/bylaws">–––&nbsp;Club By-Laws</option><option value="http://hoofersailing.org/?q=about/administration/constitution">–––&nbsp;Club Constitution</option><option value="http://hoofersailing.org/?q=about/administration/minutes">–––&nbsp;BOC Minutes</option><option value="http://hoofersailing.org/?q=about/administration/minutes/2004-2005">––––&nbsp;2004-2005</option><option value="http://hoofersailing.org/?q=about/administration/minutes/2008-2009">––––&nbsp;2008-2009</option><option value="http://hoofersailing.org/?q=about/administration/minutes/2009-2010">––––&nbsp;2009-2010</option><option value="http://hoofersailing.org/?q=about/administration/minutes/2010-2011">––––&nbsp;2010-2011</option><option value="http://hoofersailing.org/?q=about/administration/minutes/2012-2013">––––&nbsp;2012-2013</option><option value="http://hoofersailing.org/?q=social">––&nbsp;Social and Special Events</option><option value="http://hoofersailing.org/?q=social/friday">–––&nbsp;Friday Night Socials</option><option value="http://hoofersailing.org/?q=social/piratesday">–––&nbsp;Pirate's Day</option><option value="http://hoofersailing.org/?q=social/commodorescup">–––&nbsp;Commodore's Cup</option><option value="http://hoofersailing.org/?q=social/pumpkin">–––&nbsp;Pumpkin Regatta</option><option value="http://hoofersailing.org/?q=social/buccaneersball">–––&nbsp;Buccaneer's Ball</option><option value="http://hoofersailing.org/?q=social/instructorauction">–––&nbsp;Instructor's Auction</option><option value="http://hoofersailing.org/?q=social/snowball">–––&nbsp;Winter Socials</option><option value="http://hoofersailing.org/?q=racing">––&nbsp;Racing and Regattas</option><option value="http://hoofersailing.org/?q=racing/myc">–––&nbsp;Mendota Yacht Club Racing</option><option value="http://hoofersailing.org/?q=racing/springchicken">–––&nbsp;Spring Chicken Regatta</option><option value="http://hoofersailing.org/?q=racing/techigs">–––&nbsp;Intergalactic Tech Regatta</option><option value="http://hoofersailing.org/?q=about/bios">––&nbsp;Staff Bios</option><option value="http://hoofersailing.org/?q=sailingteam">––&nbsp;Sailing Team</option><option value="http://hoofersailing.org/?q=accessible">––&nbsp;Accessible Sailing</option><option value="http://hoofersailing.org/?q=conference">––&nbsp;Conference Sailing</option><option value="http://hoofersailing.org/?q=youth">––&nbsp;Youth Program</option><option value="http://hoofersailing.org/?q=contact/donations">––&nbsp;Donations</option><option value="http://hoofersailing.org/?q=about/history">––&nbsp;Club History</option><option value="http://hoofersailing.org/?q=about/hours">––&nbsp;Club/Lifesaving Hours</option><option value="http://hoofersailing.org/?q=fleets">–&nbsp;Our Fleets</option><option value="http://hoofersailing.org/?q=fleets/techs">––&nbsp;Techs</option><option value="http://hoofersailing.org/?q=fleets/sloops">––&nbsp;Sloops</option><option value="http://hoofersailing.org/?q=fleets/420s">––&nbsp;420s</option><option value="http://hoofersailing.org/?q=fleets/scows">––&nbsp;Scows</option><option value="http://hoofersailing.org/?q=fleets/lasers">––&nbsp;Lasers/ Bytes</option><option value="http://hoofersailing.org/?q=fleets/jfleet">––&nbsp;Light Keelboats (J-Fleet)</option><option value="http://hoofersailing.org/?q=fleets/keelboats">––&nbsp;Keelboats</option><option value="http://hoofersailing.org/?q=fleets/keelboats/cruising/knottyrascal">–––&nbsp;Knotty Rascal</option><option value="http://hoofersailing.org/?q=fleets/keelboats/cruising/salam">–––&nbsp;Salam</option><option value="http://hoofersailing.org/?q=fleets/keelboats/racing/toyboat">–––&nbsp;Toy Boat</option><option value="http://hoofersailing.org/?q=fleets/keelboats/racing/soma">–––&nbsp;Soma</option><option value="http://hoofersailing.org/?q=fleets/keelboats/cruising/spray">–––&nbsp;Spray</option><option value="http://hoofersailing.org/?q=fleets/keelboats/racing/decoy">–––&nbsp;Decoy</option><option value="http://hoofersailing.org/?q=fleets/windsurfing">––&nbsp;Windsurfing</option><option value="http://hoofersailing.org/?q=fleets/kiting">––&nbsp;Snow Kiting</option><option value="http://hoofersailing.org/?q=instruction">–&nbsp;Instruction</option><option value="http://hoofersailing.org/?q=instruction/safety">––&nbsp;Safety</option><option value="http://hoofersailing.org/?q=instruction/safety/flags">–––&nbsp;Flags</option><option value="http://hoofersailing.org/?q=instruction/asa">––&nbsp;American Sailing Association</option><option value="http://hoofersailing.org/?q=instruction/asa/curriculum">–––&nbsp;ASA Curriculum</option><option value="http://hoofersailing.org/?q=instruction/asa/courses">–––&nbsp;ASA Courses</option><option value="http://lessons.hoofersailing.org/">––&nbsp;Lessons</option><option value="http://hoofersailing.org/?q=instruction/flowchart">––&nbsp;Rating Flowchart</option><option value="http://hoofersailing.org/?q=instruction/groundschool">––&nbsp;Ground School</option><option value="http://hoofersailing.org/?q=instruction/sailingintro">––&nbsp;Intro to Sailing</option><option value="http://hoofersailing.org/?q=instruction/keelboat">––&nbsp;Keelboat Progress</option><option value="http://hoofersailing.org/?q=instruction/seminar">––&nbsp;Sailing Seminar/ Winter Education</option><option value="http://hoofersailing.org/?q=instruction/manuals">––&nbsp;Manuals</option><option value="http://hoofersailing.org/?q=instruction/teaching">––&nbsp;Teach Sailing</option><option value="http://hoofersailing.org/?q=membership">–&nbsp;Membership</option><option value="http://www.hoofersailing.org/?q=membership#rates">––&nbsp;Membership Rates</option><option value="http://hoofersailing.org/?q=volunteer">––&nbsp;Volunteer Information</option><option value="http://hoofersailing.org/?q=volunteer/workhours">–––&nbsp;Work Hours and Deposit</option><option value="http://hoofersailing.org/?q=contact">–&nbsp;Contact Us</option></select>
+      </nav>
+      
+    </div>  
+	</header>
+	
+	<div role="main" class="main">
+	
+	  	    <div class="region region-before-content">
+    <div id="block-md-slider-1" class="block block-md-slider">
+
+    
+  <div class="content">
+    <div class="md-slide-wrap md-slide-responsive" style="height: 470px;"><div class="md-item-wrap"><div id="md-slider-1" class="md-slide-items" data-thumb-width="100" data-thumb-height="75">
+          
+<div class="md-slide-item slide-1" data-timeout="8000" data-thumb="http://hoofersailing.org/sites/hoofersailing.org/files/styles/md_slider_1_thumb/public/Instruction.jpg?itok=dv-yAJaJ" style="height: 470px; left: 0px; top: 0px; opacity: 0; display: none;">
+
+    <div class="md-mainimg"><img src="./Hoofer Sailing Club   A UW social club with a bit of a sailing problem_files/Instruction.jpg" alt="" style="width: 100%; height: auto; top: -25px; left: 0px;"></div>
+
+    <div class="md-objects" style="font-size: 99%;">
+
+    
+      
+<div class="md-object md-layer-1-0-0" data-x="0" data-y="0" data-width="279" data-height="235" data-start="0" data-stop="8000" style="width: 29.680851063829788%; height: 50%; top: 0%; left: 0%; display: none;">
+
+  
+    <p>Learn to Sail!</p>
+  
+</div>
+
+
+
+    
+      
+<div class="md-object md-layer-1-0-1" data-x="1" data-y="48" data-width="272" data-height="96" data-start="0" data-stop="8000" style="width: 28.936170212765955%; height: 20.425531914893615%; top: 10.212765957446807%; left: 0.10638297872340426%; display: none;">
+
+  
+    <p>Did you know that 80% of our members had never sailed before joining Hoofer Sailing Club?  
+
+</p>
+  
+</div>
+
+
+
+    
+      
+<div class="md-object text-black-shadow md-layer-1-0-2" data-x="49" data-y="205" data-width="177" data-height="24" data-start="0" data-stop="8000" style="width: 18.829787234042552%; height: 5.106382978723404%; top: 43.61702127659575%; left: 5.212765957446808%; display: none;">
+
+  
+    <a title="" href="http://hoofersailing.org/?q=instruction">Find out more here.</a>
+  
+</div>
+
+
+
+    
+      
+<div class="md-object md-layer-1-0-3" data-x="36" data-y="155" data-width="200" data-height="26" data-start="1000" data-stop="3600" style="width: 21.27659574468085%; height: 5.531914893617021%; top: 32.97872340425532%; left: 3.829787234042553%; display: none;">
+
+  
+    <p>The best part is... </p>
+  
+</div>
+
+
+
+    
+      
+<div class="md-object md-layer-1-0-4" data-x="0" data-y="148" data-width="268" data-height="41" data-start="3600" data-stop="8000" style="width: 28.510638297872344%; height: 8.72340425531915%; top: 31.48936170212766%; left: 0%; display: none;">
+
+  
+    <p>All members get free instruction!</p>
+  
+</div>
+
+
+
+    
+      
+<div class="md-object md-layer-1-0-5" data-x="752" data-y="456" data-width="188" data-height="14" data-start="0" data-stop="8000" style="width: 20%; height: 2.9787234042553195%; top: 97.02127659574468%; left: 80%; display: none;">
+
+  
+    <p>Photo courtesy of Mark Gillespie</p>
+  
+</div>
+
+
+
+    
+    </div>
+
+</div>
+
+
+          
+<div class="md-slide-item slide-2" data-timeout="8000" data-thumb="http://hoofersailing.org/sites/hoofersailing.org/files/styles/md_slider_1_thumb/public/AllFleets.jpg?itok=U6t7y5By" style="display: block; height: 470px; left: 0px; top: 0px; opacity: 1;">
+
+    <div class="md-mainimg"><img src="./Hoofer Sailing Club   A UW social club with a bit of a sailing problem_files/AllFleets.jpg" alt="" style="width: 100%; height: auto; top: -121.25px; left: 0px;"></div>
+
+    <div class="md-objects" style="font-size: 99%;">
+
+    
+      
+<div class="md-object md-layer-1-1-0" data-x="25" data-y="11" data-width="425" data-height="31" data-start="0" data-stop="8000" style="width: 45.21276595744681%; height: 6.595744680851063%; top: 2.3404255319148937%; left: 2.6595744680851063%; display: block;">
+
+  
+    <p>Many fleets to choose from!</p>
+  
+</div>
+
+
+
+    
+      
+<div class="md-object md-layer-1-1-1" data-x="15" data-y="45" data-width="443" data-height="65" data-start="0" data-stop="8000" style="width: 47.12765957446808%; height: 13.829787234042554%; top: 9.574468085106384%; left: 1.5957446808510638%; display: block;">
+
+  
+    <p>HSC offers 10 different types of small craft, 10 different types of keelboats, windsurfing and winter kiting!</p>
+  
+</div>
+
+
+
+    
+      
+<div class="md-object text-white-shadow2 md-layer-1-1-2" data-x="239" data-y="114" data-width="145" data-height="73" data-start="0" data-stop="8000" style="width: 15.425531914893616%; height: 15.53191489361702%; top: 24.25531914893617%; left: 25.425531914893618%; display: block;">
+
+  
+    <a title="" href="http://hoofersailing.org/?q=fleets">Discover your favorite craft here!</a>
+  
+</div>
+
+
+
+    
+    </div>
+
+</div>
+
+
+          
+<div class="md-slide-item slide-3" data-timeout="8000" data-thumb="http://hoofersailing.org/sites/hoofersailing.org/files/styles/md_slider_1_thumb/public/IMG_9921a.jpg?itok=WobDYe2a" style="display: none; height: 470px; left: 0px; top: 0px; opacity: 0;">
+
+    <div class="md-mainimg"><img src="./Hoofer Sailing Club   A UW social club with a bit of a sailing problem_files/IMG_9921a.jpg" alt="" style="width: 100%; height: auto; top: -25px; left: 0px;"></div>
+
+    <div class="md-objects" style="font-size: 99%;">
+
+    
+      
+<div class="md-object text-white-shadow md-layer-1-2-0 keep" data-x="56" data-y="17" data-width="571" data-height="169" data-start="0" data-stop="8000" data-easein="fadeInRight" data-easeout="keep" style="width: 60.744680851063826%; height: 35.95744680851064%; top: 3.6170212765957444%; left: 5.957446808510639%; display: block;">
+
+  
+    <p>Social Events</p>
+  
+</div>
+
+
+
+    
+      
+<div class="md-object text-white-shadow md-layer-1-2-1" data-x="56" data-y="67" data-width="579" data-height="93" data-start="0" data-stop="8000" style="width: 61.59574468085106%; height: 19.78723404255319%; top: 14.255319148936172%; left: 5.957446808510639%; display: none;">
+
+  
+    <p>We do more than just sailing club at HSC.  Check out one of our many social events!  They are a great way to meet new people and learn more about the club.</p>
+  
+</div>
+
+
+
+    
+      
+<div class="md-object text-black-shadow2 md-layer-1-2-2" data-x="56" data-y="159" data-width="580" data-height="23" data-start="0" data-stop="8000" style="width: 61.702127659574465%; height: 4.8936170212765955%; top: 33.829787234042556%; left: 5.957446808510639%; display: none;">
+
+  
+    <a title="" href="http://hoofersailing.org/?q=social">Learn about all our social events here!</a>
+  
+</div>
+
+
+
+    
+      
+<div class="md-object text-white-shadow md-layer-1-2-3" data-x="718" data-y="457" data-width="222" data-height="13" data-start="0" data-stop="8000" style="width: 23.617021276595747%; height: 2.7659574468085104%; top: 97.23404255319149%; left: 76.38297872340426%; display: none;">
+
+  
+    <p>Photo courtesy of Akikazu Hashimoto</p>
+  
+</div>
+
+
+
+    
+    </div>
+
+</div>
+
+
+          
+<div class="md-slide-item slide-4" data-timeout="8000" data-thumb="http://hoofersailing.org/sites/hoofersailing.org/files/styles/md_slider_1_thumb/public/ASAMarkGillespie.jpg?itok=ZcaSBC9A" style="display: none; height: 470px; left: 0px; top: 0px; opacity: 0;">
+
+    <div class="md-mainimg"><img src="./Hoofer Sailing Club   A UW social club with a bit of a sailing problem_files/ASAMarkGillespie.jpg" alt="" style="width: 100%; height: auto; top: -121.25px; left: 0px;"></div>
+
+    <div class="md-objects" style="font-size: 99%;">
+
+    
+      
+<div class="md-object text-black-shadow md-layer-1-3-0" data-x="638" data-y="293" data-width="254" data-height="174" data-start="0" data-stop="8000" style="width: 27.02127659574468%; height: 37.02127659574468%; top: 62.34042553191489%; left: 67.87234042553192%; display: none;">
+
+  
+    <p>ASA offers internationally recognized certifications allowing you to charter a boat anywhere in the world!</p>
+  
+</div>
+
+
+
+    
+      
+<div class="md-object text-black-shadow2 md-layer-1-3-1" data-x="629" data-y="223" data-width="274" data-height="224" data-start="0" data-stop="8000" style="width: 29.148936170212764%; height: 47.65957446808511%; top: 47.4468085106383%; left: 66.91489361702128%; display: none;">
+
+  
+    <p>Check out our ASA courses!</p>
+  
+</div>
+
+
+
+    
+      
+<div class="md-object text-black-shadow md-layer-1-3-2 keep" data-x="669" data-y="422" data-width="200" data-height="30" data-start="0" data-stop="8000" data-easein="fadeInRight" data-easeout="keep" style="width: 21.27659574468085%; height: 6.382978723404255%; top: 89.7872340425532%; left: 71.17021276595744%; display: block;">
+
+  
+    <a title="" href="http://hoofersailing.org/?q=instruction/asa">Click here for more info!</a>
+  
+</div>
+
+
+
+    
+      
+<div class="md-object md-layer-1-3-3" data-x="747" data-y="455" data-width="192" data-height="15" data-start="0" data-stop="8000" style="width: 20.425531914893615%; height: 3.1914893617021276%; top: 96.80851063829788%; left: 79.46808510638299%; display: none;">
+
+  
+    <p>Photo courtesy of Mark Gillespie</p>
+  
+</div>
+
+
+
+    
+    </div>
+
+</div>
+
+
+    </div><div class="md-arrow" style="opacity: 0;"><div class="md-arrow-left"><span></span></div><div class="md-arrow-right"><span></span></div></div></div><div class="loading-bar-hoz loading-bar-bottom"><div class="br-timer-glow" style="left: 772.8125px;"></div><div class="br-timer-bar" style="width: 872.8125px;"></div></div></div>
+
+
+  </div>
+</div>
+<div id="block-views-front-page-content-block" class="block block-views">
+
+    
+  <div class="content">
+    <div class="view view-front-page-content view-id-front_page_content view-display-id-block front-page-display view-dom-id-3fd2f030902634ed15964029af0cf402">
+        
+  
+  
+      <div class="view-content">
+        <div class="views-row views-row-1 views-row-odd views-row-first">
+      
+  <div class="views-field views-field-title">        <h2 class="field-content"><a href="http://hoofersailing.org/?q=node/181">Student Introductory Rate Now Available!</a></h2>  </div>  
+  <div>        <div><p>Hey students! Try out Hoofer Sailing for the first time this fall for a special, super low rate! If you are a student, and have never been a member of Hoofer Sailing before, you are eligible to join this fall for only $40. Our fall memberships run now through January 31, and include unlimited instruction and equipment usage, plus the countless social and leadership opportunities that Hoofers offers. Sign up in the new Outdoor UW space on the lakefront during office hours (10am to 8pm). We'll see you on the water soon!</p>
+<p><i>You must be a student (undergraduate or graduate) and show a student ID. If you are not a UW Madison student, then show your Union membership + your other institution's ID. <b>You cannot have been a member of Hoofer Sailing before.</b></i></p>
+<p>Fall Student New Member promo memberships are not eligible for any work hours refund.</p>
+</div>  </div>  </div>
+  <div class="views-row views-row-2 views-row-even views-row-last">
+      
+  <div class="views-field views-field-title">        <h2 class="field-content"><a href="http://hoofersailing.org/?q=node/183">Buccaneer's Ball is Coming!</a></h2>  </div>  
+  <div>        <div><p>Hey everyone!  The end of the sailing season is fast approaching, but luckily our illustrious Traditions Committee has put together an amazing evening to take away some of the sting.  We invite everyone to join us on October 30th, 8 PM at the Argus Bar just off Capital Square for this year's Buccaneer's Ball!</p>
+<p>For more details about the Buccaneer's Ball, <a href="http://hoofersailing.org/?q=social/buccaneersball">click here.</a></p>
+</div>  </div>  </div>
+    </div>
+  
+  
+  
+  
+  
+  
+</div>  </div>
+</div>
+  </div>
+	  <div id="content" class="content full">
+	    <div class="container">
+	      <div class="row">
+	      
+			    				  <aside id="sidebar-left">
+					  <div class="span3">
+					    <div id="sticky-sidebar">
+					      <div class="region region-sidebar-left">
+    <div id="block-block-5" class="block block-block">
+
+    <h2>Getting started with HSC</h2>
+  
+  <div class="content">
+    <p>Want to find out more about Hoofer Sailing Club?  This is the place for you! In a FREE on-land presentation, a knowledgeable instructor will guide you through an introduction to how the club works, the safety rules, and a tour, with the answers to all your questions along the way. New members must attend a Ground School before signing up for their first lesson.</p>
+<p>Non-members are welcome to attend to find out more about the club. These lessons are offered weekly throughout the season and are available for FREE. For more information <a href="http://hoofersailing.org/?q=instruction/groundschool">click here.</a></p>
+<p>Visit <a href="http://lessons.hoofersailing.org/">http://lessons.hoofersailing.org</a> to view available lessons!<br></p>  </div>
+</div>
+  </div>
+					    </div>
+					  </div>
+				  </aside>
+				  			
+					<div class="span6">
+					  
+					  					  
+			     				      			      			
+					    <div class="region region-content">
+    <div id="block-system-main" class="block block-system">
+
+    
+  <div class="content">
+    
+<article id="node-181" class="node node-article node-promoted node-sticky node-teaser clearfix post post-large-image blog-single-post" about="/?q=node/181" typeof="sioc:Item foaf:Document">
+
+    
+      <div class="post-date">
+			<span class="day">05</span>
+			<span class="month">Sep</span>
+		</div>
+		
+	
+	<div class="post-content">
+
+	  	    <h2 property="dc:title" datatype=""><a href="http://hoofersailing.org/?q=node/181">Student Introductory Rate Now Available!</a></h2>
+	  	    
+	  	   
+	  <div class="article_content">
+	    <p>Hey students! Try out Hoofer Sailing for the first time this fall for a special, super low rate! If you are a student, and have never been a member of Hoofer Sailing before, you are eligible to join this fall for only $40. Our fall memberships run now through January 31, and include unlimited instruction and equipment usage, plus the countless social and leadership opportunities that Hoofers offers. Sign up in the new Outdoor UW space on the lakefront during office hours (10am to 8pm). We'll see you on the water soon!</p>
+<p><i>You must be a student (undergraduate or graduate) and show a student ID. If you are not a UW Madison student, then show your Union membership + your other institution's ID. <b>You cannot have been a member of Hoofer Sailing before.</b></i></p>
+<p>Fall Student New Member promo memberships are not eligible for any work hours refund.</p>
+	  </div>
+	  
+	    
+  
+	</div>
+  
+  
+</article>
+<!-- /node -->
+
+<article id="node-183" class="node node-article node-promoted node-teaser clearfix post post-large-image blog-single-post" about="/?q=node/183" typeof="sioc:Item foaf:Document">
+
+    
+      <div class="post-date">
+			<span class="day">03</span>
+			<span class="month">Oct</span>
+		</div>
+		
+	
+	<div class="post-content">
+
+	  	    <h2 property="dc:title" datatype=""><a href="http://hoofersailing.org/?q=node/183">Buccaneer's Ball is Coming!</a></h2>
+	  	    
+	  	   
+	  <div class="article_content">
+	    <p>Hey everyone!  The end of the sailing season is fast approaching, but luckily our illustrious Traditions Committee has put together an amazing evening to take away some of the sting.  We invite everyone to join us on October 30th, 8 PM at the Argus Bar just off Capital Square for this year's Buccaneer's Ball!</p>
+<p>For more details about the Buccaneer's Ball, <a href="http://hoofersailing.org/?q=social/buccaneersball">click here.</a></p>
+	  </div>
+	  
+	    
+  
+	</div>
+  
+  
+</article>
+<!-- /node -->
+  </div>
+</div>
+<div id="block-block-11" class="block block-block">
+
+    <h2>Getting to Know the Hoofer Sailing Club</h2>
+  
+  <div class="content">
+    <p>The Hoofer Sailing Club is an association of individuals working together to maintain a fleet of boats for recreational and competitive sailing, and to offer a top-notch instruction program. By doing as much of the work as possible ourselves, we can keep our membership dues incredibly low. Compare our dues to other yacht clubs, where you may have to pay up to $1,000 per month in dues just to maintain your membership. Then, you'll pay hundreds of dollars more for lessons, and to go sailing, you need to own a boat.<br>
+Not only does our scheme keep our costs low, it's got tremendous social potential. When you teach others to sail, or get involved in our periodic work parties, you meet new people and create friendships. Friendships made all the stronger by common interests and a shared sense of pride in a job well done. You also get a chance to learn a great deal about boat operations and maintenance-- a great thing if you dream of owning a boat someday.</p>
+  </div>
+</div>
+<div id="block-block-7" class="block block-block">
+
+    <h2>Current Wind Conditions</h2>
+  
+  <div class="content">
+    <p id='flagimage'></p>
+<iframe style="border:none; padding-bottom:10px;" src="./Hoofer Sailing Club   A UW social club with a bit of a sailing problem_files/forecastTable.html" width="210" height="221" scrolling="no" allowtransparency="no">
+</iframe><p></p><center><a href="http://metobs.ssec.wisc.edu/buoy/">For current wind speeds click here</a><br><br><a href="http://www.ehs.wisc.edu/currentconditions.htm">For the UW Lifesaving wind and flag feed click here.</a></center><br><br><div>
+</div>  </div>
+</div>
+  </div>
+					</div>
+			  
+				  				  <div class="span3">
+				      <div class="region region-sidebar-right">
+    <div id="block-views-instructor-bios-block" class="block block-views">
+
+    <h2>Meet Our Staff</h2>
+  
+  <div class="content">
+    <div class="view view-instructor-bios view-id-instructor_bios view-display-id-block view-dom-id-8c7e8b054a34da906512f44a14499d28 jquery-once-1-processed">
+        
+  
+  
+      <div class="view-content">
+      
+<div class="skin-default">
+  
+  <div id="views_slideshow_cycle_main_instructor_bios-block" class="views_slideshow_cycle_main views_slideshow_main viewsSlideshowCycle-processed"><div id="views_slideshow_cycle_teaser_section_instructor_bios-block" class="views-slideshow-cycle-main-frame views_slideshow_cycle_teaser_section" style="position: relative; width: 220px; height: 608px;">
+  <div id="views_slideshow_cycle_div_instructor_bios-block_0" class="views-slideshow-cycle-main-frame-row views_slideshow_cycle_slide views_slideshow_slide views-row-1 views-row-odd" style="position: absolute; top: 0px; left: 0px; display: none; z-index: 32; opacity: 0;">
+  <div class="views-slideshow-cycle-main-frame-row-item views-row views-row-0 views-row-first views-row-odd">
+  <div id="node-156" class="node node-instructors clearfix" about="/?q=node/156" typeof="sioc:Item foaf:Document">
+
+  
+        <h2 property="dc:title" datatype=""><a href="http://hoofersailing.org/?q=node/156">Ian Walter</a></h2>
+    
+  
+  <div class="content">
+    <div class="field field-name-field-instructor-image field-type-image field-label-hidden"><div class="field-items"><div class="field-item even"><img typeof="foaf:Image" src="./Hoofer Sailing Club   A UW social club with a bit of a sailing problem_files/IanWalter.jpg" width="168" height="166" alt=""></div></div></div><p><i>"I started out as a youth camper here at Hoofers. After a few years I became a youth assistant and then an instructor when I was 17. Now I am a full time instructor here at Hoofers and a member of the UW Sailing Team where I travel all over the Midwest to race against other schools."</i></p>
+  </div>
+
+  
+  
+</div>
+</div>
+</div>
+<div id="views_slideshow_cycle_div_instructor_bios-block_1" class="views-slideshow-cycle-main-frame-row views_slideshow_cycle_slide views_slideshow_slide views-row-2 views_slideshow_cycle_hidden views-row-even" style="position: absolute; top: 0px; left: 0px; display: none; z-index: 32; opacity: 0; width: 220px; height: 368px;">
+  <div class="views-slideshow-cycle-main-frame-row-item views-row views-row-0 views-row-first views-row-odd">
+  <div id="node-144" class="node node-instructors clearfix" about="/?q=node/144" typeof="sioc:Item foaf:Document">
+
+  
+        <h2 property="dc:title" datatype=""><a href="http://hoofersailing.org/?q=node/144">Peter Grimmer</a></h2>
+    
+  
+  <div class="content">
+    <div class="field field-name-field-instructor-image field-type-image field-label-hidden"><div class="field-items"><div class="field-item even"><img typeof="foaf:Image" src="./Hoofer Sailing Club   A UW social club with a bit of a sailing problem_files/Peter Grimmer.JPG" width="168" height="166" alt=""></div></div></div><p><i>"Been sailing at Hoofers since I was a kid, I sail most of the boats at Hoofers and I race 420s on the UW sailing team."</i></p>
+  </div>
+
+  
+  
+</div>
+</div>
+</div>
+<div id="views_slideshow_cycle_div_instructor_bios-block_2" class="views-slideshow-cycle-main-frame-row views_slideshow_cycle_slide views_slideshow_slide views-row-3 views_slideshow_cycle_hidden views-row-odd" style="position: absolute; top: 0px; left: 0px; display: none; z-index: 32; opacity: 0; width: 220px; height: 776px;">
+  <div class="views-slideshow-cycle-main-frame-row-item views-row views-row-0 views-row-first views-row-odd">
+  <div id="node-179" class="node node-instructors clearfix" about="/?q=node/179" typeof="sioc:Item foaf:Document">
+
+  
+        <h2 property="dc:title" datatype=""><a href="http://hoofersailing.org/?q=node/179">Becky Zarling</a></h2>
+    
+  
+  <div class="content">
+    <div class="field field-name-field-instructor-image field-type-image field-label-hidden"><div class="field-items"><div class="field-item even"><img typeof="foaf:Image" src="./Hoofer Sailing Club   A UW social club with a bit of a sailing problem_files/BeckyZarling.jpg" width="168" height="166" alt=""></div></div></div><p><i>"I learned to sail with Hoofer's Sailing Club in 2002 and have not looked back since. Learning to sail has helped me gain self-esteem, master skills I have never been exposed to before, and provides me an outlet for both my frustrations as well as enjoyments. Also, snowkiting is a thrill like no other &amp; I am proud to have been the Kiting Fleet Captain this year. We are excited to unveil to members our new Kitewings this winter. As an instructor for ground schools, sailing, and kiting, I hope to pass on to members and potential members the passion I have for and the reward I feel from these sports and for Hoofer's Sailing Club which makes it all possible!"</i><br></p>  </div>
+
+  
+  
+</div>
+</div>
+</div>
+<div id="views_slideshow_cycle_div_instructor_bios-block_3" class="views-slideshow-cycle-main-frame-row views_slideshow_cycle_slide views_slideshow_slide views-row-4 views_slideshow_cycle_hidden views-row-even" style="position: absolute; top: 0px; left: 0px; display: none; z-index: 32; opacity: 0; width: 220px; height: 440px;">
+  <div class="views-slideshow-cycle-main-frame-row-item views-row views-row-0 views-row-first views-row-odd">
+  <div id="node-139" class="node node-instructors clearfix" about="/?q=node/139" typeof="sioc:Item foaf:Document">
+
+  
+        <h2 property="dc:title" datatype=""><a href="http://hoofersailing.org/?q=node/139">Eric Tobias</a></h2>
+    
+  
+  <div class="content">
+    <div class="field field-name-field-instructor-image field-type-image field-label-hidden"><div class="field-items"><div class="field-item even"><img typeof="foaf:Image" src="./Hoofer Sailing Club   A UW social club with a bit of a sailing problem_files/EricTobias.jpg" width="168" height="166" alt=""></div></div></div><p><i>"I'm from Racine, Wisconsin where I grew up sailing on Lake Michigan. I've been instructing at Hoofers since 2011. I just graduated from UW - Madison where I competed on the sailing team."</i></p>
+  </div>
+
+  
+  
+</div>
+</div>
+</div>
+<div id="views_slideshow_cycle_div_instructor_bios-block_4" class="views-slideshow-cycle-main-frame-row views_slideshow_cycle_slide views_slideshow_slide views-row-5 views_slideshow_cycle_hidden views-row-odd" style="position: absolute; top: 0px; left: 0px; display: none; z-index: 32; opacity: 0; width: 220px; height: 440px;">
+  <div class="views-slideshow-cycle-main-frame-row-item views-row views-row-0 views-row-first views-row-odd">
+  <div id="node-136" class="node node-instructors clearfix" about="/?q=node/136" typeof="sioc:Item foaf:Document">
+
+  
+        <h2 property="dc:title" datatype=""><a href="http://hoofersailing.org/?q=node/136">Connor Vliet</a></h2>
+    
+  
+  <div class="content">
+    <div class="field field-name-field-instructor-image field-type-image field-label-hidden"><div class="field-items"><div class="field-item even"><img typeof="foaf:Image" src="./Hoofer Sailing Club   A UW social club with a bit of a sailing problem_files/ConnorVilet.jpg" width="168" height="166" alt=""></div></div></div><p><i>"I grew up sailing on Lake Michigan as a kid.  I've taught sailing and raced dinghies and big boats in Milwaukee throughout high school.  I like long walks on the beach, candle-lit dinners, and dancing in the rain."</i>
+</p>
+  </div>
+
+  
+  
+</div>
+</div>
+</div>
+<div id="views_slideshow_cycle_div_instructor_bios-block_5" class="views-slideshow-cycle-main-frame-row views_slideshow_cycle_slide views_slideshow_slide views-row-6 views_slideshow_cycle_hidden views-row-even" style="position: absolute; top: 0px; left: 0px; display: none; z-index: 32; opacity: 0; width: 220px; height: 440px;">
+  <div class="views-slideshow-cycle-main-frame-row-item views-row views-row-0 views-row-first views-row-odd">
+  <div id="node-142" class="node node-instructors clearfix" about="/?q=node/142" typeof="sioc:Item foaf:Document">
+
+  
+        <h2 property="dc:title" datatype=""><a href="http://hoofersailing.org/?q=node/142">Kyle May</a></h2>
+    
+  
+  <div class="content">
+    <div class="field field-name-field-instructor-image field-type-image field-label-hidden"><div class="field-items"><div class="field-item even"><img typeof="foaf:Image" src="./Hoofer Sailing Club   A UW social club with a bit of a sailing problem_files/KyleMay_0.jpg" width="168" height="166" alt=""></div></div></div><p><i>"This is my first year instructing here, but before that I was in the youth program and also a youth assistant.  I like long walks on the beach and sunsets. Oh, and if you need a massage you can always ask me."</i>
+</p>
+  </div>
+
+  
+  
+</div>
+</div>
+</div>
+<div id="views_slideshow_cycle_div_instructor_bios-block_6" class="views-slideshow-cycle-main-frame-row views_slideshow_cycle_slide views_slideshow_slide views-row-7 views_slideshow_cycle_hidden views-row-odd" style="position: absolute; top: 0px; left: 0px; display: none; z-index: 32; opacity: 0; width: 220px; height: 656px;">
+  <div class="views-slideshow-cycle-main-frame-row-item views-row views-row-0 views-row-first views-row-odd">
+  <div id="node-152" class="node node-instructors clearfix" about="/?q=node/152" typeof="sioc:Item foaf:Document">
+
+  
+        <h2 property="dc:title" datatype=""><a href="http://hoofersailing.org/?q=node/152">Nathan Holman</a></h2>
+    
+  
+  <div class="content">
+    <div class="field field-name-field-instructor-image field-type-image field-label-hidden"><div class="field-items"><div class="field-item even"><img typeof="foaf:Image" src="./Hoofer Sailing Club   A UW social club with a bit of a sailing problem_files/NathanHolman.jpg" width="168" height="166" alt=""></div></div></div><p><i>"I started sailing when I was 12 years old at a summer camp, but Hoofers is where I really learned the finer points of sailing. I joined the club in 2006 and became a volunteer instructor a few years later after earning my Toy Boat skipper rating. The knowledge I gained at Hoofers allowed me to charter keelboats on the great lakes and the bahamas, and also to be employed as a professional sailor on a tall ship for a summer. My other hobbies include mountain biking, science, and playing the violin."</i></p>
+  </div>
+
+  
+  
+</div>
+</div>
+</div>
+<div id="views_slideshow_cycle_div_instructor_bios-block_7" class="views-slideshow-cycle-main-frame-row views_slideshow_cycle_slide views_slideshow_slide views-row-8 views_slideshow_cycle_hidden views-row-even" style="position: absolute; top: 0px; left: 0px; display: none; z-index: 32; opacity: 0; width: 220px; height: 512px;">
+  <div class="views-slideshow-cycle-main-frame-row-item views-row views-row-0 views-row-first views-row-odd">
+  <div id="node-173" class="node node-instructors clearfix" about="/?q=node/173" typeof="sioc:Item foaf:Document">
+
+  
+        <h2 property="dc:title" datatype=""><a href="http://hoofersailing.org/?q=node/173">Charlie Cahill</a></h2>
+    
+  
+  <div class="content">
+    <div class="field field-name-field-instructor-image field-type-image field-label-hidden"><div class="field-items"><div class="field-item even"><img typeof="foaf:Image" src="./Hoofer Sailing Club   A UW social club with a bit of a sailing problem_files/CharlieCahill.jpg" width="168" height="166" alt=""></div></div></div><p><i>"I began my sailing life with Hoofer's in 2007 and became hooked immediately. In Hoofer's I instruct for our J-fleet and Swing-Keels. Outside of Hoofers I've had the opportunity to sail in Chicago, around the Apostle Islands and off the coast of Israel. There's nothing like our club in the world and I'm so thankful to be a part of it!"</i><br></p>  </div>
+
+  
+  
+</div>
+</div>
+</div>
+<div id="views_slideshow_cycle_div_instructor_bios-block_8" class="views-slideshow-cycle-main-frame-row views_slideshow_cycle_slide views_slideshow_slide views-row-9 views_slideshow_cycle_hidden views-row-odd" style="position: absolute; top: 0px; left: 0px; display: none; z-index: 32; opacity: 0; width: 220px; height: 632px;">
+  <div class="views-slideshow-cycle-main-frame-row-item views-row views-row-0 views-row-first views-row-odd">
+  <div id="node-178" class="node node-instructors clearfix" about="/?q=node/178" typeof="sioc:Item foaf:Document">
+
+  
+        <h2 property="dc:title" datatype=""><a href="http://hoofersailing.org/?q=node/178">John Feith</a></h2>
+    
+  
+  <div class="content">
+    <div class="field field-name-field-instructor-image field-type-image field-label-hidden"><div class="field-items"><div class="field-item even"><img typeof="foaf:Image" src="./Hoofer Sailing Club   A UW social club with a bit of a sailing problem_files/JohnFeith.jpg" width="168" height="166" alt=""></div></div></div><p><i>"I learned to sail at Hoofers and have been a sailing instructor (also at<br>
+Hoofers) for over 10 years. I've sailed several times in the Apostle<br>
+Islands, crossed Lake Michigan, and cruised in the Caribbean. Other<br>
+interests include birdsong recording and VO5. As part of the Hoofers 75th<br>
+Anniversary,<a href="http://www.youtube.com/watch?v=1lHe9EaJYkI"> I produced an hour-long documentary DVD on the history of the<br>
+club.</a>"</i></p>
+  </div>
+
+  
+  
+</div>
+</div>
+</div>
+<div id="views_slideshow_cycle_div_instructor_bios-block_9" class="views-slideshow-cycle-main-frame-row views_slideshow_cycle_slide views_slideshow_slide views-row-10 views_slideshow_cycle_hidden views-row-even" style="position: absolute; top: 0px; left: 0px; display: none; z-index: 32; opacity: 0; width: 220px; height: 392px;">
+  <div class="views-slideshow-cycle-main-frame-row-item views-row views-row-0 views-row-first views-row-odd">
+  <div id="node-177" class="node node-instructors clearfix" about="/?q=node/177" typeof="sioc:Item foaf:Document">
+
+  
+        <h2 property="dc:title" datatype=""><a href="http://hoofersailing.org/?q=node/177">Jeff Thurner</a></h2>
+    
+  
+  <div class="content">
+    <div class="field field-name-field-instructor-image field-type-image field-label-hidden"><div class="field-items"><div class="field-item even"><img typeof="foaf:Image" src="./Hoofer Sailing Club   A UW social club with a bit of a sailing problem_files/JeffThurner.jpg" width="168" height="166" alt=""></div></div></div><p><i>"I have been sailing most of my life, in Florida, Cayman and Wisconsin. In 2013 I was J-Fleet Captain here at hoofers. If you see me on the lake shore, say Hi!"</i></p>
+  </div>
+
+  
+  
+</div>
+</div>
+</div>
+<div id="views_slideshow_cycle_div_instructor_bios-block_10" class="views-slideshow-cycle-main-frame-row views_slideshow_cycle_slide views_slideshow_slide views-row-11 views_slideshow_cycle_hidden views-row-odd" style="position: absolute; top: 0px; left: 0px; display: none; z-index: 32; opacity: 0; width: 220px; height: 560px;">
+  <div class="views-slideshow-cycle-main-frame-row-item views-row views-row-0 views-row-first views-row-odd">
+  <div id="node-135" class="node node-instructors clearfix" about="/?q=node/135" typeof="sioc:Item foaf:Document">
+
+  
+        <h2 property="dc:title" datatype=""><a href="http://hoofersailing.org/?q=node/135">Brian Adams</a></h2>
+    
+  
+  <div class="content">
+    <div class="field field-name-field-instructor-image field-type-image field-label-hidden"><div class="field-items"><div class="field-item even"><img typeof="foaf:Image" src="./Hoofer Sailing Club   A UW social club with a bit of a sailing problem_files/BrianAdams.jpg" width="168" height="166" alt=""></div></div></div><p><i>"I have been an Instructor since 1999 and has taught over 300 Tech and 130 Badger Sloop lessons.  I have been a Badger Sloop Fleet Instruction Supervisor, Conference Sailing Coordinator and member of the Education Committee. Away from Hoofers, I design and develop online and blended courses.  My Introduction to Sailing interactive tutorial is just one example of this work."</i></p>
+  </div>
+
+  
+  
+</div>
+</div>
+</div>
+<div id="views_slideshow_cycle_div_instructor_bios-block_11" class="views-slideshow-cycle-main-frame-row views_slideshow_cycle_slide views_slideshow_slide views-row-12 views_slideshow_cycle_hidden views-row-even" style="position: absolute; top: 0px; left: 0px; display: none; z-index: 32; opacity: 0; width: 220px; height: 488px;">
+  <div class="views-slideshow-cycle-main-frame-row-item views-row views-row-0 views-row-first views-row-odd">
+  <div id="node-137" class="node node-instructors clearfix" about="/?q=node/137" typeof="sioc:Item foaf:Document">
+
+  
+        <h2 property="dc:title" datatype=""><a href="http://hoofersailing.org/?q=node/137">Daniel Hanna</a></h2>
+    
+  
+  <div class="content">
+    <div class="field field-name-field-instructor-image field-type-image field-label-hidden"><div class="field-items"><div class="field-item even"><img typeof="foaf:Image" src="./Hoofer Sailing Club   A UW social club with a bit of a sailing problem_files/DaneilHanna.jpg" width="168" height="166" alt=""></div></div></div><p><i>"I learned to sail as a member of the collegiate racing team here at UW. From competing in regattas around the country, I gained a vast knowledge about dinghy sailing, especially the ability to sail them fast! I mainly teach on our Tech fleet and once in a while on the 420s."</i>
+</p>
+  </div>
+
+  
+  
+</div>
+</div>
+</div>
+<div id="views_slideshow_cycle_div_instructor_bios-block_12" class="views-slideshow-cycle-main-frame-row views_slideshow_cycle_slide views_slideshow_slide views-row-13 views_slideshow_cycle_hidden views-row-odd" style="position: absolute; top: 0px; left: 0px; display: none; z-index: 32; opacity: 0; width: 220px; height: 344px;">
+  <div class="views-slideshow-cycle-main-frame-row-item views-row views-row-0 views-row-first views-row-odd">
+  <div id="node-145" class="node node-instructors clearfix" about="/?q=node/145" typeof="sioc:Item foaf:Document">
+
+  
+        <h2 property="dc:title" datatype=""><a href="http://hoofersailing.org/?q=node/145">Yu Chen</a></h2>
+    
+  
+  <div class="content">
+    <div class="field field-name-field-instructor-image field-type-image field-label-hidden"><div class="field-items"><div class="field-item even"><img typeof="foaf:Image" src="./Hoofer Sailing Club   A UW social club with a bit of a sailing problem_files/YuChen_0.jpg" width="168" height="166" alt=""></div></div></div><p><i>"Started windsurfing in 2009 and started to teach windsurfing in 2012 at HSC.</i></p>
+  </div>
+
+  
+  
+</div>
+</div>
+</div>
+<div id="views_slideshow_cycle_div_instructor_bios-block_13" class="views-slideshow-cycle-main-frame-row views_slideshow_cycle_slide views_slideshow_slide views-row-14 views_slideshow_cycle_hidden views-row-even" style="position: absolute; top: 0px; left: 0px; display: block; z-index: 33; opacity: 1; width: 220px; height: 584px;">
+  <div class="views-slideshow-cycle-main-frame-row-item views-row views-row-0 views-row-first views-row-odd">
+  <div id="node-164" class="node node-instructors clearfix" about="/?q=node/164" typeof="sioc:Item foaf:Document">
+
+  
+        <h2 property="dc:title" datatype=""><a href="http://hoofersailing.org/?q=node/164">Andrew Bartling</a></h2>
+    
+  
+  <div class="content">
+    <div class="field field-name-field-instructor-image field-type-image field-label-hidden"><div class="field-items"><div class="field-item even"><img typeof="foaf:Image" src="./Hoofer Sailing Club   A UW social club with a bit of a sailing problem_files/AndrewBartling.JPG" width="168" height="166" alt=""></div></div></div><p><i>"I first learned to sail here at Hoofers in 2009.  Since then I've enjoyed teaching others to sail for two years and working on boats as the Scow Fleet Captain.  While I like all of the boats Hoofers has to offer, I especially like sailing and racing on our scows, but am not opposed to a casual sail around the lake on one of our keelboats or Badger Sloops.  I currently study chemical engineering as an undergrad here at UW."</i></p>
+  </div>
+
+  
+  
+</div>
+</div>
+</div>
+<div id="views_slideshow_cycle_div_instructor_bios-block_14" class="views-slideshow-cycle-main-frame-row views_slideshow_cycle_slide views_slideshow_slide views-row-15 views_slideshow_cycle_hidden views-row-odd" style="position: absolute; top: 0px; left: 0px; display: none; z-index: 18; opacity: 0;">
+  <div class="views-slideshow-cycle-main-frame-row-item views-row views-row-0 views-row-first views-row-odd">
+  <div id="node-154" class="node node-instructors clearfix" about="/?q=node/154" typeof="sioc:Item foaf:Document">
+
+  
+        <h2 property="dc:title" datatype=""><a href="http://hoofersailing.org/?q=node/154">Louis Tenebruso</a></h2>
+    
+  
+  <div class="content">
+    <div class="field field-name-field-instructor-image field-type-image field-label-hidden"><div class="field-items"><div class="field-item even"><img typeof="foaf:Image" src="./Hoofer Sailing Club   A UW social club with a bit of a sailing problem_files/LouisTenebruso.jpg" width="168" height="166" alt=""></div></div></div><p><i>"I learned to sail in Madison, and have been teaching at Hoofers since 2007; though this will likely be my last full summer in Madison for quite a while. I have also done some sailing in the Apostles, on Lake Michigan, and on the Sea of Cortez. I mainly teach youth, J-fleet, Sloop, and Tech lessons. This summer, I have begun teaching windsurfing, and am also now certified to teach ASA 101. I enjoy Hoofers because of the people in the club and because of how actively we use all of our equipment. Eventually, I would like to retire/semi-retire on a big sailboat."</i></p>
+  </div>
+
+  
+  
+</div>
+</div>
+</div>
+<div id="views_slideshow_cycle_div_instructor_bios-block_15" class="views-slideshow-cycle-main-frame-row views_slideshow_cycle_slide views_slideshow_slide views-row-16 views_slideshow_cycle_hidden views-row-even" style="position: absolute; top: 0px; left: 0px; display: none; z-index: 17; opacity: 0;">
+  <div class="views-slideshow-cycle-main-frame-row-item views-row views-row-0 views-row-first views-row-odd">
+  <div id="node-161" class="node node-instructors clearfix" about="/?q=node/161" typeof="sioc:Item foaf:Document">
+
+  
+        <h2 property="dc:title" datatype=""><a href="http://hoofersailing.org/?q=node/161">John Beck</a></h2>
+    
+  
+  <div class="content">
+    <div class="field field-name-field-instructor-image field-type-image field-label-hidden"><div class="field-items"><div class="field-item even"><img typeof="foaf:Image" src="./Hoofer Sailing Club   A UW social club with a bit of a sailing problem_files/JohnBeck.jpg" width="168" height="166" alt=""></div></div></div><p><i>"I grew up sailing on Lake Winnebago, in my hometown, Oshkosh, WI. I learned on Optis and then raced X-Boats, 420s, and E-Scows.  I moved to Madison in 2010 to go to UW-Madison, studying Evolutionary Biology and Global Health.  I love teaching at Hoofers and I'm looking forward to spending more summers with Hoofers!"</i></p>
+  </div>
+
+  
+  
+</div>
+</div>
+</div>
+<div id="views_slideshow_cycle_div_instructor_bios-block_16" class="views-slideshow-cycle-main-frame-row views_slideshow_cycle_slide views_slideshow_slide views-row-17 views_slideshow_cycle_hidden views-row-odd" style="position: absolute; top: 0px; left: 0px; display: none; z-index: 16; opacity: 0;">
+  <div class="views-slideshow-cycle-main-frame-row-item views-row views-row-0 views-row-first views-row-odd">
+  <div id="node-134" class="node node-instructors clearfix" about="/?q=node/134" typeof="sioc:Item foaf:Document">
+
+  
+        <h2 property="dc:title" datatype=""><a href="http://hoofersailing.org/?q=node/134">Anna Boatman</a></h2>
+    
+  
+  <div class="content">
+    <div class="field field-name-field-instructor-image field-type-image field-label-hidden"><div class="field-items"><div class="field-item even"><img typeof="foaf:Image" src="./Hoofer Sailing Club   A UW social club with a bit of a sailing problem_files/AnnaBoatman_0.jpg" width="168" height="166" alt=""></div></div></div><p><i>"I started sailing when I was 14, racing I-20s with my dad on Lake Winnebago in Fond Du Lac, WI.  I joined Hoofers the summer before my senior year at UW, and now I teach on small dinghies, especially Techs and Bytes."</i></p>
+  </div>
+
+  
+  
+</div>
+</div>
+</div>
+<div id="views_slideshow_cycle_div_instructor_bios-block_17" class="views-slideshow-cycle-main-frame-row views_slideshow_cycle_slide views_slideshow_slide views-row-18 views_slideshow_cycle_hidden views-row-even" style="position: absolute; top: 0px; left: 0px; display: none; z-index: 15; opacity: 0;">
+  <div class="views-slideshow-cycle-main-frame-row-item views-row views-row-0 views-row-first views-row-odd">
+  <div id="node-153" class="node node-instructors clearfix" about="/?q=node/153" typeof="sioc:Item foaf:Document">
+
+  
+        <h2 property="dc:title" datatype=""><a href="http://hoofersailing.org/?q=node/153">Mark Gillespie</a></h2>
+    
+  
+  <div class="content">
+    <div class="field field-name-field-instructor-image field-type-image field-label-hidden"><div class="field-items"><div class="field-item even"><img typeof="foaf:Image" src="./Hoofer Sailing Club   A UW social club with a bit of a sailing problem_files/MarkGillespie.jpg" width="168" height="166" alt=""></div></div></div><p><i>"I've been sailing at Hoofers since 2006 and began instructing on keelboats and J-Boats in 2008. In 2010 I was certified as an ASA Basic Keelboat Instructor. The skills and knowledge I've developed since joining Hoofers, have enabled me to sail across the Caribbean, around the Virgin Islands and along the Dalmatian coast. I co-own a 30' sailboat on Lake Michigan in which I've raced in 5 Mac Races among other adventures. My goal in instructing at Hoofers is to open up the world of sailing to those just getting started. "</i></p>
+  </div>
+
+  
+  
+</div>
+</div>
+</div>
+<div id="views_slideshow_cycle_div_instructor_bios-block_18" class="views-slideshow-cycle-main-frame-row views_slideshow_cycle_slide views_slideshow_slide views-row-19 views_slideshow_cycle_hidden views-row-odd" style="position: absolute; top: 0px; left: 0px; display: none; z-index: 14; opacity: 0;">
+  <div class="views-slideshow-cycle-main-frame-row-item views-row views-row-0 views-row-first views-row-odd">
+  <div id="node-155" class="node node-instructors clearfix" about="/?q=node/155" typeof="sioc:Item foaf:Document">
+
+  
+        <h2 property="dc:title" datatype=""><a href="http://hoofersailing.org/?q=node/155">Mary Cummins</a></h2>
+    
+  
+  <div class="content">
+    <div class="field field-name-field-instructor-image field-type-image field-label-hidden"><div class="field-items"><div class="field-item even"><img typeof="foaf:Image" src="./Hoofer Sailing Club   A UW social club with a bit of a sailing problem_files/MaryCummins.jpg" width="168" height="166" alt=""></div></div></div><p><i>"I love to sail! I grew up sailing and racing on Lake Winnebago in Oshkosh, WI. I sailed for the University of Wisconsin Sailing Team during my four years as an undergraduate and competed at so many cool places around the country. Nowadays, I am a middle and high school math teacher; however my favorite job is teaching sailing at Hoofers! I like to sail any type of boat and also windsurf, but you will usually find me teaching lasers, 420s, techs, scows, and, of course, the Hoofer youth camps!"</i></p>
+  </div>
+
+  
+  
+</div>
+</div>
+</div>
+<div id="views_slideshow_cycle_div_instructor_bios-block_19" class="views-slideshow-cycle-main-frame-row views_slideshow_cycle_slide views_slideshow_slide views-row-20 views_slideshow_cycle_hidden views-row-even" style="position: absolute; top: 0px; left: 0px; display: none; z-index: 13; opacity: 0;">
+  <div class="views-slideshow-cycle-main-frame-row-item views-row views-row-0 views-row-first views-row-odd">
+  <div id="node-171" class="node node-instructors clearfix" about="/?q=node/171" typeof="sioc:Item foaf:Document">
+
+  
+        <h2 property="dc:title" datatype=""><a href="http://hoofersailing.org/?q=node/171">Dan Jenkins</a></h2>
+    
+  
+  <div class="content">
+    <div class="field field-name-field-instructor-image field-type-image field-label-hidden"><div class="field-items"><div class="field-item even"><img typeof="foaf:Image" src="./Hoofer Sailing Club   A UW social club with a bit of a sailing problem_files/DanJenkins.jpg" width="168" height="166" alt=""></div></div></div><p><i>"I joined HSC about 15 years ago when I moved to Madison for work, and decided that, although I had never sailed before, the sailing club seemed like a great way to take advantage of the lakes surrounding Madison.  Since then I have sailed on nearly all of the club’s fleets, and I started as an instructor on Spray and Knotty Rascal in the 2007 season.  I also became a certified ASA 101 instructor in 2010.  Since learning sailing at Hoofer’s, I’ve sailed on Lakes Michigan and Superior many times, and also in the British Virgin Islands twice and St. Lucia and the Grenadines once.  So what you learn at HSC can certainly take you sailing throughout the world."</i></p>
+  </div>
+
+  
+  
+</div>
+</div>
+</div>
+<div id="views_slideshow_cycle_div_instructor_bios-block_20" class="views-slideshow-cycle-main-frame-row views_slideshow_cycle_slide views_slideshow_slide views-row-21 views_slideshow_cycle_hidden views-row-odd" style="position: absolute; top: 0px; left: 0px; display: none; z-index: 12; opacity: 0;">
+  <div class="views-slideshow-cycle-main-frame-row-item views-row views-row-0 views-row-first views-row-odd">
+  <div id="node-175" class="node node-staff clearfix" about="/?q=node/175" typeof="sioc:Item foaf:Document">
+
+  
+        <h2 property="dc:title" datatype=""><a href="http://hoofersailing.org/?q=node/175">Lauren Dillard</a></h2>
+    
+  
+  <div class="content">
+    <div class="field field-name-field-staff-image field-type-image field-label-hidden"><div class="field-items"><div class="field-item even"><img typeof="foaf:Image" src="./Hoofer Sailing Club   A UW social club with a bit of a sailing problem_files/LaurenDillard.jpg" width="168" height="166" alt=""></div></div></div><p><i>"I have worked with Hoofers for 4 years, and currently work as a Lakefront Supervisor doing boat checkouts. I especially love Hoofers for the Friday night socials and the baby bunnies living near our office."</i></p>
+  </div>
+
+  
+  
+</div>
+</div>
+</div>
+<div id="views_slideshow_cycle_div_instructor_bios-block_21" class="views-slideshow-cycle-main-frame-row views_slideshow_cycle_slide views_slideshow_slide views-row-22 views_slideshow_cycle_hidden views-row-even" style="position: absolute; top: 0px; left: 0px; display: none; z-index: 11; opacity: 0;">
+  <div class="views-slideshow-cycle-main-frame-row-item views-row views-row-0 views-row-first views-row-odd">
+  <div id="node-159" class="node node-instructors clearfix" about="/?q=node/159" typeof="sioc:Item foaf:Document">
+
+  
+        <h2 property="dc:title" datatype=""><a href="http://hoofersailing.org/?q=node/159">George Roth</a></h2>
+    
+  
+  <div class="content">
+    <div class="field field-name-field-instructor-image field-type-image field-label-hidden"><div class="field-items"><div class="field-item even"><img typeof="foaf:Image" src="./Hoofer Sailing Club   A UW social club with a bit of a sailing problem_files/GeorgeRoth_0.JPG" width="168" height="166" alt=""></div></div></div><p><i>"I was born into a sailing family in 1949.  During my youth I raced in many different one-design class centerboard boats as well as cruising class yachts on Lake Erie.  During that time I was able to watch the transition from all wood to fiberglass hulls.  I currently alternate my sailing between Lake Mendota and the Apostle Islands."</i></p>
+  </div>
+
+  
+  
+</div>
+</div>
+</div>
+<div id="views_slideshow_cycle_div_instructor_bios-block_22" class="views-slideshow-cycle-main-frame-row views_slideshow_cycle_slide views_slideshow_slide views-row-23 views_slideshow_cycle_hidden views-row-odd" style="position: absolute; top: 0px; left: 0px; display: none; z-index: 10; opacity: 0;">
+  <div class="views-slideshow-cycle-main-frame-row-item views-row views-row-0 views-row-first views-row-odd">
+  <div id="node-176" class="node node-instructors clearfix" about="/?q=node/176" typeof="sioc:Item foaf:Document">
+
+  
+        <h2 property="dc:title" datatype=""><a href="http://hoofersailing.org/?q=node/176">David Crinion</a></h2>
+    
+  
+  <div class="content">
+    <div class="field field-name-field-instructor-image field-type-image field-label-hidden"><div class="field-items"><div class="field-item even"><img typeof="foaf:Image" src="./Hoofer Sailing Club   A UW social club with a bit of a sailing problem_files/DavidCrinion.jpg" width="168" height="166" alt=""></div></div></div><p><i>"I've always loved being on/in the water. I first began windsurfing when I was 11. In my 7 years of windsurfing I've had a blast and decided I wanted to start teaching others! A side hobby I have is doing recovery dives for what ever happens to go overboard."</i></p>
+  </div>
+
+  
+  
+</div>
+</div>
+</div>
+<div id="views_slideshow_cycle_div_instructor_bios-block_23" class="views-slideshow-cycle-main-frame-row views_slideshow_cycle_slide views_slideshow_slide views-row-24 views_slideshow_cycle_hidden views-row-even" style="position: absolute; top: 0px; left: 0px; display: none; z-index: 9; opacity: 0;">
+  <div class="views-slideshow-cycle-main-frame-row-item views-row views-row-0 views-row-first views-row-odd">
+  <div id="node-170" class="node node-instructors clearfix" about="/?q=node/170" typeof="sioc:Item foaf:Document">
+
+  
+        <h2 property="dc:title" datatype=""><a href="http://hoofersailing.org/?q=node/170">Peter Keuler</a></h2>
+    
+  
+  <div class="content">
+    <div class="field field-name-field-instructor-image field-type-image field-label-hidden"><div class="field-items"><div class="field-item even"><img typeof="foaf:Image" src="./Hoofer Sailing Club   A UW social club with a bit of a sailing problem_files/PeterKueler.jpg" width="168" height="166" alt=""></div></div></div><p><i>"I took up sailing with Hoofers in 2009.   I’ve been a volunteer instructor on the Heavy Keelboats since 2011.  I enjoy racing on Toy boat, sailing all of our boats and maintaining the boats over the winter months!"</i></p>
+  </div>
+
+  
+  
+</div>
+</div>
+</div>
+<div id="views_slideshow_cycle_div_instructor_bios-block_24" class="views-slideshow-cycle-main-frame-row views_slideshow_cycle_slide views_slideshow_slide views-row-25 views_slideshow_cycle_hidden views-row-odd" style="position: absolute; top: 0px; left: 0px; display: none; z-index: 8; opacity: 0;">
+  <div class="views-slideshow-cycle-main-frame-row-item views-row views-row-0 views-row-first views-row-odd">
+  <div id="node-163" class="node node-instructors clearfix" about="/?q=node/163" typeof="sioc:Item foaf:Document">
+
+  
+        <h2 property="dc:title" datatype=""><a href="http://hoofersailing.org/?q=node/163">Sawyer Walter</a></h2>
+    
+  
+  <div class="content">
+    <div class="field field-name-field-instructor-image field-type-image field-label-hidden"><div class="field-items"><div class="field-item even"><img typeof="foaf:Image" src="./Hoofer Sailing Club   A UW social club with a bit of a sailing problem_files/SawyerWalter.jpg" width="168" height="166" alt=""></div></div></div><p><i>"Hey! I'm Sawyer! I learned to sail and windsurf through the Youth Program at Hoofers when I was 10. I worked my way up, and was hired as an instructor at 16! My favorite classes to teach are windsurfing and Scows. I have the best summer job ever!"</i></p>
+  </div>
+
+  
+  
+</div>
+</div>
+</div>
+<div id="views_slideshow_cycle_div_instructor_bios-block_25" class="views-slideshow-cycle-main-frame-row views_slideshow_cycle_slide views_slideshow_slide views-row-26 views_slideshow_cycle_hidden views-row-even" style="position: absolute; top: 0px; left: 0px; display: none; z-index: 7; opacity: 0;">
+  <div class="views-slideshow-cycle-main-frame-row-item views-row views-row-0 views-row-first views-row-odd">
+  <div id="node-140" class="node node-instructors clearfix" about="/?q=node/140" typeof="sioc:Item foaf:Document">
+
+  
+        <h2 property="dc:title" datatype=""><a href="http://hoofersailing.org/?q=node/140">Jeanne Morledge</a></h2>
+    
+  
+  <div class="content">
+    <div class="field field-name-field-instructor-image field-type-image field-label-hidden"><div class="field-items"><div class="field-item even"><img typeof="foaf:Image" src="./Hoofer Sailing Club   A UW social club with a bit of a sailing problem_files/JeanneMorledge.jpg" width="168" height="166" alt=""></div></div></div><p><i>"I have so much fun teaching snow kiting and windsurfing, and sharing these great sports with Hoofers!  To have fun on Lake Mendota  all year around, and the Union Terrace and new Hoofer lakefront is the best!"</i>
+</p>
+  </div>
+
+  
+  
+</div>
+</div>
+</div>
+<div id="views_slideshow_cycle_div_instructor_bios-block_26" class="views-slideshow-cycle-main-frame-row views_slideshow_cycle_slide views_slideshow_slide views-row-27 views_slideshow_cycle_hidden views-row-odd" style="position: absolute; top: 0px; left: 0px; display: none; z-index: 6; opacity: 0;">
+  <div class="views-slideshow-cycle-main-frame-row-item views-row views-row-0 views-row-first views-row-odd">
+  <div id="node-138" class="node node-instructors clearfix" about="/?q=node/138" typeof="sioc:Item foaf:Document">
+
+  
+        <h2 property="dc:title" datatype=""><a href="http://hoofersailing.org/?q=node/138">Daniel Sutton</a></h2>
+    
+  
+  <div class="content">
+    <div class="field field-name-field-instructor-image field-type-image field-label-hidden"><div class="field-items"><div class="field-item even"><img typeof="foaf:Image" src="./Hoofer Sailing Club   A UW social club with a bit of a sailing problem_files/DanSutton.jpg" width="168" height="166" alt=""></div></div></div><p><i>"I have 25 years of racing experience in C-Scows, mostly club racing, and five in keel boats.  Had to get back to the scows and so I joined Hoofer’s and am proud to be a part of this fine organization.</i></p>
+  </div>
+
+  
+  
+</div>
+</div>
+</div>
+<div id="views_slideshow_cycle_div_instructor_bios-block_27" class="views-slideshow-cycle-main-frame-row views_slideshow_cycle_slide views_slideshow_slide views-row-28 views_slideshow_cycle_hidden views-row-even" style="position: absolute; top: 0px; left: 0px; display: none; z-index: 5; opacity: 0;">
+  <div class="views-slideshow-cycle-main-frame-row-item views-row views-row-0 views-row-first views-row-odd">
+  <div id="node-143" class="node node-instructors clearfix" about="/?q=node/143" typeof="sioc:Item foaf:Document">
+
+  
+        <h2 property="dc:title" datatype=""><a href="http://hoofersailing.org/?q=node/143">Michaela Rabas</a></h2>
+    
+  
+  <div class="content">
+    <div class="field field-name-field-instructor-image field-type-image field-label-hidden"><div class="field-items"><div class="field-item even"><img typeof="foaf:Image" src="./Hoofer Sailing Club   A UW social club with a bit of a sailing problem_files/MichaelaRabas_0.jpg" width="168" height="166" alt=""></div></div></div><p><i>"I started sailing when I was 8 at the Sturgeon Bay Yacht Club where I had awesome college-aged sailing instructors who made me want to become an instructor when I grew up! I taught at that same place for three summers. I eventually became a student at the University of Wisconsin and decided to give a summer in Madison a chance when I got this awesome job!! I teach on Techs and 420s and am working towards more ratings.  My favorite food is pickles and you'd be the best students ever if you brought me some!!"</i>
+</p>
+  </div>
+
+  
+  
+</div>
+</div>
+</div>
+<div id="views_slideshow_cycle_div_instructor_bios-block_28" class="views-slideshow-cycle-main-frame-row views_slideshow_cycle_slide views_slideshow_slide views-row-29 views_slideshow_cycle_hidden views-row-odd" style="position: absolute; top: 0px; left: 0px; display: none; z-index: 4; opacity: 0;">
+  <div class="views-slideshow-cycle-main-frame-row-item views-row views-row-0 views-row-first views-row-odd">
+  <div id="node-162" class="node node-instructors clearfix" about="/?q=node/162" typeof="sioc:Item foaf:Document">
+
+  
+        <h2 property="dc:title" datatype=""><a href="http://hoofersailing.org/?q=node/162">Lilly Pearson</a></h2>
+    
+  
+  <div class="content">
+    <div class="field field-name-field-instructor-image field-type-image field-label-hidden"><div class="field-items"><div class="field-item even"><img typeof="foaf:Image" src="./Hoofer Sailing Club   A UW social club with a bit of a sailing problem_files/LillyPearson.JPG" width="168" height="166" alt=""></div></div></div><p><i>"I started sailing at Hoofers when I was 11 in the youth program and became a youth assistant after a few years. I was hired on as an instructor when I was 16 and have worked at hoofers since then. Other sailing experience includes sailing a 134 foot tall ship across the Pacific Ocean in a program called SEA for a month last spring. I mostly teach on the smaller fleets and in the youth program."</i></p>
+  </div>
+
+  
+  
+</div>
+</div>
+</div>
+<div id="views_slideshow_cycle_div_instructor_bios-block_29" class="views-slideshow-cycle-main-frame-row views_slideshow_cycle_slide views_slideshow_slide views-row-30 views_slideshow_cycle_hidden views-row-even" style="position: absolute; top: 0px; left: 0px; display: none; z-index: 3; opacity: 0;">
+  <div class="views-slideshow-cycle-main-frame-row-item views-row views-row-0 views-row-first views-row-odd">
+  <div id="node-141" class="node node-instructors clearfix" about="/?q=node/141" typeof="sioc:Item foaf:Document">
+
+  
+        <h2 property="dc:title" datatype=""><a href="http://hoofersailing.org/?q=node/141">Katlyn Putney</a></h2>
+    
+  
+  <div class="content">
+    <div class="field field-name-field-instructor-image field-type-image field-label-hidden"><div class="field-items"><div class="field-item even"><img typeof="foaf:Image" src="./Hoofer Sailing Club   A UW social club with a bit of a sailing problem_files/KatlynPutney.jpg" width="168" height="166" alt=""></div></div></div><p><i>"I grew up sailing in Milwaukee at South Shore Yacht Club.  I started when I was eight and have sailed and raced Optis, Lasers, Snipes, 420s, FJs, and Tarten 10s.  Now I am on the UW Sailing Team and I race all over the country!"</i></p>
+  </div>
+
+  
+  
+</div>
+</div>
+</div>
+<div id="views_slideshow_cycle_div_instructor_bios-block_30" class="views-slideshow-cycle-main-frame-row views_slideshow_cycle_slide views_slideshow_slide views-row-31 views_slideshow_cycle_hidden views-row-odd" style="position: absolute; top: 0px; left: 0px; display: none; z-index: 2; opacity: 0;">
+  <div class="views-slideshow-cycle-main-frame-row-item views-row views-row-0 views-row-first views-row-odd">
+  <div id="node-158" class="node node-instructors clearfix" about="/?q=node/158" typeof="sioc:Item foaf:Document">
+
+  
+        <h2 property="dc:title" datatype=""><a href="http://hoofersailing.org/?q=node/158">Ken Smith</a></h2>
+    
+  
+  <div class="content">
+    <div class="field field-name-field-instructor-image field-type-image field-label-hidden"><div class="field-items"><div class="field-item even"><img typeof="foaf:Image" src="./Hoofer Sailing Club   A UW social club with a bit of a sailing problem_files/KenSmith.jpg" width="168" height="166" alt=""></div></div></div><p><i>"I am an undergraduate at UW Madison.  I started sailing in Japan on the open ocean when I was 7 years old, and spent 8 years in the Navy sailing around on an aircraft carrier.  Now, I teach windsurfing and techs lessons, and am co-captain of the Windsurfing Fleet!"</i></p>
+  </div>
+
+  
+  
+</div>
+</div>
+</div>
+<div id="views_slideshow_cycle_div_instructor_bios-block_31" class="views-slideshow-cycle-main-frame-row views_slideshow_cycle_slide views_slideshow_slide views-row-32 views_slideshow_cycle_hidden views-row-even" style="position: absolute; top: 0px; left: 0px; display: none; z-index: 1; opacity: 0;">
+  <div class="views-slideshow-cycle-main-frame-row-item views-row views-row-0 views-row-first views-row-odd">
+  <div id="node-160" class="node node-instructors clearfix" about="/?q=node/160" typeof="sioc:Item foaf:Document">
+
+  
+        <h2 property="dc:title" datatype=""><a href="http://hoofersailing.org/?q=node/160">Joe Silverberg</a></h2>
+    
+  
+  <div class="content">
+    <div class="field field-name-field-instructor-image field-type-image field-label-hidden"><div class="field-items"><div class="field-item even"><img typeof="foaf:Image" src="./Hoofer Sailing Club   A UW social club with a bit of a sailing problem_files/JoeSilverberg.jpg" width="168" height="166" alt=""></div></div></div><p><i>"I started sailing in 1943 at the age of 13. I took an 8 year sabbatical when I started my business and family.  My two favorite boats to sail were the E-Scow and the Colgate 26. My two favorite Hoofer boats are the J22 and the Badger Sloop.  My current extra curricular activities are volunteering with SCORE (the Service Corps of Retired Executives.), being an active Mason, a Shrine clown, a Rotarian and socializing with my fellow OFs.  I have mostly sailed on the inland lakes of  WI, MN and IA. I have sailed to and around many of the islands in the Caribbean. I've taken one Hoofer trip off  British Columbia around the San Juan islands.  I have instructed on Techs, Badger Sloops, both J boats and given one C-Scow lesson when the instructor didn't show up. (I'm not rated on the C-Scow!)  Associating with the Hoofer instructors keeps me young!"</i></p>
+  </div>
+
+  
+  
+</div>
+</div>
+</div>
+</div>
+</div>
+  </div>
+    </div>
+  
+  
+  
+  
+  
+  
+</div>  </div>
+</div>
+  </div>
+				  </div>
+				  			    
+			  </div>
+	    </div>  
+	  </div>  
+ 
+		 
+	  
+	</div>
+
+    <div class="region region-after-content">
+    <div id="block-block-2" class="block block-block">
+
+    
+  <div class="content">
+    <p></p><center>
+
+<a href="http://www.union.wisc.edu/wud"><img src="./Hoofer Sailing Club   A UW social club with a bit of a sailing problem_files/WUD_Logo.png" alt="" width="200" height="57"></a>
+<a href="http://www.hoofers.org/"><img src="./Hoofer Sailing Club   A UW social club with a bit of a sailing problem_files/WU_Hoofer_logo.png" alt="" width="69" height="57"></a>
+<a href="http://www.asa.com/"><img src="./Hoofer Sailing Club   A UW social club with a bit of a sailing problem_files/asa_logo.jpg" alt="" width="200" height="57"></a>
+
+<p></p></center>
+  </div>
+</div>
+  </div>
+
+<footer>
+  <div class="container">
+    <div class="row">
+    
+			<div class="footer-ribon">
+				<span>Get in Touch</span>
+			</div>
+		  
+	    <div class="span3">
+	      			      <div class="region region-footer-1">
+    <div id="block-block-6" class="block block-block">
+
+    
+  <div class="content">
+    <p>
+<br><br>
+Boathouse Phone: <i>Currently closed</i><br>
+Email: <a href="http://hoofersailing.org/?q=contact">Contact Us.</a><br>
+Lake Hours: ~8AM - Sunset
+</p>
+  </div>
+</div>
+  </div>
+			  	    </div>
+	    
+	    <div class="span3">
+	      			      <div class="region region-footer-2">
+    <div id="block-block-10" class="block block-block">
+
+    
+  <div class="content">
+    <p><a href="./Hoofer Sailing Club   A UW social club with a bit of a sailing problem_files/flaglarge.php"><img id="terrace_webcam_img" height="150" width="200" src="./Hoofer Sailing Club   A UW social club with a bit of a sailing problem_files/flaglarge.php"></a></p>
+  </div>
+</div>
+  </div>
+			  	    </div>
+	    
+	    <div class="span4">
+	      			      <div class="region region-footer-3">
+    <div id="block-block-8" class="block block-block">
+
+    
+  <div class="content">
+    <div class="content">
+<p><a href="http://www.soils.wisc.edu/asig/webcam/big.jpg" target="_blank"><img src="./Hoofer Sailing Club   A UW social club with a bit of a sailing problem_files/halfsize.jpg" alt="UW Soils Lake Mendota Webcam" width="200" height="150"></a></p>
+<p><a href="http://metobs.ssec.wisc.edu/aoss/cameras/" target="_blank">Other Sky Views</a></p>
+</div>
+  </div>
+</div>
+  </div>
+			  	    </div>
+	    
+	    <div class="span2">
+	      			      <div class="region region-footer-4">
+    <div id="block-block-9" class="block block-block">
+
+    
+  <div class="content">
+    <p><a href="./Hoofer Sailing Club   A UW social club with a bit of a sailing problem_files/netcam.jpg"><img id="terrace_webcam_img" height="150" width="200" src="./Hoofer Sailing Club   A UW social club with a bit of a sailing problem_files/netcam.jpg"></a></p>
+  </div>
+</div>
+  </div>
+			  	    </div>
+		    
+		</div>  
+  </div>	
+
+	  <div class="footer-copyright">  
+	    <div class="container">
+	      <div class="row">
+			    <div class="span6">
+			    
+					  					      <div class="region region-footer-bottom-left">
+    <div id="block-system-powered-by" class="block block-system">
+
+    
+  <div class="content">
+    <span>Powered by <a href="http://drupal.org/">Drupal</a></span>  </div>
+</div>
+  </div>
+					  			  
+			    </div>
+			    <div class="span6">
+			    
+					  					    					  			  
+			    </div>
+	      </div>  
+	    </div>
+	  </div>  
+	</footer>
+	
+</div>	
+
+
+<a class="scroll-to-top" href="http://hoofersailing.org/#" id="scrollToTop"><i class="icon-chevron-up icon-white"></i></a></body></html>

@@ -53,18 +53,12 @@ Ext.define('HooferSailingMobile.view.Rose', {
 		}
 
 		// Assert: store (and me.getStore()) reference a store object for the winds.
-<<<<<<< HEAD
-		// When it's reloaded the fetch event is fired. 
-		store.on('fetch', function(store) {
-			me.rotate();
-=======
 		// When it's reloaded the fetch event is fired. When that happens update the
 		// contents of the Conditions tpl with properties from the store.
 		store.on('fetch', function(winds) {
 			var roseDirection = winds.getWindDirectionRose();
 			var degrees = HooferSailingMobile.util.Compass.roseToDegrees(roseDirection);
 			me.rotate(degrees);
->>>>>>> 50c14c2453fe79c81c81edf1d01d2c2ad26fe262
 		});
 
 		this.callParent();
