@@ -1,3 +1,4 @@
+/*
 Ext.onReady(function(){
 	Ext.data.JsonP.request({
 		url: 'http://ehs.wisc.edu/current-flag.php',
@@ -24,3 +25,4 @@ Ext.onReady(function(){
 		}
 	});
 })
+*/
