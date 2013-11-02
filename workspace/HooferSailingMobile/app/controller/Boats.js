@@ -1,15 +1,15 @@
+
 Ext.define('HooferSailingMobile.controller.Boats', {
     extend: 'Ext.app.Controller',
 
     config: {
-        stores: ['Fleets', 'Winds', 'CompassPoints'],
-        models: ['Flag'],
-        //views: ['HooferSailingMobile.view.Rose'],
+        stores: ['Fleets', 'Winds', 'CompassPoints', 'RefreshRatePreferenceStore'],
+        models: ['RefreshRatePreferenceModel', 'Flag'],
+        views: ['RefreshRatePreference'],
 
         refs: {
             conditions: 'conditions',
             rotatingImage: 'rotatingimage',
-            //rose: 'rose'
         },
 
         control: {
@@ -25,6 +25,8 @@ Ext.define('HooferSailingMobile.controller.Boats', {
         Ext.getStore('Fleets').on('load', this.fleetsLoadHandler, this);
         Ext.getStore('Winds').on('fetch', this.updateCompassPoints, this);
         this.setAutoRefresh(true);
+        //var preferredRefreshInterval = localstorage.refreshRatePreference;
+        //this.setAutoRefreshInterval(preferredRefreshInterval);
         HooferSailingMobile.model.Flag.on('load', this.updateFlag, this);
     },
 
@@ -67,7 +69,19 @@ Ext.define('HooferSailingMobile.controller.Boats', {
     },
     updateAutoRefresh: function(newValue, oldValue) {
         this.doAutoRefresh();
+    },
+    /*
+    updateAutoRefreshInterval: function(newValue, oldValue) {
+        var store = new Ext.data.Store({ //Prob need to create store outside of controller
+            model: this.RefreshRateRetrievalModel, // <==== Model with this name doesn't exist here
+        });
+
+        Ext.getStore(store).load()
+
+        store.each(function(recordFromLocalstorage){  // For each of the records in the cache, call this function...
+            this.autoRefreshInterval = recordFromLocalstorage.get('preferredRefreshRate')});
     }
-
-
+        
+    
+    */
 });
