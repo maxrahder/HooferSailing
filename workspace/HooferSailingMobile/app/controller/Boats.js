@@ -4,7 +4,6 @@ Ext.define('HooferSailingMobile.controller.Boats', {
     config: {
         stores: ['Fleets', 'Winds', 'CompassPoints'],
         models: ['Flag'],
-        views: ['HooferSailingMobile.view.Rose'],
 
         refs: {
             conditions: 'conditions',

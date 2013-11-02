@@ -83207,21 +83207,38 @@ Ext.define('HooferSailingMobile.view.RotatingImage', {
 		height: 100,
 		degrees: 0,
 		src: '',
+		backgroundSrc: '',
 		tpl: [
+
 			'<div style="',
 			'text-align: center; ',
+			'">',
+
+			'<div style="',
+			'height: {height}px; ',
+			'background-image: url({backgroundSrc}); ',
+			'background-size: {height}px {height}px; ',
+			'background-position: center; ',
+			'background-repeat: no-repeat; ',
+			'">',
+
+			'<img style="',
 			'height: {height}px; ',
 			'transform:rotate({degrees}deg) ;',
 			'-ms-transform:rotate({degrees}deg) ;', // IE 9
 			'-webkit-transform:rotate({degrees}deg); ', // Safari and Chrome
-			'">',
-			'<img src="{src}" height="{height}px"/>',
+			'"',
+			'src="{src}" height="{height}px"/>',
+
+			'</div>',
+
 			'</div>'
 		],
 	},
 	initialize: function() {
 		this.setData({
 			src: this.getSrc(),
+			backgroundSrc: this.getBackgroundSrc(),
 			height: this.getHeight()
 		});
 		this.callParent();
@@ -83249,7 +83266,8 @@ Ext.define('HooferSailingMobile.view.Conditions', {
             xtype: 'rotatingimage',
             margin: 6,
             itemId: 'rotatingImage',
-            src: 'resources/images/CompassRoseWindDirectionSimple.png'
+            backgroundSrc: 'resources/images/RoseBackground.png',
+            src: 'resources/images/RoseForeground.png'
         }, {
             xtype: 'component',
             itemId: 'tpl',
@@ -83352,74 +83370,6 @@ Ext.define('HooferSailingMobile.view.Conditions', {
     }
 });
 
-Ext.define('HooferSailingMobile.view.Rose', {
-	extend:  Ext.Container ,
-	xtype: 'rose',
-	           
-		                     
-		                        
-		                               
-	  
-	rotate: function(degrees) {
-		//debugger;
-		var draw = this.down('draw');
-		var surface = draw.getSurface();
-		var image = surface.getItems().get('image');
-		image.setAttributes({
-			rotation: degrees
-		});
-		image.repaint();
-		surface.repaint();
-	},
-	config: {
-
-		store: null,
-
-		layout: 'fit',
-
-		items: [
-			{
-				xtype: 'draw',
-				viewBox: true,
-				items: [{
-					type: 'image',
-					height: 100,
-					width: 100,
-					rotation: 0,
-					id: 'image',
-					src: 'resources/images/CompassRoseWindDirectionSimple.png'
-				}]
-
-			}
-		]
-
-	},
-	initialize: function() {
-		var me = this;
-		// The calling routine specifies the store. That may be an actual Ext.data.Store
-		// object, or the string name of a store. So take a look and if it's a string
-		// then get the actual store object via Ext.getStore() and have the Condition's
-		// store property reference that, rather than the string.
-		var store = me.getStore();
-		if (Ext.isString(store)) {
-			store = Ext.getStore(store);
-			me.setStore(store);
-		}
-
-		// Assert: store (and me.getStore()) reference a store object for the winds.
-		// When it's reloaded the fetch event is fired. When that happens update the
-		// contents of the Conditions tpl with properties from the store.
-		store.on('fetch', function(winds) {
-			var roseDirection = winds.getWindDirectionRose();
-			var degrees = HooferSailingMobile.util.Compass.roseToDegrees(roseDirection);
-			me.rotate(degrees);
-		});
-
-		this.callParent();
-
-	}
-});
-
 Ext.define('HooferSailingMobile.view.WindsChart', {
   extend:  Ext.chart.PolarChart ,
   xtype: 'windschart',
@@ -83429,6 +83379,7 @@ Ext.define('HooferSailingMobile.view.WindsChart', {
                               
                              
                              
+                                   
     
   config: {
     animate: true,
@@ -83489,11 +83440,10 @@ Ext.define('HooferSailingMobile.view.Main', {
                        
                                          
                                               
-                                        
                                               
                              
-                                
-                            
+                                                 
+                               
       
     config: {
         tabBarPosition: 'bottom',
@@ -83697,7 +83647,7 @@ Ext.define('HooferSailingMobile.store.Winds', {
 	config: {
 		url: 'http://metobs.ssec.wisc.edu/app/mendota/buoy/data/jsonp',
 		symbols: 'dir:spd:wt_1.0',
-		interval: '00:00:00',
+		interval: '00:00:10',
 		begin: '-00:05:00',
 		averageKnots: 0,		
 		gusts: 0,
@@ -83926,7 +83876,6 @@ Ext.define('HooferSailingMobile.store.CompassPoints', {
 			var r = me.getAt(index);
 			r.set({frequency: frequency, averageKnots: (averageKnots / 30) * radiusUnit});
 			//r.set({frequency: frequency, averageKnots: averageKnots});
-
 		});
 	}
 
@@ -83938,10 +83887,10 @@ Ext.define('HooferSailingMobile.controller.Boats', {
     config: {
         stores: ['Fleets', 'Winds', 'CompassPoints'],
         models: ['Flag'],
-        views: ['HooferSailingMobile.view.Rose'],
 
         refs: {
             conditions: 'conditions',
+            rotatingImage: 'rotatingimage',
             rose: 'rose'
         },
 
@@ -84033,10 +83982,10 @@ Ext.application({
     ],
 
     icon: {
-        '57': 'resources/icons/Icon.png',
-        '72': 'resources/icons/Icon~ipad.png',
-        '114': 'resources/icons/Icon@2x.png',
-        '144': 'resources/icons/Icon~ipad@2x.png'
+        '57': 'resources/images/Burgee_57x57.jpg',
+        '72': 'resources/images/Burgee_72x72.jpg',
+        '114': 'resources/images/Burgee_114x114.jpg',
+        '144': 'resources/images/Burgee_144x144.jpg'
     },
 
     isIconPrecomposed: true,

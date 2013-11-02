@@ -5,9 +5,9 @@ Ext.define('HooferSailingMobile.view.Main', {
         'Ext.TitleBar',
         'HooferSailingMobile.view.Boats',
         'HooferSailingMobile.view.Conditions',
-        'HooferSailingMobile.view.Rose',
         'HooferSailingMobile.view.WindsChart',
         'Ext.draw.Component',
+        'HooferSailingMobile.view.RotatingImage',
         'Ext.draw.sprite.Image'
     ],
     config: {

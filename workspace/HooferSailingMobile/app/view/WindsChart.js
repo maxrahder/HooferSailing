@@ -7,6 +7,7 @@ Ext.define('HooferSailingMobile.view.WindsChart', {
     'Ext.chart.axis.Category',
     'Ext.chart.axis.Numeric',
     'Ext.chart.series.Radar',
+    'Ext.chart.interactions.Rotate'
   ],
   config: {
     animate: true,
