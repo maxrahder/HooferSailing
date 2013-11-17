@@ -7,7 +7,8 @@ Ext.define('HooferSailingMobile.model.RefreshRatePreferenceModel', {
     config: {
 
         fields: [
-            {name: 'preferredRefreshRate', type: 'string'}
+            {name: 'preferredRefreshRate', type: 'string'},
+            //{name: 'id', type: 'int'}  // This id field was intended to facilitate the removal of old values from localstorage
         ],
     
         proxy: {

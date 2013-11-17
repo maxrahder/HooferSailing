@@ -6,6 +6,7 @@ Ext.define('HooferSailingMobile.view.Main', {
         'HooferSailingMobile.view.Boats',
         'HooferSailingMobile.view.Conditions',
         'HooferSailingMobile.view.WindsChart',
+        'HooferSailingMobile.view.RefreshRatePreference',
         'Ext.draw.Component',
         'HooferSailingMobile.view.RotatingImage',
         'Ext.draw.sprite.Image'
@@ -30,6 +31,10 @@ Ext.define('HooferSailingMobile.view.Main', {
                 xtype: 'windschart',
                 store: 'CompassPoints'
             }]
+        }, {
+            iconCls: 'settings',
+            title: 'Preferences',
+            xtype: 'refreshratepreference'
         }]
     }
 });

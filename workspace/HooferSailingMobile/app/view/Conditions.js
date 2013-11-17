@@ -103,6 +103,7 @@ Ext.define('HooferSailingMobile.view.Conditions', {
             var image = me.down('#rotatingImage');
             var roseDirection = store.getWindDirectionRose();
             var degrees = HooferSailingMobile.util.Compass.roseToDegrees(roseDirection);
+            alert('The degrees is: ' + me.degrees);
             image.rotate(degrees);
 
             me.updateConditions({
