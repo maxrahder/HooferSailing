@@ -17,19 +17,45 @@ Ext.define('HooferSailingMobile.controller.Refresh', {
 
         autoRefresh: false,
         autoRefreshInterval: 10000, // Seconds
- 
+        recordId: 0, // The key for the 1 and only record that holds user preferences
+        record: null
+
 
     },
     init: function() {
         var me = this;
         me.setAutoRefresh(true);
-        alert('The autoRefreshInterval at startup is: ' + me.getAutoRefreshInterval());
+
+        // Load the one record using its unique key. 
+        // If we read it, save a reference via me.setRecord()
+        // If we don't read it, create a new record, save it to local
+        // storage and save a reverenc via me.setRecord()
+        HooferSailingMobile.model.RefreshRatePreferenceModel.load(me.getRecordId(), {
+            success: function(record) {
+                me.setRecord(record);
+            },
+            failure: function() {
+                debugger;
+            }
+        });
+
+        //alert('The autoRefreshInterval at startup is: ' + me.getAutoRefreshInterval());
+
+
         //alert('The rrp object in init() is: ' + me.getRefreshRate());  // Undefined at startup due to timing.
         //var rateFromLocalStorage = me.getRefreshRate().retrieveRefreshRateFromLocalstorage());
         //me.setAutoRefreshInterval(rateFromLocalStorage);
     },
 
-    refreshRateChangeHandler: function(refreshRatePreference, minutes){
+    updateAutoRefreshInterval: function(interval) {
+        var record = this.getRecord();
+        if (record) {
+            this.getRecord().set('preferredRefreshRate', interval);
+            this.getRecord().save();
+        }
+    },
+
+    refreshRateChangeHandler: function(refreshRatePreference, minutes) {
         this.setAutoRefreshInterval(minutes);
         // Could refresh once here for convenience
     },
@@ -51,7 +77,7 @@ Ext.define('HooferSailingMobile.controller.Refresh', {
         recursiveRefresh();
     },
     refresh: function() {
-        alert('Refreshing now');
+        //alert('Refreshing now');
         Ext.getStore('Winds').fetch();
         Ext.getStore('Fleets').load();
         HooferSailingMobile.model.Flag.load();
