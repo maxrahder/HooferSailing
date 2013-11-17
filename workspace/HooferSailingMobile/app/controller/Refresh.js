@@ -35,7 +35,12 @@ Ext.define('HooferSailingMobile.controller.Refresh', {
                 me.setRecord(record);
             },
             failure: function() {
-                debugger;
+                var config = {
+                    id: me.getRecordId()
+                };
+                var record = Ext.create('HooferSailingMobile.model.RefreshRatePreferenceModel', config);
+                me.setRecord(record);
+                record.save();
             }
         });
 
