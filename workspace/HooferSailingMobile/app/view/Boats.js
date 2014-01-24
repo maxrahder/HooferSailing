@@ -12,12 +12,12 @@ Ext.define('HooferSailingMobile.view.Boats', {
 			store: 'Fleets',
 			itemTpl: [
 				'<div ',
-				'    style="',
+				'   play:-webkit-box; ',
+				'    padding: 4px; ',
+				'    -webkit-box style="',
 				'    height: 60px; ',
 				'    border-bottom: solid 1px #555555; ',
-				'    display:-webkit-box; ',
-				'    padding: 4px; ',
-				'    -webkit-box-align:center; ',
+				'    dis-align:center; ',
 				'">',
 				'{name}',
 				'</div>'

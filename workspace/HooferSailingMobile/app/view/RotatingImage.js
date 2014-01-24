@@ -32,6 +32,7 @@ Ext.define('HooferSailingMobile.view.RotatingImage', {
 
 			'</div>'
 		],
+		degrees: 0
 	},
 	initialize: function() {
 		this.setData({
@@ -41,7 +42,10 @@ Ext.define('HooferSailingMobile.view.RotatingImage', {
 		});
 		this.callParent();
 	},
-	rotate: function(degrees){
+	applyDegrees: function(degrees){
+		return Ext.Number.from(degrees, 0);
+	},
+	updateDegrees: function(degrees){
 		var data = this.getData();
 		data = Ext.apply(data, {degrees: degrees});
 		this.setData(data);

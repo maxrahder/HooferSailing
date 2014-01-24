@@ -1,4 +1,4 @@
-Ext.define('HooferSailingMobile.view.RefreshRatePreference', {
+  Ext.define('HooferSailingMobile.view.RefreshRatePreference', {
   extend: 'Ext.Container',
   xtype: 'refreshratepreference',
   title: 'Refresh Rate Preference',
