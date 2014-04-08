@@ -3,12 +3,11 @@ Ext.define('HooferSailingMobile.controller.Boats', {
     myNewProperty: 1,
     config: {
         stores: ['Fleets', 'Winds', 'CompassPoints'],
-        models: ['Flag', 'RefreshRatePreferenceModel'],
+        models: ['Flag'],
 
         refs: {
             conditions: 'conditions',
-            rotatingImage: 'rotatingimage',
-            refreshRate: 'refreshratepreference'
+            rotatingImage: 'rotatingimage'
         },
 
         control: {
