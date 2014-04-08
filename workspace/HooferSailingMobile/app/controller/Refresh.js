@@ -46,7 +46,7 @@ Ext.define('HooferSailingMobile.controller.Refresh', {
                 var rpr = me.getRefreshPreferenceRecord();
                 var preferredRefreshRate = rpr.get('preferredRefreshRate'); // In refreshes per hour
                 var intervalInMilliseconds = (1/preferredRefreshRate) * 3600000;
-                alert('The interval in seconds is ' + intervalInMilliseconds * 1000);
+                //alert('The interval in seconds is ' + intervalInMilliseconds * 1000);
                 me.refresh();
                 Ext.defer(recursiveRefresh, intervalInMilliseconds, me);
             }
@@ -55,7 +55,7 @@ Ext.define('HooferSailingMobile.controller.Refresh', {
     },
 
     refresh: function() {
-        alert('Refreshing now');
+        //alert('Refreshing now');
         Ext.getStore('Winds').fetch();
         Ext.getStore('Fleets').load();
         HooferSailingMobile.model.Flag.load();

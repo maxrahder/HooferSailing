@@ -16,25 +16,26 @@ Ext.define('HooferSailingMobile.view.UserPreferences', {
         title: 'User Preferences',
         items: [ 
           { label: 'Refresh Rate: ',
+            labelWidth: 120,
             xtype: 'selectfield', // Use slider instead?
             id: '', // Not currently used
             options: [ 
-              { text: 'Click to change your refresh rate',  // (It's a bug that the placeholder config doesn't work?)
+              { text: 'Change Rate',  // (It's a bug that the placeholder config doesn't work?)
                 value: null
               },
-              { text: 'Refresh every thirty seconds',
+              { text: 'Every 30 seconds',
                 value: 120
               }, 
-              { text: 'Refresh every minute',
+              { text: 'Every minute',
                 value: 60
               }, 
-              { text: 'Refresh every five minutes',
+              { text: 'Every 5 minutes',
                 value: 12
               }, 
-              { text: 'Refresh every ten minutes',
+              { text: 'Every 10 minutes',
                 value: 6
               }, 
-              { text: 'Refresh every thirty minutes',
+              { text: 'Every 30 minutes',
                 value: 2
               }
             ],
