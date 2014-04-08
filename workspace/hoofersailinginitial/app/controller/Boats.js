@@ -37,12 +37,4 @@ Ext.define('HooferSailingMobile.controller.Boats', {
         Ext.getStore('CompassPoints').updateDataUsingWinds(winds);
     },
 
-    fleetsLoadHandler: function(store) {},
-
-    //called when the Application is launched, remove if not needed
-    launch: function(app) {
-
-    }
-
-
 });
