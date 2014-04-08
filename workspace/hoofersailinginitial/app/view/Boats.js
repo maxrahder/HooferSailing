@@ -33,7 +33,7 @@ Ext.define('HooferSailingMobile.view.Boats', {
 						property: 'outTime',
 						direction: 'ASC'
 					}, {
-						property: 'hull',
+						property: 'name',
 						direction: 'DESC'
 					}]);
 					// Push a new dataview onto this navigation view. 
@@ -65,8 +65,8 @@ Ext.define('HooferSailingMobile.view.Boats', {
 							'{[values.isOut ? "&#42;" : "&#51;"]}',
 							'</td>',
 							'<td valign="middle">',
-							'Boat {hull}<br/>',
-							'{[values.isOut ? values.outPurpose + " " + values.outAgo: "Available"]}',
+							'Boat {name}<br/>',
+							'{[values.isOut ? values.purpose + " " + values.outAgo: "Available"]}',
 							'</td></tr></table>'
 						]
 					});

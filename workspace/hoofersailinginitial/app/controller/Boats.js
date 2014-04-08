@@ -16,8 +16,8 @@ Ext.define('HooferSailingMobile.controller.Boats', {
     },
     init: function() {
         var me = this;
-        // HooferSailingMobile.now = new Date();
-        HooferSailingMobile.now = Ext.Date.add(moment('2013-10-10T10:01:01Z').toDate(), Ext.Date.MINUTE, 90);
+        HooferSailingMobile.now = new Date();
+        // HooferSailingMobile.now = Ext.Date.add(moment('2013-10-10T10:01:01Z').toDate(), Ext.Date.MINUTE, 90);
 
         Ext.getStore('Fleets').on('load', this.fleetsLoadHandler, this);
         Ext.getStore('Winds').on('fetch', this.updateCompassPoints, this);

@@ -30,7 +30,7 @@ Ext.define('HooferSailingMobile.controller.Refresh', {
 
     refresh: function() {
         Ext.getStore('Winds').fetch();
-        Ext.getStore('Fleets').load();
+        //Ext.getStore('Fleets').load();
         HooferSailingMobile.model.Flag.load();
     },
 
