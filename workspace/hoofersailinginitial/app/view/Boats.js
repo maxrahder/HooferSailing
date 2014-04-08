@@ -34,7 +34,7 @@ Ext.define('HooferSailingMobile.view.Boats', {
 						direction: 'ASC'
 					}, {
 						property: 'name',
-						direction: 'DESC'
+						direction: 'ASC'
 					}]);
 					// Push a new dataview onto this navigation view. 
 					// The dataview will show the itemTpl for each 

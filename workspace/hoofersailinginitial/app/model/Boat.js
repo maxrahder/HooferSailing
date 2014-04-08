@@ -16,7 +16,6 @@ Ext.define('HooferSailingMobile.model.Boat', {
 		}, 'checkout', {
 			name: 'isOut',
 			convert: function(value, record) {
-				console.log('checkout: ' + record.data.checkout);
 				return !Ext.isEmpty(record.data.checkout);
 			}
 		}, {

@@ -53,7 +53,6 @@ Ext.define('HooferSailingMobile.store.Fleets', {
 
 					data.push(datum);
 				});
-				console.dir(data);
 				me.setData(data);
 
 			}

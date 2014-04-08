@@ -6,7 +6,7 @@ Ext.define('HooferSailingMobile.controller.Refresh', {
         refs: {},
         control: {},
 
-        interval: 0,
+        interval: 0, // 0 = off
         intervalId: -1, // Used to make sure we don't refresh using an old timer
 
         autoRefreshEnabled: false
@@ -19,13 +19,16 @@ Ext.define('HooferSailingMobile.controller.Refresh', {
 
 
     applyInterval: function(interval) {
-        if (interval > 5000) {
+        // Can't be less than every 5 seconds.
+        if ((interval === 0) || (interval >= 5000)) {
             return interval;
         }
     },
     updateInterval: function(interval) {
         this.setIntervalId(new Date().getTime());
-        this.doAutoRefresh(this.getIntervalId());
+        if (interval > 0) {
+            this.doAutoRefresh(this.getIntervalId());
+        }
     },
 
 
