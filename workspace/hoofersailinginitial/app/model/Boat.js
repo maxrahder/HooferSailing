@@ -11,12 +11,18 @@ Ext.define('HooferSailingMobile.model.Boat', {
 		fields: ['name', 'statusCode', {
 			name: 'status',
 			convert: function(value, record) {
-				return HooferSailingMobile.model.Boat.statusCodes[record.data.statusCode];
+				// return HooferSailingMobile.model.Boat.statusCodes[1];
+				return HooferSailingMobile.model.Boat.statusCodes[record.data.statusCode-1];
 			}
 		}, 'checkout', {
 			name: 'isOut',
 			convert: function(value, record) {
-				return !Ext.isEmpty(record.data.checkout);
+				return record.data.statusCode === 4;
+			}
+		},{
+			name: 'isAvailable',
+			convert: function(value, record) {
+				return record.data.statusCode === 1;
 			}
 		}, {
 			name: 'outTime',

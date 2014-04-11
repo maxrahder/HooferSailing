@@ -13,8 +13,8 @@ Ext.define('HooferSailingMobile.view.Boats', {
 			itemTpl: [
 				'<div ',
 				'   play:-webkit-box; ',
-				'    padding: 4px; ',
 				'    -webkit-box style="',
+				'    padding: 4px; ',
 				'    height: 60px; ',
 				'    border-bottom: solid 1px #555555; ',
 				'    dis-align:center; ',
@@ -52,7 +52,7 @@ Ext.define('HooferSailingMobile.view.Boats', {
 							'">',
 							'<tr ',
 							'    style="',
-							'    background-color: {[values.isOut ? "#cccccc" : "#ffffff"]}"',
+							'    background-color: {[values.isAvailable ? "#ffffff":"#cccccc"]}"',
 							'>',
 							'<td valign="middle" ',
 							'    style="',
@@ -60,13 +60,13 @@ Ext.define('HooferSailingMobile.view.Boats', {
 							'    font-size: 200%; ',
 							'    width: 38px; ',
 							'    padding: 4px; ',
-							'    color: {[values.isOut ? "red" : "green"]}; ',
+							'    color: {[values.isAvailable ? "green" : "red"]}; ',
 							'">',
-							'{[values.isOut ? "&#42;" : "&#51;"]}',
+							'{[values.isAvailable ?  "&#51;": "&#42;"]}',
 							'</td>',
 							'<td valign="middle">',
-							'Boat {name}<br/>',
-							'{[values.isOut ? values.purpose + " " + values.outAgo: "Available"]}',
+							'{name}<br/>',
+							'{[values.isOut ? values.purpose + " " + values.outAgo: values.status]}',
 							'</td></tr></table>'
 						]
 					});

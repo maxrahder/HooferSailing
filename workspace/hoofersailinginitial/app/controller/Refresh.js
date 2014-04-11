@@ -36,7 +36,7 @@ Ext.define('HooferSailingMobile.controller.Refresh', {
             return;
         }
         me.refresh();
-        Ext.defer(me.doAutoRefresh, me.getInterval(), me, intervalId);
+        Ext.defer(me.doAutoRefresh, me.getInterval(), me, [intervalId]);
     },
 
     refresh: function() {
