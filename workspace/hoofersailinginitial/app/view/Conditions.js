@@ -84,6 +84,8 @@ Ext.define('HooferSailingMobile.view.Conditions', {
         tplComponent.setData(data);
     },
     initialize: function() {
+        this.callParent();
+
         var me = this;
         // The calling routine specifies the store. That may be an actual Ext.data.Store
         // object, or the string name of a store. So take a look and if it's a string
@@ -103,7 +105,6 @@ Ext.define('HooferSailingMobile.view.Conditions', {
             var image = me.down('#rotatingImage');
             var roseDirection = store.getWindDirectionRose();
             var degrees = HooferSailingMobile.util.Compass.roseToDegrees(roseDirection);
-            alert('The degrees is: ' + me.degrees);
             image.rotate(degrees);
 
             me.updateConditions({
@@ -114,6 +115,5 @@ Ext.define('HooferSailingMobile.view.Conditions', {
             });
         });
 
-        this.callParent();
     }
 });

@@ -743,24 +743,7 @@ Ext.ClassManager.addNameAlternateMappings({
   "Ext.viewport.WindowsPhone": [
     "Ext.viewport.WP"
   ],
-  "HooferSailingMobile.controller.Boats": [],
-  "HooferSailingMobile.controller.Refresh": [],
-  "HooferSailingMobile.model.Boat": [],
-  "HooferSailingMobile.model.Flag": [],
-  "HooferSailingMobile.model.Fleet": [],
-  "HooferSailingMobile.model.RefreshRatePreferenceModel": [],
-  "HooferSailingMobile.store.CompassPoints": [],
-  "HooferSailingMobile.store.Fleets": [],
-  "HooferSailingMobile.store.Winds": [],
-  "HooferSailingMobile.util.Compass": [],
-  "HooferSailingMobile.util.Date": [],
-  "HooferSailingMobile.util.Util": [],
-  "HooferSailingMobile.view.Boats": [],
-  "HooferSailingMobile.view.Conditions": [],
-  "HooferSailingMobile.view.Main": [],
-  "HooferSailingMobile.view.RotatingImage": [],
-  "HooferSailingMobile.view.UserPreferences": [],
-  "HooferSailingMobile.view.WindsChart": []
+  "HooferSailingMobile.view.Main": []
 });
 Ext.ClassManager.addNameAliasMappings({
   "Ext.AbstractComponent": [],
@@ -1704,34 +1687,7 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.viewport.Ios": [],
   "Ext.viewport.Viewport": [],
   "Ext.viewport.WindowsPhone": [],
-  "HooferSailingMobile.controller.Boats": [],
-  "HooferSailingMobile.controller.Refresh": [],
-  "HooferSailingMobile.model.Boat": [],
-  "HooferSailingMobile.model.Flag": [],
-  "HooferSailingMobile.model.Fleet": [],
-  "HooferSailingMobile.model.RefreshRatePreferenceModel": [],
-  "HooferSailingMobile.store.CompassPoints": [],
-  "HooferSailingMobile.store.Fleets": [],
-  "HooferSailingMobile.store.Winds": [],
-  "HooferSailingMobile.util.Compass": [],
-  "HooferSailingMobile.util.Date": [],
-  "HooferSailingMobile.util.Util": [],
-  "HooferSailingMobile.view.Boats": [
-    "widget.boats"
-  ],
-  "HooferSailingMobile.view.Conditions": [
-    "widget.conditions"
-  ],
   "HooferSailingMobile.view.Main": [
     "widget.main"
-  ],
-  "HooferSailingMobile.view.RotatingImage": [
-    "widget.rotatingimage"
-  ],
-  "HooferSailingMobile.view.UserPreferences": [
-    "widget.userpreferences"
-  ],
-  "HooferSailingMobile.view.WindsChart": [
-    "widget.windschart"
   ]
 });

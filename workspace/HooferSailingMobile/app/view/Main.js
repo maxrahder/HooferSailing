@@ -3,38 +3,48 @@ Ext.define('HooferSailingMobile.view.Main', {
     xtype: 'main',
     requires: [
         'Ext.TitleBar',
-        'HooferSailingMobile.view.Boats',
-        'HooferSailingMobile.view.Conditions',
-        'HooferSailingMobile.view.WindsChart',
-        'HooferSailingMobile.view.UserPreferences',
-        'Ext.draw.Component',
-        'HooferSailingMobile.view.RotatingImage',
-        'Ext.draw.sprite.Image'
+        'Ext.Video'
     ],
     config: {
         tabBarPosition: 'bottom',
-        items: [{
-            iconCls: 'flag',
-            title: 'Conditions',
-            xtype: 'conditions',
-            store: 'Winds'
-        }, {
-            iconCls: 'anchor',
-            title: 'Boats',
-            xtype: 'boats'
-        }, {
-            iconCls: 'chart',
-            title: 'Chart',
-            layout: 'fit',
-            margin: 40,
-            items: [{
-                xtype: 'windschart',
-                store: 'CompassPoints'
-            }]
-        }, {
-            iconCls: 'settings',
-            title: 'Preferences',
-            xtype: 'userpreferences'
-        }]
+
+        items: [
+            {
+                title: 'Welcome',
+                iconCls: 'home',
+
+                styleHtmlContent: true,
+                scrollable: true,
+
+                items: {
+                    docked: 'top',
+                    xtype: 'titlebar',
+                    title: 'Welcome to Sencha Touch 2'
+                },
+
+                html: [
+                    "You've just generated a new Sencha Touch 2 project. What you're looking at right now is the ",
+                    "contents of <a target='_blank' href=\"app/view/Main.js\">app/view/Main.js</a> - edit that file ",
+                    "and refresh to change what's rendered here."
+                ].join("")
+            },
+            {
+                title: 'Get Started',
+                iconCls: 'action',
+
+                items: [
+                    {
+                        docked: 'top',
+                        xtype: 'titlebar',
+                        title: 'Getting Started'
+                    },
+                    {
+                        xtype: 'video',
+                        url: 'http://av.vimeo.com/64284/137/87347327.mp4?token=1330978144_f9b698fea38cd408d52a2393240c896c',
+                        posterUrl: 'http://b.vimeocdn.com/ts/261/062/261062119_640.jpg'
+                    }
+                ]
+            }
+        ]
     }
 });
