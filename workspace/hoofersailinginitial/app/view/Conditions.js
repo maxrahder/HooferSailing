@@ -97,11 +97,12 @@ Ext.define('HooferSailingMobile.view.Conditions', {
             me.setStore(store);
         }
 
+
         // Assert: store (and me.getStore()) reference a store object for the winds.
         // When it's reloaded the fetch event is fired. When that happens update the
         // contents of the Conditions tpl with properties from the store.
         store.on('fetch', function(store) {
-
+            
             var image = me.down('#rotatingImage');
             var roseDirection = store.getWindDirectionRose();
             var degrees = HooferSailingMobile.util.Compass.roseToDegrees(roseDirection);

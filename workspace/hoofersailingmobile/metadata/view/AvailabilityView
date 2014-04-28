@@ -1,0 +1,29 @@
+{
+    "type": "Ext.dataview.DataView",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|userClassName": "AvailabilityView"
+    },
+    "designerId": "6dbc9a18-ae69-4262-bce5-38f4c2f22423",
+    "cn": [
+        {
+            "type": "Ext.XTemplate",
+            "reference": {
+                "name": "itemTpl",
+                "type": "object"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "designer|displayName": "itemTpl",
+                "implHandler": [
+                    "<div>Data View Item {string}</div>"
+                ]
+            },
+            "designerId": "1e5ea59f-d81e-46e5-ab28-b1a7bf9509df"
+        }
+    ]
+}

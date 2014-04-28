@@ -1,0 +1,29 @@
+{
+    "type": "Ext.dataview.DataView",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|userClassName": "FleetList"
+    },
+    "designerId": "24039c34-55dd-4018-bf10-446f61a53cb3",
+    "cn": [
+        {
+            "type": "Ext.XTemplate",
+            "reference": {
+                "name": "itemTpl",
+                "type": "object"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "designer|displayName": "itemTpl",
+                "implHandler": [
+                    "<div>Data View Item {string}</div>"
+                ]
+            },
+            "designerId": "f58d6ce2-dba1-40b0-ad33-bba5ea2964f9"
+        }
+    ]
+}

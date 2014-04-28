@@ -20,5 +20,18 @@ Ext.Loader.setConfig({
 
 
 Ext.application({
-    name: 'HooferSailingMobile'
+    views: [
+        'MyTabPanel',
+        'Conditions',
+        'Boats',
+        'FleetList',
+        'AvailabilityView'
+    ],
+    name: 'HooferSailingMobile',
+
+    launch: function() {
+
+        Ext.create('HooferSailingMobile.view.MyTabPanel', {fullscreen: true});
+    }
+
 });

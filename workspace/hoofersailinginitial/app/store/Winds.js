@@ -17,7 +17,7 @@ Ext.define('HooferSailingMobile.store.Winds', {
 		averageKnots: 0,		
 		gusts: 0,
 		weightedAverage: true,
-		windDirectionRose: '',
+		windDirectionRose: 0,
 		waterTemperature: 0,
 
 		groupField: 'windDirectionRose',
@@ -60,8 +60,10 @@ Ext.define('HooferSailingMobile.store.Winds', {
 
 				var buoyData = response.data;
 				var stamps = response.stamps;
-				for (var i = 0; i < length; i++) {
 
+				var buoyDown = false;
+
+				for (var i = 0; i < length; i++) {
 
 					// Assert: 
 					// buoyData[i][0] = wind direction (degrees)
@@ -73,6 +75,11 @@ Ext.define('HooferSailingMobile.store.Winds', {
 					}
 
 					var windDirectionDegrees = buoyData[i][0];
+
+					if (isNaN(windDirectionDegrees)){
+						buoyDown = true;
+						break;
+					}
 
 					var windSpeedMetersPerSecond;
 					if (me.getWeightedAverage()) {
@@ -108,6 +115,10 @@ Ext.define('HooferSailingMobile.store.Winds', {
 				}
 				me.setData(d);
 
+				if (buoyDown){
+					return;
+				}
+
 				if (i > 0) {
 					me.setWaterTemperature(buoyData[i-1][2]);
 				}
@@ -115,6 +126,7 @@ Ext.define('HooferSailingMobile.store.Winds', {
 				// Figure out the most common wind direction
 				var groups = me.getGroups();
 				var biggestGroup = groups[0];
+
 				Ext.Array.forEach(groups, function(g) {
 					if (g.children.length > biggestGroup.children.length) {
 						biggestGroup = g;

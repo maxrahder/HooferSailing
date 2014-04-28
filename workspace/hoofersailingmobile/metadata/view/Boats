@@ -1,0 +1,13 @@
+{
+    "type": "Ext.navigation.View",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|userAlias": "boats",
+        "designer|userClassName": "Boats"
+    },
+    "designerId": "95f2776c-82a2-4b13-b6ce-7dd3be68338a"
+}
