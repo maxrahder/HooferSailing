@@ -18,6 +18,9 @@
       },
       {
          "path": "resources/lib/moment.js"
+      },
+      {
+         "path": "app/util/Compass.js"
       }
    ],
    "css": [
@@ -52,6 +55,6 @@
    ],
    "archivePath": "archive",
    "requires": [],
-   "id": "f0eea7b6-bce8-4161-9129-fa85c83e723f",
-   "classpath": "${app.dir}/app,${app.dir}/resources/lib/"
+   "id": "61f0c7de-a988-4dad-8850-48082346fc21",
+   "classpath": "${app.dir}/app,${app.dir}/resources/lib/,${app.dir}/app/util/"
 }

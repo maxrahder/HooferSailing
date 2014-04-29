@@ -7,12 +7,16 @@
     "codeClass": null,
     "userConfig": {
         "name": "HooferSailingMobile",
+        "stores": [
+            "Winds"
+        ],
         "views": [
-            "MyTabPanel",
             "Conditions",
             "Boats",
             "FleetList",
-            "AvailabilityView"
+            "AvailabilityView",
+            "RotatingImage",
+            "MyCarousel"
         ]
     },
     "designerId": "application"

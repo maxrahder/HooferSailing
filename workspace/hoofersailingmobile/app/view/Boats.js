@@ -17,7 +17,17 @@ Ext.define('HooferSailingMobile.view.Boats', {
     extend: 'Ext.navigation.View',
     alias: 'widget.boats',
 
+    requires: [
+        'HooferSailingMobile.view.FleetList',
+        'Ext.dataview.DataView'
+    ],
+
     config: {
+        items: [
+            {
+                xtype: 'fleetlist'
+            }
+        ]
     }
 
 });

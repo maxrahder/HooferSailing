@@ -10,9 +10,31 @@
     },
     "designerId": "e432ccc0-f4ea-4f89-a860-c19738bfa564",
     "storage": {
-        "needsCompile": false,
+        "needsCompile": true,
         "simple": {},
-        "nameIndex": 1,
+        "nameIndex": 2,
         "varData": {}
-    }
+    },
+    "cn": [
+        {
+            "type": "themescss",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "designer|displayName": "Scss Resource",
+                "implHandler": [
+                    "@include icon('anchor');",
+                    "@include icon('flag');",
+                    "@include icon('delete');",
+                    "@include icon('check2');",
+                    "@include icon('chart');",
+                    ""
+                ]
+            },
+            "designerId": "f445af17-0b92-488e-bf42-f6373c82e748"
+        }
+    ]
 }

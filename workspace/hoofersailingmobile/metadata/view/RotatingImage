@@ -1,0 +1,132 @@
+{
+    "type": "Ext.Component",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "backgroundSrc": "resources/images/RoseBackground.png",
+        "degrees": 0,
+        "designer|userAlias": "rotatingimage",
+        "designer|userClassName": "RotatingImage",
+        "height": 100,
+        "src": "resources/images/RoseForeground.png"
+    },
+    "configAlternates": {
+        "degrees": "number"
+    },
+    "designerId": "609722ec-3d3a-4ab3-b8c0-3ea686313ccb",
+    "customConfigs": [
+        {
+            "group": "(Custom Properties)",
+            "name": "degrees",
+            "type": "string"
+        },
+        {
+            "group": "(Custom Properties)",
+            "name": "src",
+            "type": "string"
+        },
+        {
+            "group": "(Custom Properties)",
+            "name": "backgroundSrc",
+            "type": "string"
+        }
+    ],
+    "cn": [
+        {
+            "type": "Ext.XTemplate",
+            "reference": {
+                "name": "tpl",
+                "type": "object"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "designer|displayName": "tpl",
+                "implHandler": [
+                    "<div style=\"text-align: center;\">",
+                    "<div style=\"",
+                    "    height: {height}px;background-image: url({backgroundSrc}) ;",
+                    "    background-size: {height}px {height}px ;",
+                    "\tbackground-position: center ;",
+                    "\tbackground-repeat: no-repeat ;",
+                    "\t\">",
+                    "<img style=\"",
+                    "    height: {height}px;",
+                    "    transform:rotate({degrees}deg) ;",
+                    "\t-ms-transform:rotate({degrees}deg) ;",
+                    "    -webkit-transform:rotate({degrees}deg) ;",
+                    "    \"",
+                    "    src=\"{src}\" ",
+                    "    height=\"{height}px\"",
+                    "/>",
+                    "</div>",
+                    "</div>"
+                ]
+            },
+            "designerId": "e7425ac6-56f1-4702-9758-d6930c1ad306"
+        },
+        {
+            "type": "fixedfunction",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "initialize",
+                "implHandler": [
+                    "this.setData({",
+                    "    src: this.getSrc(),",
+                    "\tbackgroundSrc: this.getBackgroundSrc(),",
+                    "\theight: this.getHeight()",
+                    "});",
+                    "",
+                    "this.callParent();",
+                    ""
+                ]
+            },
+            "designerId": "06a75229-e615-476d-bb03-d8ddbb353056"
+        },
+        {
+            "type": "basicfunction",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "designer|params": [
+                    "degrees"
+                ],
+                "fn": "applyDegrees",
+                "implHandler": [
+                    "return Ext.Number.from(degrees, 0);"
+                ]
+            },
+            "designerId": "3dffd168-a029-4b11-bd79-915393ba7cc1"
+        },
+        {
+            "type": "basicfunction",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "designer|params": [
+                    "degrees"
+                ],
+                "fn": "updateDegrees",
+                "implHandler": [
+                    "var data = this.getData();",
+                    "data = Ext.apply(data, {degrees: degrees});",
+                    "this.setData(data);",
+                    ""
+                ]
+            },
+            "designerId": "e4d10637-a4de-4c11-ada3-fa959fa6b297"
+        }
+    ]
+}

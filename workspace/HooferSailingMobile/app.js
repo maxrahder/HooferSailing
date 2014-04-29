@@ -20,18 +20,22 @@ Ext.Loader.setConfig({
 
 
 Ext.application({
+    stores: [
+        'Winds'
+    ],
     views: [
-        'MyTabPanel',
         'Conditions',
         'Boats',
         'FleetList',
-        'AvailabilityView'
+        'AvailabilityView',
+        'RotatingImage',
+        'MyCarousel'
     ],
     name: 'HooferSailingMobile',
 
     launch: function() {
 
-        Ext.create('HooferSailingMobile.view.MyTabPanel', {fullscreen: true});
+        Ext.create('HooferSailingMobile.view.MyCarousel', {fullscreen: true});
     }
 
 });

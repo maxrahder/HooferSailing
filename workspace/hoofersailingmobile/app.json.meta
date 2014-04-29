@@ -1,1 +1,1 @@
-{"_comment":"Please don't edit. This is Architect data.","name":"HooferSailingMobile","css":[],"js":[{"path":"resources/lib/moment.js"}],"resources":[],"classpath":"${app.dir}/app,${app.dir}/resources/lib/","requires":[]}
+{"_comment":"Please don't edit. This is Architect data.","name":"HooferSailingMobile","css":[],"js":[{"path":"resources/lib/moment.js"},{"path":"app/util/Compass.js"}],"resources":[],"classpath":"${app.dir}/app,${app.dir}/resources/lib/,${app.dir}/app/util/","requires":[]}

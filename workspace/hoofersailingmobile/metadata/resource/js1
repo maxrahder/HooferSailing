@@ -1,0 +1,13 @@
+{
+    "type": "jsresource",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|userClassName": "js1",
+        "url": "app/util/Compass.js"
+    },
+    "designerId": "7071b8f2-faef-40e5-aff4-55bb2fba3af0"
+}

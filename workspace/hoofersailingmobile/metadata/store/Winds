@@ -1,0 +1,272 @@
+{
+    "type": "arraystore",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "averageKnots": 0,
+        "begin": "-00:05:00",
+        "designer|userClassName": "Winds",
+        "groupField": "windDirectionRose",
+        "gusts": 0,
+        "interval": "00:00:10",
+        "requires": [
+            "HooferSailingMobile.util.Compass"
+        ],
+        "storeId": "Winds",
+        "symbols": "dir:spd:wt_1.0",
+        "url": "http://metobs.ssec.wisc.edu/app/mendota/buoy/data/jsonp",
+        "waterTemperature": 0,
+        "weightedAverage": true,
+        "windDirectionRose": 0
+    },
+    "configAlternates": {
+        "averageKnots": "number",
+        "gusts": "number",
+        "weightedAverage": "boolean",
+        "windDirectionRose": "number",
+        "waterTemperature": "number"
+    },
+    "designerId": "951da714-8064-47f4-a3e6-6fd3d78ed600",
+    "customConfigs": [
+        {
+            "group": "(Custom Properties)",
+            "name": "url",
+            "type": "string"
+        },
+        {
+            "group": "(Custom Properties)",
+            "name": "symbols",
+            "type": "string"
+        },
+        {
+            "group": "(Custom Properties)",
+            "name": "interval",
+            "type": "string"
+        },
+        {
+            "group": "(Custom Properties)",
+            "name": "begin",
+            "type": "string"
+        },
+        {
+            "group": "(Custom Properties)",
+            "name": "averageKnots",
+            "type": "string"
+        },
+        {
+            "group": "(Custom Properties)",
+            "name": "gusts",
+            "type": "string"
+        },
+        {
+            "group": "(Custom Properties)",
+            "name": "weightedAverage",
+            "type": "string"
+        },
+        {
+            "group": "(Custom Properties)",
+            "name": "windDirectionRose",
+            "type": "string"
+        },
+        {
+            "group": "(Custom Properties)",
+            "name": "waterTemperature",
+            "type": "string"
+        }
+    ],
+    "cn": [
+        {
+            "type": "basicfunction",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "fetch",
+                "implHandler": [
+                    "var me = this;",
+                    "Ext.data.JsonP.request({",
+                    "\turl: this.getUrl(),",
+                    "\tparams: {",
+                    "\t\tsymbols: this.getSymbols(),",
+                    "\t\tbegin: this.getBegin(),",
+                    "\t\tinterval: this.getInterval()",
+                    "\t},",
+                    "\tsuccess: function(response) {",
+                    "",
+                    "\t\t// Buoy data is two separate arrays of equal length: one of ",
+                    "\t\t// time stamps for each measurement, and another array of ",
+                    "\t\t// the requested values for each time stamp.",
+                    "",
+                    "\t\t// This is an array store, which means the feed needs to be",
+                    "\t\t// an array of arrays, with each element in the order defined",
+                    "\t\t// in the fields array (above). The buoy feed doesn't match ",
+                    "\t\t// that, so here we're manually constructing each item and",
+                    "\t\t// adding it to the array \"d\" -- then out of the loop we're",
+                    "\t\t// running store.loadData(d) to populate the data store.",
+                    "",
+                    "\t\t// There's also a topSpeeds array of the three top wind speeds.",
+                    "\t\t// The average of those is the value for \"gusting\". ",
+                    "",
+                    "\t\t// Finally, we're taking the moving average of the wind speeds.",
+                    "\t\t// I.e., each wind speed data point is actually the average of",
+                    "\t\t// the three adjacent values. ",
+                    "",
+                    "\t\tvar d = [];",
+                    "\t\tvar topSpeeds = [0, 0, 0];",
+                    "\t\tvar knotsSum = 0;",
+                    "\t\tvar length = response.stamps.length;",
+                    "",
+                    "\t\tvar buoyData = response.data;",
+                    "\t\tvar stamps = response.stamps;",
+                    "",
+                    "\t\tvar buoyDown = false;",
+                    "",
+                    "\t\tfor (var i = 0; i < length; i++) {",
+                    "",
+                    "\t\t\t// Assert: ",
+                    "\t\t\t// buoyData[i][0] = wind direction (degrees)",
+                    "\t\t\t// buoyData[i][1] = wind speed (meters per second)",
+                    "\t\t\t// buoyData[i][2] = water temperature at 1 meter (celsius)",
+                    "",
+                    "\t\t\tif (me.getWeightedAverage() && ((i === 0) || ((i + 1) == length))) {",
+                    "\t\t\t\tcontinue;",
+                    "\t\t\t}",
+                    "",
+                    "\t\t\tvar windDirectionDegrees = buoyData[i][0];",
+                    "",
+                    "\t\t\tif (isNaN(windDirectionDegrees)){",
+                    "\t\t\t\tbuoyDown = true;",
+                    "\t\t\t\tbreak;",
+                    "\t\t\t}",
+                    "",
+                    "\t\t\tvar windSpeedMetersPerSecond;",
+                    "\t\t\tif (me.getWeightedAverage()) {",
+                    "\t\t\t\twindSpeedMetersPerSecond = (buoyData[i - 1][1] + buoyData[i][1] + buoyData[i + 1][1]) / 3;",
+                    "\t\t\t} else {",
+                    "\t\t\t\twindSpeedMetersPerSecond = buoyData[i][1];",
+                    "\t\t\t}",
+                    "",
+                    "\t\t\tvar time = moment(stamps[i] + 'Z').toDate();",
+                    "",
+                    "\t\t\tvar windDirectionRose = HooferSailingMobile.util.Compass.degreesToRose(windDirectionDegrees);",
+                    "",
+                    "\t\t\tvar windSpeedKnots = (windSpeedMetersPerSecond * 1.94384);",
+                    "",
+                    "\t\t\td.push([",
+                    "\t\t\t\twindDirectionDegrees,",
+                    "\t\t\t\twindSpeedMetersPerSecond,",
+                    "\t\t\t\ttime,",
+                    "\t\t\t\twindDirectionRose,",
+                    "\t\t\t\twindSpeedKnots",
+                    "\t\t\t]);",
+                    "",
+                    "",
+                    "\t\t\tknotsSum += windSpeedKnots;",
+                    "",
+                    "\t\t\tvar unWeightedKnot = buoyData[i][1] * 1.94384;",
+                    "\t\t\tfor (var index = 0; index < topSpeeds.length; index++) {",
+                    "\t\t\t\tif (unWeightedKnot > topSpeeds[index]) {",
+                    "\t\t\t\t\ttopSpeeds[index] = windSpeedKnots;",
+                    "\t\t\t\t\tbreak;",
+                    "\t\t\t\t}",
+                    "\t\t\t}",
+                    "\t\t}",
+                    "\t\tme.setData(d);",
+                    "",
+                    "\t\tif (buoyDown){",
+                    "\t\t\treturn;",
+                    "\t\t}",
+                    "",
+                    "\t\tif (i > 0) {",
+                    "\t\t\tme.setWaterTemperature(buoyData[i-1][2]);",
+                    "\t\t}",
+                    "",
+                    "\t\t// Figure out the most common wind direction",
+                    "\t\tvar groups = me.getGroups();",
+                    "\t\tvar biggestGroup = groups[0];",
+                    "",
+                    "\t\tExt.Array.forEach(groups, function(g) {",
+                    "\t\t\tif (g.children.length > biggestGroup.children.length) {",
+                    "\t\t\t\tbiggestGroup = g;",
+                    "\t\t\t}",
+                    "\t\t});",
+                    "\t\tme.setWindDirectionRose(biggestGroup.name);",
+                    "",
+                    "\t\tme.setAverageKnots(Math.round(knotsSum / d.length));",
+                    "\t\tme.setGusts(Math.round(Ext.Array.mean(topSpeeds)));",
+                    "\t\tme.fireEvent('fetch', me);",
+                    "\t\t",
+                    "\t}",
+                    "});",
+                    ""
+                ]
+            },
+            "designerId": "5bd76e83-3e91-4436-bdce-3bdca51eb255"
+        },
+        {
+            "type": "Ext.data.Field",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "windDirectionDegrees"
+            },
+            "designerId": "527efd38-282c-4618-a3ab-e7e2732bb067"
+        },
+        {
+            "type": "Ext.data.Field",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "metersPerSecond"
+            },
+            "designerId": "4d2f690f-1ae6-4313-9523-4217f5dec489"
+        },
+        {
+            "type": "Ext.data.Field",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "time"
+            },
+            "designerId": "511bd71b-9137-4189-a82c-c8ff1bffcd86"
+        },
+        {
+            "type": "Ext.data.Field",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "windDirectionRose"
+            },
+            "designerId": "de8ace83-6015-4e5c-a096-c3809576d512"
+        },
+        {
+            "type": "Ext.data.Field",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "windSpeedKnots"
+            },
+            "designerId": "21e8b05b-2751-4e3c-8279-83b60a0973d8"
+        }
+    ]
+}

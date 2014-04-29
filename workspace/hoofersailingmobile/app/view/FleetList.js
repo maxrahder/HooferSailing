@@ -15,6 +15,7 @@
 
 Ext.define('HooferSailingMobile.view.FleetList', {
     extend: 'Ext.dataview.DataView',
+    alias: 'widget.fleetlist',
 
     requires: [
         'Ext.XTemplate'

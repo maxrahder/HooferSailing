@@ -1,0 +1,81 @@
+{
+    "type": "Ext.carousel.Carousel",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|initialView": true,
+        "designer|userClassName": "MyCarousel",
+        "indicator": false
+    },
+    "designerId": "a005c09b-3762-4ff7-9589-c1c3f1ec9c82",
+    "cn": [
+        {
+            "type": "linkedinstance",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "designerId": "bee40f41-45df-4d77-b3be-5718613b35c1",
+            "masterInstanceId": "11bd6933-7379-45dd-afca-cf36b6e59eeb"
+        },
+        {
+            "type": "linkedinstance",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "designerId": "3541f1db-64f9-4c7d-af8e-fbf54e9fbaa1",
+            "masterInstanceId": "95f2776c-82a2-4b13-b6ce-7dd3be68338a"
+        },
+        {
+            "type": "Ext.Toolbar",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "container|pack": "center",
+                "docked": "bottom"
+            },
+            "designerId": "0c875146-69c0-4af9-acef-3b3f4b0161e3",
+            "cn": [
+                {
+                    "type": "Ext.Button",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "iconAlign": null,
+                        "iconCls": "flag",
+                        "text": ""
+                    },
+                    "designerId": "79a94726-ec17-4770-a7a9-e30cef689c01"
+                },
+                {
+                    "type": "Ext.Button",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "designer|uiInterfaceName": "plain",
+                        "icon": null,
+                        "iconCls": "anchor",
+                        "text": "",
+                        "ui": "plain"
+                    },
+                    "designerId": "c42c523a-6466-4622-826d-55794a7d6d65"
+                }
+            ]
+        }
+    ]
+}

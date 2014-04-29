@@ -2,7 +2,7 @@
     "name": "hoofersailingmobile",
     "settings": {
         "cmd": {
-            "license": "commercial",
+            "license": "gpl",
             "cmdVersion": "4.0.4.84",
             "frameworkVersion": "2.3.1.410"
         },
@@ -25,10 +25,7 @@
         "buildShouldOverwriteIndex": true,
         "generateArchitectVersion": true,
         "displayfield-ExtBox1-2338-inputEl": "Not Installed",
-        "lastBuildSelection": {
-            "value": "webBuild",
-            "display": "Build web app"
-        }
+        "displayfield-ExtBox1-2454-inputEl": "Not Installed"
     },
     "xdsVersion": "3.0.4",
     "xdsBuild": 1386,
@@ -37,19 +34,23 @@
     "framework": "touch23",
     "viewOrderMap": {
         "view": [
-            "f509e442-1a26-4efc-ae8e-fc53020b5f88",
+            "a005c09b-3762-4ff7-9589-c1c3f1ec9c82",
             "11bd6933-7379-45dd-afca-cf36b6e59eeb",
             "95f2776c-82a2-4b13-b6ce-7dd3be68338a",
             "24039c34-55dd-4018-bf10-446f61a53cb3",
-            "6dbc9a18-ae69-4262-bce5-38f4c2f22423"
+            "6dbc9a18-ae69-4262-bce5-38f4c2f22423",
+            "609722ec-3d3a-4ab3-b8c0-3ea686313ccb"
         ],
-        "store": [],
+        "store": [
+            "951da714-8064-47f4-a3e6-6fd3d78ed600"
+        ],
         "controller": [],
         "model": [],
         "resource": [
             "0259b35f-470f-417f-977b-d0fcbf9ed9e9",
             "e432ccc0-f4ea-4f89-a860-c19738bfa564",
-            "edd02bb0-aa05-44f9-a04d-967addeb329f"
+            "edd02bb0-aa05-44f9-a04d-967addeb329f",
+            "7071b8f2-faef-40e5-aff4-55bb2fba3af0"
         ],
         "app": [
             "application"

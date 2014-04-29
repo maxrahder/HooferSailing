@@ -17,7 +17,46 @@ Ext.define('HooferSailingMobile.view.Conditions', {
     extend: 'Ext.Container',
     alias: 'widget.conditions',
 
+    requires: [
+        'HooferSailingMobile.view.RotatingImage',
+        'Ext.Component',
+        'Ext.XTemplate'
+    ],
+
     config: {
+        layout: {
+            type: 'vbox',
+            pack: 'center'
+        },
+        items: [
+            {
+                xtype: 'rotatingimage'
+            },
+            {
+                xtype: 'component',
+                tpl: [
+                    '<p style="text-align:center;margin-top:0em;font-size:3em;">',
+                    '    <b>{knots}</b> kn',
+                    '</p>',
+                    '',
+                    '<p style="text-align:center;font-size:1.5em;">',
+                    '{gusts} kn gusts',
+                    '</p>',
+                    '',
+                    '<p style="margin-top:.3em;text-align:center;font-size: 1.5em;">',
+                    'Water temp. {waterTemperature}&deg;F',
+                    '</p>'
+                ]
+            },
+            {
+                xtype: 'component',
+                tpl: [
+                    '<tpl if="color">',
+                    '<img src="resources/images/Flags/{color}.png" />',
+                    '</tpl>'
+                ]
+            }
+        ]
     }
 
 });

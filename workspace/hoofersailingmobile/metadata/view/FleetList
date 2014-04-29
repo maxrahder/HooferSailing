@@ -6,6 +6,7 @@
     },
     "codeClass": null,
     "userConfig": {
+        "designer|userAlias": "fleetlist",
         "designer|userClassName": "FleetList"
     },
     "designerId": "24039c34-55dd-4018-bf10-446f61a53cb3",

@@ -9,5 +9,17 @@
         "designer|userAlias": "boats",
         "designer|userClassName": "Boats"
     },
-    "designerId": "95f2776c-82a2-4b13-b6ce-7dd3be68338a"
+    "designerId": "95f2776c-82a2-4b13-b6ce-7dd3be68338a",
+    "cn": [
+        {
+            "type": "linkedinstance",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "designerId": "0119401f-bff5-4143-a04b-7f452e14c535",
+            "masterInstanceId": "24039c34-55dd-4018-bf10-446f61a53cb3"
+        }
+    ]
 }
