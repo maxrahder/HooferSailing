@@ -26,10 +26,10 @@ Ext.application({
     ],
 
     icon: {
-        '57': 'resources/images/Burgee_57x57.jpg',
-        '72': 'resources/images/Burgee_72x72.jpg',
-        '114': 'resources/images/Burgee_114x114.jpg',
-        '144': 'resources/images/Burgee_144x144.jpg'
+        '57': 'resources/images/Burgee_57x57.png',
+        '72': 'resources/images/Burgee_72x72.png',
+        '114': 'resources/images/Burgee_114x114.png',
+        '144': 'resources/images/Burgee_144x144.png'
     },
 
     isIconPrecomposed: true,

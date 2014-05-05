@@ -1,5 +1,11 @@
  Ext.define('HooferSailingMobile.util.Compass', {
  	singleton: true,
+ 	rosePoints: [
+ 		'N', 'NNE', 'NE', 'ENE',
+ 		'E', 'ESE', 'SE', 'SSE',
+ 		'S', 'SSW', 'SW', 'WSW',
+ 		'W', 'WNW', 'NW', 'NNW'
+ 	],
  	fromTo: [
  		[11.25, 'N'],
  		[33.75, 'NNE'],

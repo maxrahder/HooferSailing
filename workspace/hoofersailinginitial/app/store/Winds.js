@@ -14,24 +14,30 @@ Ext.define('HooferSailingMobile.store.Winds', {
 		symbols: 'dir:spd:wt_1.0',
 		interval: '00:00:10',
 		begin: '-00:05:00',
-		averageKnots: 0,		
+		averageKnots: 0,
 		gusts: 0,
 		weightedAverage: true,
 		windDirectionRose: 0,
 		waterTemperature: 0,
-
 		groupField: 'windDirectionRose',
 		fields: ['windDirectionDegrees', 'metersPerSecond', 'time', 'windDirectionRose', 'windSpeedKnots'],
 	},
+	buoyTransmitting: false,
 
 	fetch: function() {
 		var me = this;
+
 		Ext.data.JsonP.request({
 			url: this.getUrl(),
+			timeout: 5000, // UW buoy data should come quickly, or not at all
 			params: {
 				symbols: this.getSymbols(),
 				begin: this.getBegin(),
 				interval: this.getInterval()
+			},
+			failure: function() {
+				me.buoyTransmitting = false;
+				me.fireEvent('fetch', me);
 			},
 			success: function(response) {
 
@@ -60,8 +66,7 @@ Ext.define('HooferSailingMobile.store.Winds', {
 
 				var buoyData = response.data;
 				var stamps = response.stamps;
-
-				var buoyDown = false;
+				me.buoyTransmitting = true;
 
 				for (var i = 0; i < length; i++) {
 
@@ -76,8 +81,8 @@ Ext.define('HooferSailingMobile.store.Winds', {
 
 					var windDirectionDegrees = buoyData[i][0];
 
-					if (isNaN(windDirectionDegrees)){
-						buoyDown = true;
+					if (isNaN(windDirectionDegrees)) {
+						me.buoyTransmitting = false;
 						break;
 					}
 
@@ -115,12 +120,12 @@ Ext.define('HooferSailingMobile.store.Winds', {
 				}
 				me.setData(d);
 
-				if (buoyDown){
+				if (!me.buoyTransmitting) {
 					return;
 				}
 
 				if (i > 0) {
-					me.setWaterTemperature(buoyData[i-1][2]);
+					me.setWaterTemperature(buoyData[i - 1][2]);
 				}
 
 				// Figure out the most common wind direction
@@ -137,7 +142,7 @@ Ext.define('HooferSailingMobile.store.Winds', {
 				me.setAverageKnots(Math.round(knotsSum / d.length));
 				me.setGusts(Math.round(Ext.Array.mean(topSpeeds)));
 				me.fireEvent('fetch', me);
-				
+
 			}
 		});
 	}

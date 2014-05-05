@@ -1,0 +1,91 @@
+{
+    "type": "Ext.Container",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "container|pack": "center",
+        "designer|userAlias": "conditions",
+        "designer|userClassName": "Conditions",
+        "layout": "vbox"
+    },
+    "designerId": "11bd6933-7379-45dd-afca-cf36b6e59eeb",
+    "cn": [
+        {
+            "type": "linkedinstance",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "designerId": "cc13a790-614d-486b-8fd3-fafe272fad24",
+            "masterInstanceId": "609722ec-3d3a-4ab3-b8c0-3ea686313ccb"
+        },
+        {
+            "type": "Ext.Component",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "designerId": "62563ba7-e8d5-4020-b305-a27f6a928eeb",
+            "cn": [
+                {
+                    "type": "Ext.XTemplate",
+                    "reference": {
+                        "name": "tpl",
+                        "type": "object"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "designer|displayName": "tpl",
+                        "implHandler": [
+                            "<p style=\"text-align:center;margin-top:0em;font-size:3em;\">",
+                            "    <b>{knots}</b> kn",
+                            "</p>",
+                            "",
+                            "<p style=\"text-align:center;font-size:1.5em;\">",
+                            "{gusts} kn gusts",
+                            "</p>",
+                            "",
+                            "<p style=\"margin-top:.3em;text-align:center;font-size: 1.5em;\">",
+                            "Water temp. {waterTemperature}&deg;F",
+                            "</p>"
+                        ]
+                    },
+                    "designerId": "47cee464-2dea-419b-964f-99a70d48785f"
+                }
+            ]
+        },
+        {
+            "type": "Ext.Component",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "designerId": "886831d8-d9f2-475a-bdca-f5e834868f55",
+            "cn": [
+                {
+                    "type": "Ext.XTemplate",
+                    "reference": {
+                        "name": "tpl",
+                        "type": "object"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "designer|displayName": "tpl",
+                        "implHandler": [
+                            "<tpl if=\"color\">",
+                            "<img src=\"resources/images/Flags/{color}.png\" />",
+                            "</tpl>"
+                        ]
+                    },
+                    "designerId": "d699eb8c-51bc-4a34-be4f-b5a295ebd7fe"
+                }
+            ]
+        }
+    ]
+}

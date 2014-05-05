@@ -767,6 +767,7 @@ Ext.ClassManager.addNameAlternateMappings({
   "HooferSailingMobile.util.Util": [],
   "HooferSailingMobile.view.Boats": [],
   "HooferSailingMobile.view.Conditions": [],
+  "HooferSailingMobile.view.ConditionsFlag": [],
   "HooferSailingMobile.view.Main": [],
   "HooferSailingMobile.view.RotatingImage": []
 });
@@ -1728,6 +1729,9 @@ Ext.ClassManager.addNameAliasMappings({
   ],
   "HooferSailingMobile.view.Conditions": [
     "widget.conditions"
+  ],
+  "HooferSailingMobile.view.ConditionsFlag": [
+    "widget.conditionsflag"
   ],
   "HooferSailingMobile.view.Main": [
     "widget.main"

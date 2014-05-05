@@ -18,8 +18,8 @@ Ext.define('HooferSailingMobile.controller.Refresh', {
 
 
     applyInterval: function(interval) {
-        // Can't be less than every 5 seconds.
-        if ((interval === 0) || (interval >= 5000)) {
+        // Allowed intervals: 0 (off) or more than 5 seconds 
+        if ((interval === 0) || (interval > 5000)) {
             return interval;
         }
     },
@@ -36,6 +36,7 @@ Ext.define('HooferSailingMobile.controller.Refresh', {
             return;
         }
         me.refresh();
+        // I don't think this is recursion. So hopefully, no call stack issues.
         Ext.defer(me.doAutoRefresh, me.getInterval(), me, [intervalId]);
     },
 

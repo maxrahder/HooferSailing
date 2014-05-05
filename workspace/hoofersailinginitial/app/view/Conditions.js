@@ -3,12 +3,16 @@ Ext.define('HooferSailingMobile.view.Conditions', {
     xtype: 'conditions',
     requires: [
         'Ext.TitleBar',
-        'HooferSailingMobile.view.Boats', 
-        'HooferSailingMobile.view.RotatingImage'
+        'HooferSailingMobile.view.Boats',
+        'HooferSailingMobile.view.RotatingImage',
+        'HooferSailingMobile.view.ConditionsFlag'
     ],
     config: {
         store: null,
-        layout: 'vbox',
+        layout: {
+            type: 'vbox',
+            pack: 'center'
+        },
         items: [{
             xtype: 'rotatingimage',
             margin: 6,
@@ -30,13 +34,6 @@ Ext.define('HooferSailingMobile.view.Conditions', {
                 '    vertical-align: middle;',
                 '    margin-top: 0em; ',
                 '">',
-
-                // '<p style="',
-                // '    text-align: center; ',
-                // '    font-size: 3em; ',
-                // '">',
-                // '<b>{windDirection}</b>',
-                // '</p>',
 
                 '<p style="',
                 '    text-align: center; ',
@@ -62,19 +59,10 @@ Ext.define('HooferSailingMobile.view.Conditions', {
                 '{waterTemperature}&deg;F',
                 '</p>',
 
-                '<tpl if="color">',
-                '<img src="resources/images/Flags/{color}.png" ',
-                'style="',
-                'margin-top: .3em; ',
-                'display: block;',
-                'margin-left: auto;',
-                'margin-right: auto; ' ,
-                'height: 120px; ',
-                '"/>',
-                '</tpl>',
-
                 '</div>'
             ]
+        }, {
+            xtype: 'conditionsflag'
         }]
 
     },
@@ -83,30 +71,21 @@ Ext.define('HooferSailingMobile.view.Conditions', {
         data = Ext.apply(tplComponent.getData(), data);
         tplComponent.setData(data);
     },
-    initialize: function() {
-        this.callParent();
-
-        var me = this;
-        // The calling routine specifies the store. That may be an actual Ext.data.Store
-        // object, or the string name of a store. So take a look and if it's a string
-        // then get the actual store object via Ext.getStore() and have the Condition's
-        // store property reference that, rather than the string.
-        var store = me.getStore();
+    applyStore: function(store) {
         if (Ext.isString(store)) {
             store = Ext.getStore(store);
-            me.setStore(store);
         }
+        return store;
+    },
+    onStoreFetch: function(store) {
+        var me = this;
+        if (store.buoyTransmitting) {
 
-
-        // Assert: store (and me.getStore()) reference a store object for the winds.
-        // When it's reloaded the fetch event is fired. When that happens update the
-        // contents of the Conditions tpl with properties from the store.
-        store.on('fetch', function(store) {
-            
             var image = me.down('#rotatingImage');
             var roseDirection = store.getWindDirectionRose();
             var degrees = HooferSailingMobile.util.Compass.roseToDegrees(roseDirection);
-            image.rotate(degrees);
+            image.setDegrees(degrees);
+            image.show();
 
             me.updateConditions({
                 windDirection: store.getWindDirectionRose(),
@@ -114,7 +93,27 @@ Ext.define('HooferSailingMobile.view.Conditions', {
                 gusts: store.getGusts(),
                 waterTemperature: Math.round(((9 / 5) * store.getWaterTemperature()) + 32)
             });
-        });
+        } else {
 
+            var image = me.down('#rotatingImage');
+            image.hide();
+
+            var p = '<p style="';
+            p += 'text-align: center;'
+            p += 'font-size: 2em;';
+            p += 'color: #666666;';
+            p += 'margin: 1em;';
+            p += '">';
+            p += 'The UW Mendota Buoy<br>Is Not Transmitting';
+            p += '</p>';
+            this.down('#tpl').update(p);
+
+        }
+    },
+    updateStore: function(store) {
+        var me = this;
+        if (store) {
+            store.on('fetch', me.onStoreFetch, me);
+        }
     }
 });
