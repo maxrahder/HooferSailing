@@ -1,0 +1,12 @@
+{
+    "type": "Ext.app.Controller",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|userClassName": "Boats"
+    },
+    "designerId": "d0bc534c-2199-42f0-ad27-a1eec87a240e"
+}

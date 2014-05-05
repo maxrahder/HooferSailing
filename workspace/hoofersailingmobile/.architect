@@ -2,7 +2,7 @@
     "expandedState": {
         "data": true,
         "model": true,
-        "component": true,
+        "component": false,
         "controller": true,
         "resource": true,
         "a005c09b-3762-4ff7-9589-c1c3f1ec9c82": {
@@ -61,6 +61,7 @@
         },
         "24039c34-55dd-4018-bf10-446f61a53cb3": {
             "id": "24039c34-55dd-4018-bf10-446f61a53cb3",
+            "expanded": false,
             "cn": [
                 {
                     "id": "f58d6ce2-dba1-40b0-ad33-bba5ea2964f9"
@@ -77,6 +78,7 @@
         },
         "609722ec-3d3a-4ab3-b8c0-3ea686313ccb": {
             "id": "609722ec-3d3a-4ab3-b8c0-3ea686313ccb",
+            "expanded": false,
             "cn": [
                 {
                     "id": "e7425ac6-56f1-4702-9758-d6930c1ad306"
@@ -94,6 +96,7 @@
         },
         "951da714-8064-47f4-a3e6-6fd3d78ed600": {
             "id": "951da714-8064-47f4-a3e6-6fd3d78ed600",
+            "expanded": false,
             "cn": [
                 {
                     "id": "5bd76e83-3e91-4436-bdce-3bdca51eb255"
@@ -114,6 +117,12 @@
                     "id": "21e8b05b-2751-4e3c-8279-83b60a0973d8"
                 }
             ]
+        },
+        "d0bc534c-2199-42f0-ad27-a1eec87a240e": {
+            "id": "d0bc534c-2199-42f0-ad27-a1eec87a240e"
+        },
+        "c54b6d27-6936-42d5-94ea-f374666ef78c": {
+            "id": "c54b6d27-6936-42d5-94ea-f374666ef78c"
         },
         "0259b35f-470f-417f-977b-d0fcbf9ed9e9": {
             "id": "0259b35f-470f-417f-977b-d0fcbf9ed9e9"
@@ -144,18 +153,20 @@
             "e432ccc0-f4ea-4f89-a860-c19738bfa564",
             "a005c09b-3762-4ff7-9589-c1c3f1ec9c82",
             "951da714-8064-47f4-a3e6-6fd3d78ed600",
-            "7071b8f2-faef-40e5-aff4-55bb2fba3af0"
+            "7071b8f2-faef-40e5-aff4-55bb2fba3af0",
+            "d0bc534c-2199-42f0-ad27-a1eec87a240e",
+            "c54b6d27-6936-42d5-94ea-f374666ef78c"
         ]
     },
     "canvasState": {
         "topInstance": null
     },
     "inspectorState": {
-        "topInstance": "951da714-8064-47f4-a3e6-6fd3d78ed600",
-        "selectedInstance": "951da714-8064-47f4-a3e6-6fd3d78ed600"
+        "topInstance": "d0bc534c-2199-42f0-ad27-a1eec87a240e",
+        "selectedInstance": "d0bc534c-2199-42f0-ad27-a1eec87a240e"
     },
     "codeState": {
-        "topInstance": "951da714-8064-47f4-a3e6-6fd3d78ed600"
+        "topInstance": "d0bc534c-2199-42f0-ad27-a1eec87a240e"
     },
     "editMode": "code",
     "userSettings": {

@@ -6,6 +6,10 @@
     },
     "codeClass": null,
     "userConfig": {
+        "controllers": [
+            "Boats",
+            "Refresh"
+        ],
         "name": "HooferSailingMobile",
         "stores": [
             "Winds"

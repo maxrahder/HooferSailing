@@ -1,0 +1,12 @@
+{
+    "type": "Ext.app.Controller",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|userClassName": "Refresh"
+    },
+    "designerId": "c54b6d27-6936-42d5-94ea-f374666ef78c"
+}
