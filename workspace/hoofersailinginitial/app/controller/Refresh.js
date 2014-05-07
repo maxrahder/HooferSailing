@@ -36,7 +36,8 @@ Ext.define('HooferSailingMobile.controller.Refresh', {
             return;
         }
         me.refresh();
-        // I don't think this is recursion. So hopefully, no call stack issues.
+        // Due to the defer(), I don't think this is recursion. 
+        // So hopefully, no call stack issues.
         Ext.defer(me.doAutoRefresh, me.getInterval(), me, [intervalId]);
     },
 

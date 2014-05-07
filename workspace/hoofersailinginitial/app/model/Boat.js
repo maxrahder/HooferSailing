@@ -34,7 +34,7 @@ Ext.define('HooferSailingMobile.model.Boat', {
 				}
 				return result;
 			}
-		}, 'purpose', {
+		}, 'use', {
 			name: 'outAgo',
 			convert: function(value, record) {
 				var outTime = record.get('outTime');

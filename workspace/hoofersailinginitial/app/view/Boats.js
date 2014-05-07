@@ -27,7 +27,7 @@ Ext.define('HooferSailingMobile.view.Boats', {
 					var navigationView = dataview.up('boats');
 					var boats = record.boats();
 					boats.sort([{
-						property: 'isOut',
+						property: 'status',
 						direction: 'ASC'
 					}, {
 						property: 'outTime',
@@ -66,7 +66,7 @@ Ext.define('HooferSailingMobile.view.Boats', {
 							'</td>',
 							'<td valign="middle">',
 							'{name}<br/>',
-							'{[values.isOut ? values.purpose + " " + values.outAgo: values.status]}',
+							'{[values.isOut ? values.use + " " + values.outAgo: values.status]}',
 							'</td></tr></table>'
 						]
 					});

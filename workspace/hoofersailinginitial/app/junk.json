@@ -1,4 +1,4 @@
-Ext. {
+{
 	"420": [{
 		"equipment_ID": "53",
 		"name": "420 #1",
@@ -7,7 +7,10 @@ Ext. {
 		"equipment_ID": "62",
 		"name": "420 #10",
 		"status": 4,
-		"checkout": "2014-04-08 11:28:43"
+		"checkout": {
+			"checkouttime": "2014-04-08T11:28:43-05:00",
+			"usage": "Conference"
+		}
 	}, {
 		"equipment_ID": "63",
 		"name": "420 #11",
@@ -27,7 +30,7 @@ Ext. {
 	}, {
 		"equipment_ID": "67",
 		"name": "420 #15",
-		"status": 1
+		"status": 2
 	}, {
 		"equipment_ID": "68",
 		"name": "420 #16",
@@ -64,7 +67,10 @@ Ext. {
 		"equipment_ID": "59",
 		"name": "420 #7",
 		"status": 4,
-		"checkout": "2014-04-10 17:52:05"
+		"checkout": {
+			"checkouttime": "2014-04-10T17:52:05-05:00",
+			"usage": "Day Sailing"
+		}
 	}, {
 		"equipment_ID": "60",
 		"name": "420 #8",
@@ -77,13 +83,15 @@ Ext. {
 	"Badger Sloop": [{
 		"equipment_ID": "71",
 		"name": "Badger Sloop #1",
-		"status": 4,
-		"checkout": "2014-04-10 17:52:21"
+		"status": 2
 	}, {
 		"equipment_ID": "72",
 		"name": "Badger Sloop #2",
 		"status": 4,
-		"checkout": "2014-04-10 17:47:03"
+		"checkout": {
+			"checkouttime": "2014-04-10T17:47:03-05:00",
+			"usage": "Day Sailing"
+		}
 	}, {
 		"equipment_ID": "73",
 		"name": "Badger Sloop #3",
@@ -108,7 +116,10 @@ Ext. {
 		"equipment_ID": "78",
 		"name": "Badger Sloop #8",
 		"status": 4,
-		"checkout": "2014-04-10 17:53:06"
+		"checkout": {
+			"checkouttime": "2014-04-10T17:53:06-05:00",
+			"usage": "Day Sailing"
+		}
 	}],
 	"Heavy Keelboat": [{
 		"equipment_ID": "285",
@@ -122,7 +133,10 @@ Ext. {
 		"equipment_ID": "23",
 		"name": "Knotty Rascal",
 		"status": 4,
-		"checkout": "2014-04-10 17:47:21"
+		"checkout": {
+			"checkouttime": "2014-04-10T17:47:21-05:00",
+			"usage": "Instruction"
+		}
 	}, {
 		"equipment_ID": "38",
 		"name": "Salam",
@@ -152,7 +166,10 @@ Ext. {
 		"equipment_ID": "27",
 		"name": "J-22 (Shaken)",
 		"status": 4,
-		"checkout": "2014-04-10 17:52:54"
+		"checkout": {
+			"checkouttime": "2014-04-10T17:52:54-05:00",
+			"usage": "Day Sailing"
+		}
 	}, {
 		"equipment_ID": "24",
 		"name": "J-24 (Estrella)",
@@ -172,7 +189,7 @@ Ext. {
 	}, {
 		"equipment_ID": "49",
 		"name": "J24 (Flying Monkey)",
-		"status": 1
+		"status": 2
 	}, {
 		"equipment_ID": "37",
 		"name": "O'Day 25 (Mystique)",
@@ -181,7 +198,7 @@ Ext. {
 	"Laser": [{
 		"equipment_ID": "238",
 		"name": "Laser Hull # 4001",
-		"status": 1
+		"status": 2
 	}, {
 		"equipment_ID": "239",
 		"name": "Laser Hull # 4002",
@@ -280,7 +297,10 @@ Ext. {
 		"equipment_ID": "100",
 		"name": "Tech Hull # 7",
 		"status": 4,
-		"checkout": "2014-04-10 17:47:41"
+		"checkout": {
+			"checkouttime": "2014-04-10T17:47:41-05:00",
+			"usage": "Day Sailing"
+		}
 	}, {
 		"equipment_ID": "85",
 		"name": "Tech Hull #1",
@@ -301,7 +321,10 @@ Ext. {
 		"equipment_ID": "105",
 		"name": "Tech Hull #13",
 		"status": 4,
-		"checkout": "2014-04-10 17:53:20"
+		"checkout": {
+			"checkouttime": "2014-04-10T17:53:20-05:00",
+			"usage": "Day Sailing"
+		}
 	}, {
 		"equipment_ID": "106",
 		"name": "Tech Hull #14",
@@ -345,7 +368,7 @@ Ext. {
 	}, {
 		"equipment_ID": "96",
 		"name": "Tech Hull #3",
-		"status": 1
+		"status": 2
 	}, {
 		"equipment_ID": "97",
 		"name": "Tech Hull #4",
@@ -545,7 +568,10 @@ Ext. {
 		"equipment_ID": "218",
 		"name": "Kite H",
 		"status": 4,
-		"checkout": "2014-04-10 17:42:33"
+		"checkout": {
+			"checkouttime": "2014-04-10T17:42:33-05:00",
+			"usage": "Day Sailing"
+		}
 	}, {
 		"equipment_ID": "219",
 		"name": "Kite I",

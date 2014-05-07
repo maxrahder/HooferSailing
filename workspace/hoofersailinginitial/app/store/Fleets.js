@@ -44,8 +44,10 @@ Ext.define('HooferSailingMobile.store.Fleets', {
 						var o = {};
 						o.id = item.equipment_ID;
 						o.name = item.name;
-						o.checkout = item.checkout?item.checkout+' GMT-0500':null;
-						o.purpose = item.purpose?item.purpose:'Day Sailing';
+						if (item.checkout){
+							o.checkout = item.checkout.checkouttime;
+							o.use = item.checkout.usage;
+						}
 						o.statusCode = item.status;
 
 						datum.boats.push(o);
