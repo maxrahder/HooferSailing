@@ -30,7 +30,8 @@ Ext.define('HooferSailingMobile.store.Fleets', {
 	loadUsingAdapter: function() {
 		var me = this;
 		Ext.data.JsonP.request({
-			url: 'http://hoofers.staging.threelakessoftware.com/api/equipment/status',
+			// url: 'http://hoofers.staging.threelakessoftware.com/api/equipment/status',
+			url: 'http://members.hoofers.org/api/equipment/status?club_ID=7',
 			params: {
 				club_ID: 7
 			},
