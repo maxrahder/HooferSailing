@@ -36,30 +36,32 @@ Ext.define('HooferSailingMobile.store.Fleets', {
 			},
 			success: function(response) {
 				var data = [];
+				// Omit Winter Kiting, Tanks, and within Techs, Tech Sails.
 				Ext.Object.each(response, function(key, value, object) {
 
-						if (!((key === 'Winter Kiting') || (key === 'Tanks'))) {
-							var datum = {};
+					if (!((key === 'Winter Kiting') || (key === 'Tanks'))) {
+						var datum = {};
 
-							datum.name = key;
-							datum.boats = [];
+						datum.name = key;
+						datum.boats = [];
 
-							// Populate the boats array
-							Ext.Array.forEach(value, function(item) {
+						// Populate the boats array
+						Ext.Array.forEach(value, function(item) {
+							if (item.name.indexOf('Tech Sail') !== 0) {
 								var o = {};
 								o.id = item.equipment_ID;
+
 								o.name = item.name;
 								if (item.checkout) {
 									o.checkout = item.checkout.checkouttime;
 									o.use = item.checkout.usage;
 								}
 								o.statusCode = item.status;
-
 								datum.boats.push(o);
-							});
-
-							data.push(datum);
-						}
+							}
+						});
+						data.push(datum);
+					}
 				});
 				me.setData(data);
 			}

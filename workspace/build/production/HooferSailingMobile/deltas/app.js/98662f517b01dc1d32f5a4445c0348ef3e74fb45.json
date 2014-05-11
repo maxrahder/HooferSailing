@@ -1,1 +1,1 @@
-["function _db8eff7cbcd74549a3f9cc9b3f6a577c246c634f",50,619957,"params:{club_ID:7}",620006,64,"if(!((f===\"Winter Kiting\")||(f===\"Tanks\"))",620068,229,620296,4469]
+["function _718b40e9526f380d036231935f649e56d24eb4dd",50,614033,"'<p style=\"',\"padding: 16px; \",\"font-size: 1.4em;\",\"",614574,36,"'\">',\"{name}\",\"</p",614269,5738,"params:{club_ID:7}",620006,64,"if(!((f===\"Winter Kiting\")||(f===\"Tanks\"))",620068,63,"if(h.name.indexOf(\"Tech Sail\")!==0",620129,156,"});c.push(d)}",620296,4469]

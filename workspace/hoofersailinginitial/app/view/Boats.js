@@ -11,16 +11,13 @@ Ext.define('HooferSailingMobile.view.Boats', {
 			xtype: 'dataview',
 			store: 'Fleets',
 			itemTpl: [
-				'<div ',
-				'   play:-webkit-box; ',
-				'    -webkit-box style="',
-				'    padding: 4px; ',
-				'    height: 60px; ',
-				'    border-bottom: solid 1px #555555; ',
-				'    dis-align:center; ',
+				'<p style="',
+				'padding: 16px; ',
+				'font-size: 1.4em;',
+				'border-bottom: solid 1px #555555; ',
 				'">',
 				'{name}',
-				'</div>'
+				'</p>'
 			],
 			listeners: {
 				itemtap: function(dataview, index, target, record) {
