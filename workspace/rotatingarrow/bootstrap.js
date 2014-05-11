@@ -46,7 +46,8 @@ Ext.Loader.addClassPathMappings({
   "Ext.device.sqlite.SQLResultSetRowList": "../touch/src/device/sqlite/Sencha.js",
   "Ext.device.sqlite.SQLTransaction": "../touch/src/device/sqlite/Sencha.js",
   "Ext.draw.engine.SvgContext.Gradient": "../touch/src/draw/engine/SvgContext.js",
-  "RotatingArrow": "app"
+  "RotatingArrow": "app",
+  "RotatingArrow.view.RotatingArrow": "app/view/RotatingArrow.js"
 });
 Ext.ClassManager.addNameAlternateMappings({
   "Ext.AbstractComponent": [],
@@ -648,6 +649,17 @@ Ext.ClassManager.addNameAlternateMappings({
   "Ext.layout.wrapper.BoxDock": [],
   "Ext.layout.wrapper.Dock": [],
   "Ext.layout.wrapper.Inner": [],
+  "Ext.log.Base": [],
+  "Ext.log.Logger": [],
+  "Ext.log.filter.Filter": [],
+  "Ext.log.filter.Priority": [],
+  "Ext.log.formatter.Default": [],
+  "Ext.log.formatter.Formatter": [],
+  "Ext.log.formatter.Identity": [],
+  "Ext.log.writer.Console": [],
+  "Ext.log.writer.DocumentTitle": [],
+  "Ext.log.writer.Remote": [],
+  "Ext.log.writer.Writer": [],
   "Ext.mixin.Bindable": [],
   "Ext.mixin.Filterable": [],
   "Ext.mixin.Mixin": [],
@@ -772,7 +784,8 @@ Ext.ClassManager.addNameAlternateMappings({
   "Ext.viewport.WindowsPhone": [
     "Ext.viewport.WP"
   ],
-  "RotatingArrow.view.Main": []
+  "RotatingArrow.view.Main": [],
+  "RotatingArrow.view.RotatingArrow": []
 });
 Ext.ClassManager.addNameAliasMappings({
   "Ext.AbstractComponent": [],
@@ -1576,6 +1589,17 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.layout.wrapper.BoxDock": [],
   "Ext.layout.wrapper.Dock": [],
   "Ext.layout.wrapper.Inner": [],
+  "Ext.log.Base": [],
+  "Ext.log.Logger": [],
+  "Ext.log.filter.Filter": [],
+  "Ext.log.filter.Priority": [],
+  "Ext.log.formatter.Default": [],
+  "Ext.log.formatter.Formatter": [],
+  "Ext.log.formatter.Identity": [],
+  "Ext.log.writer.Console": [],
+  "Ext.log.writer.DocumentTitle": [],
+  "Ext.log.writer.Remote": [],
+  "Ext.log.writer.Writer": [],
   "Ext.mixin.Bindable": [],
   "Ext.mixin.Filterable": [],
   "Ext.mixin.Mixin": [],
@@ -1716,8 +1740,9 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.viewport.Ios": [],
   "Ext.viewport.Viewport": [],
   "Ext.viewport.WindowsPhone": [],
-  "RotatingArrow.view.Main": [
-    "widget.main"
+  "RotatingArrow.view.Main": [],
+  "RotatingArrow.view.RotatingArrow": [
+    "widget.rotatingarrow"
   ]
 });
 

@@ -8,3 +8,66 @@
 
 // Examples of using the icon mixin:
 // @include icon('user');
+
+
+
+@import 'compass';
+
+/* As usual: -ms is IE, -webkit is Chrome/Safari, -moz is Firefox, -o is Opera */
+/* Arrows: ➢ ➤ ➜ ➙ ➘ */
+.rotating-arrow-arrow:before {
+	color: red;
+	content: "➢"; 
+	display: inline-block;
+	font-size: 11em;
+} 
+
+.rotating-arrow-absolute-center {
+
+	display:-ms-flexbox;
+	-ms-flex-pack:center;
+	-ms-flex-align:center;
+
+	display:-moz-box;
+	-moz-box-pack:center;
+	-moz-box-align:center;
+
+	display:-webkit-box;
+	-webkit-box-pack:center;
+	-webkit-box-align:center;
+
+	display:box;
+	box-pack:center;
+	box-align:center;
+
+}
+
+.rotating-arrow-arrow {
+	@extend .rotating-arrow-absolute-center;
+  	height: 100%;
+  	@include transition(all 0.3s ease-in-out);
+
+	transform-origin:         53% 51%;
+	-ms-transform-origin:     53% 51%;
+	-webkit-transform-origin: 53% 51%;
+	-moz-transform-origin:    53% 51%;
+	-o-transform-origin:      53% 51%;
+
+}
+
+.rotating-arrow-viewport {
+	width: 300px;
+	height: 300px; 
+	display: block;
+}
+
+.rotating-arrow-circle {
+	border: 24px solid #666666;
+	width: 100%;
+	height: 100%;
+	display: block;
+	@include box-sizing(border-box); 
+	@include border-radius(9999px); 
+}
+
+
