@@ -1,4 +1,4 @@
-{
+Ext. {
 	"420": [{
 		"equipment_ID": "53",
 		"name": "420 #1",
@@ -6,11 +6,7 @@
 	}, {
 		"equipment_ID": "62",
 		"name": "420 #10",
-		"status": 4,
-		"checkout": {
-			"checkouttime": "2014-04-08T11:28:43-05:00",
-			"usage": "Conference"
-		}
+		"status": 1
 	}, {
 		"equipment_ID": "63",
 		"name": "420 #11",
@@ -30,7 +26,7 @@
 	}, {
 		"equipment_ID": "67",
 		"name": "420 #15",
-		"status": 2
+		"status": 1
 	}, {
 		"equipment_ID": "68",
 		"name": "420 #16",
@@ -66,11 +62,7 @@
 	}, {
 		"equipment_ID": "59",
 		"name": "420 #7",
-		"status": 4,
-		"checkout": {
-			"checkouttime": "2014-04-10T17:52:05-05:00",
-			"usage": "Day Sailing"
-		}
+		"status": 1
 	}, {
 		"equipment_ID": "60",
 		"name": "420 #8",
@@ -83,15 +75,11 @@
 	"Badger Sloop": [{
 		"equipment_ID": "71",
 		"name": "Badger Sloop #1",
-		"status": 2
+		"status": 1
 	}, {
 		"equipment_ID": "72",
 		"name": "Badger Sloop #2",
-		"status": 4,
-		"checkout": {
-			"checkouttime": "2014-04-10T17:47:03-05:00",
-			"usage": "Day Sailing"
-		}
+		"status": 1
 	}, {
 		"equipment_ID": "73",
 		"name": "Badger Sloop #3",
@@ -115,11 +103,7 @@
 	}, {
 		"equipment_ID": "78",
 		"name": "Badger Sloop #8",
-		"status": 4,
-		"checkout": {
-			"checkouttime": "2014-04-10T17:53:06-05:00",
-			"usage": "Day Sailing"
-		}
+		"status": 1
 	}],
 	"Heavy Keelboat": [{
 		"equipment_ID": "285",
@@ -132,11 +116,7 @@
 	}, {
 		"equipment_ID": "23",
 		"name": "Knotty Rascal",
-		"status": 4,
-		"checkout": {
-			"checkouttime": "2014-04-10T17:47:21-05:00",
-			"usage": "Instruction"
-		}
+		"status": 1
 	}, {
 		"equipment_ID": "38",
 		"name": "Salam",
@@ -165,11 +145,7 @@
 	}, {
 		"equipment_ID": "27",
 		"name": "J-22 (Shaken)",
-		"status": 4,
-		"checkout": {
-			"checkouttime": "2014-04-10T17:52:54-05:00",
-			"usage": "Day Sailing"
-		}
+		"status": 1
 	}, {
 		"equipment_ID": "24",
 		"name": "J-24 (Estrella)",
@@ -189,7 +165,7 @@
 	}, {
 		"equipment_ID": "49",
 		"name": "J24 (Flying Monkey)",
-		"status": 2
+		"status": 1
 	}, {
 		"equipment_ID": "37",
 		"name": "O'Day 25 (Mystique)",
@@ -198,7 +174,7 @@
 	"Laser": [{
 		"equipment_ID": "238",
 		"name": "Laser Hull # 4001",
-		"status": 2
+		"status": 1
 	}, {
 		"equipment_ID": "239",
 		"name": "Laser Hull # 4002",
@@ -296,11 +272,7 @@
 	}, {
 		"equipment_ID": "100",
 		"name": "Tech Hull # 7",
-		"status": 4,
-		"checkout": {
-			"checkouttime": "2014-04-10T17:47:41-05:00",
-			"usage": "Day Sailing"
-		}
+		"status": 1
 	}, {
 		"equipment_ID": "85",
 		"name": "Tech Hull #1",
@@ -320,11 +292,7 @@
 	}, {
 		"equipment_ID": "105",
 		"name": "Tech Hull #13",
-		"status": 4,
-		"checkout": {
-			"checkouttime": "2014-04-10T17:53:20-05:00",
-			"usage": "Day Sailing"
-		}
+		"status": 1
 	}, {
 		"equipment_ID": "106",
 		"name": "Tech Hull #14",
@@ -368,7 +336,7 @@
 	}, {
 		"equipment_ID": "96",
 		"name": "Tech Hull #3",
-		"status": 2
+		"status": 1
 	}, {
 		"equipment_ID": "97",
 		"name": "Tech Hull #4",
@@ -567,11 +535,7 @@
 	}, {
 		"equipment_ID": "218",
 		"name": "Kite H",
-		"status": 4,
-		"checkout": {
-			"checkouttime": "2014-04-10T17:42:33-05:00",
-			"usage": "Day Sailing"
-		}
+		"status": 1
 	}, {
 		"equipment_ID": "219",
 		"name": "Kite I",
@@ -696,67 +660,6 @@
 	}, {
 		"equipment_ID": "262",
 		"name": "SUP Paddle #9",
-		"status": 1
-	}],
-	"Tanks": [{
-		"equipment_ID": "270",
-		"name": "AL80 #1",
-		"status": 1
-	}, {
-		"equipment_ID": "279",
-		"name": "AL80 #10",
-		"status": 1
-	}, {
-		"equipment_ID": "280",
-		"name": "AL80 #11",
-		"status": 1
-	}, {
-		"equipment_ID": "281",
-		"name": "AL80 #12",
-		"status": 1
-	}, {
-		"equipment_ID": "282",
-		"name": "AL80 #13",
-		"status": 1
-	}, {
-		"equipment_ID": "284",
-		"name": "AL80 #14",
-		"status": 1
-	}, {
-		"equipment_ID": "283",
-		"name": "AL80 #15",
-		"status": 1
-	}, {
-		"equipment_ID": "271",
-		"name": "AL80 #2",
-		"status": 1
-	}, {
-		"equipment_ID": "272",
-		"name": "AL80 #3",
-		"status": 1
-	}, {
-		"equipment_ID": "273",
-		"name": "AL80 #4",
-		"status": 1
-	}, {
-		"equipment_ID": "274",
-		"name": "AL80 #5",
-		"status": 1
-	}, {
-		"equipment_ID": "275",
-		"name": "AL80 #6",
-		"status": 1
-	}, {
-		"equipment_ID": "276",
-		"name": "AL80 #7",
-		"status": 1
-	}, {
-		"equipment_ID": "277",
-		"name": "AL80 #8",
-		"status": 1
-	}, {
-		"equipment_ID": "278",
-		"name": "AL80 #9",
 		"status": 1
 	}]
 }

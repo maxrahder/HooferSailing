@@ -1,5 +1,6 @@
 Ext.define('HooferSailingMobile.controller.Refresh', {
     extend: 'Ext.app.Controller',
+    requires: ['Ext.device.Connection'],
     config: {
         stores: ['Fleets', 'Winds'],
         models: ['Flag'],
@@ -42,10 +43,14 @@ Ext.define('HooferSailingMobile.controller.Refresh', {
     },
 
     refresh: function() {
-        Ext.getStore('Winds').fetch();
-        //Ext.getStore('Fleets').load();
-        Ext.getStore('Fleets').loadUsingAdapter();
-        HooferSailingMobile.model.Flag.load();
+        if (Ext.device.Connection.isOnline()) {
+            Ext.getStore('Winds').fetch();
+            //Ext.getStore('Fleets').load();
+            Ext.getStore('Fleets').loadUsingAdapter();
+            HooferSailingMobile.model.Flag.load();
+        } else {
+            Ext.Msg.alert('Error', 'You are not connected to the Internet.');
+        }
     },
 
 });
