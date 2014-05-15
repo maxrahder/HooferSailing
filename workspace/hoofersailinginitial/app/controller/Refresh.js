@@ -42,12 +42,28 @@ Ext.define('HooferSailingMobile.controller.Refresh', {
         Ext.defer(me.doAutoRefresh, me.getInterval(), me, [intervalId]);
     },
 
-    refresh: function() {
+
+
+    refreshConditions: function() {
         if (Ext.device.Connection.isOnline()) {
             Ext.getStore('Winds').fetch();
-            //Ext.getStore('Fleets').load();
-            Ext.getStore('Fleets').loadUsingAdapter();
             HooferSailingMobile.model.Flag.load();
+        } else {
+            Ext.Msg.alert('Error', 'You are not connected to the Internet.');
+        }
+    },
+    refreshFleets: function(){
+        if (Ext.device.Connection.isOnline()) {
+            Ext.getStore('Fleets').loadUsingAdapter();
+        } else {
+            Ext.Msg.alert('Error', 'You are not connected to the Internet.');
+        }
+    },
+
+    refresh: function() {
+        if (Ext.device.Connection.isOnline()) {
+            this.refreshConditions();
+            this.refreshFleets();
         } else {
             Ext.Msg.alert('Error', 'You are not connected to the Internet.');
         }
