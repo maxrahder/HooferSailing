@@ -7,6 +7,14 @@ Ext.define('HooferSailingMobile.view.Conditions', {
         'HooferSailingMobile.view.RotatingImage',
         'HooferSailingMobile.view.ConditionsFlag'
     ],
+    initialize: function() {
+        this.on('painted', function() {
+            this.fireEvent('firsttime', this);
+        }, this, {
+            single: true
+        });
+        this.callParent();
+    },
     config: {
         store: null,
         layout: {

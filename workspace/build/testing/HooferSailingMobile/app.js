@@ -78646,6 +78646,14 @@ Ext.define('HooferSailingMobile.view.Conditions', {
                                                  
                                                  
       
+    initialize: function() {
+        this.on('painted', function() {
+            this.fireEvent('firsttime', this);
+        }, this, {
+            single: true
+        });
+        this.callParent();
+    },
     config: {
         store: null,
         layout: {
@@ -78760,11 +78768,27 @@ Ext.define('HooferSailingMobile.view.Conditions', {
 Ext.define('HooferSailingMobile.view.WindsForecast', {
 	extend:  Ext.Component ,
 	xtype: 'windsforecast',
-	requires: [],
+	                            
 	cls: 'windsforecast',
 	config: {
-		html: ['<iframe align="top" src="http://widgets.windalert.com/widgets/web/forecastTable?spot_id=1200&amp;units_wind=mph&amp;units_height=ft&amp;units_temp=F&amp;days=2&amp;width=203&amp;height=210&amp;color=870100&amp;activity=Windsurf&amp;app=windalert" width="100%" height="100%" frameborder="0" scrolling="no" allowtransparency="no"></iframe>']
+		size: null
+	},
+	initialize: function() {
+		this.iFrameTemplate = Ext.create(Ext.XTemplate, '<iframe align="top" src="http://widgets.windalert.com/widgets/web/forecastTable?spot_id=1200&units_wind=mph&units_height=ft&units_temp=F&days=2&width={width}&height={height}&color=870100&activity=Windsurf&app=windalert" width="{width}" height="{height}" frameborder="0" scrolling="no" allowtransparency="no"></iframe>');
+		this.callParent();
+	},
+	maxFrameHeight: 350,
+	updateSize: function(size) {
+		if (size) {
+			padding = (size.height - this.maxFrameHeight) / 2;
+			this.setPadding(padding + ' 0 ' + padding + ' 0');
+			this.setSize(size.width, size.height);
+			size.height = Ext.Number.constrain(size.height, 0, this.maxFrameHeight);
+			console.dir(size);
+			this.setHtml(this.iFrameTemplate.apply(size));
+		}
 	}
+
 
 });
 
@@ -78786,12 +78810,18 @@ Ext.define('HooferSailingMobile.view.Main', {
             iconCls: 'flag',
             title: 'Conditions',
             xtype: 'conditions',
-            store: 'Winds'
+            store: 'Winds',
+            listeners: {
+                element: 'element',
+                doubletap: function() {
+                    this.fireEvent('refreshdata', this);
+                }
+            }
         }, {
             iconCls: 'anchor',
             title: 'Boats',
             xtype: 'boats'
-        },{
+        }, {
             iconCls: 'anchor',
             title: 'Winds',
             xtype: 'windsforecast'
@@ -78938,7 +78968,7 @@ Ext.define('HooferSailingMobile.store.Fleets', {
 				// Omit Winter Kiting, Tanks, and within Techs, Tech Sails.
 				Ext.Object.each(response, function(key, value, object) {
 
-					if (!((key === 'Winter Kiting') || (key === 'Tanks'))) {
+					if (!((key === 'Winter Kiting') || (key === 'Tanks') || (key === 'Tools'))) {
 						var datum = {};
 
 						datum.name = key;
@@ -79157,6 +79187,7 @@ Ext.define('HooferSailingMobile.store.Winds', {
 				me.setData(d);
 
 				if (!me.buoyTransmitting) {
+					me.fireEvent('fetch', me);
 					return;
 				}
 
@@ -79185,9 +79216,8 @@ Ext.define('HooferSailingMobile.store.Winds', {
 
 });
 
-Ext.define('HooferSailingMobile.controller.Boats', {
+Ext.define('HooferSailingMobile.controller.Conditions', {
     extend:  Ext.app.Controller ,
-    // requires: ['HooferSailingMobile.store.CompassPoints'],
     compassPoints: null,
     config: {
         stores: ['Fleets', 'Winds'],
@@ -79206,13 +79236,7 @@ Ext.define('HooferSailingMobile.controller.Boats', {
     init: function() {
         var me = this;
         HooferSailingMobile.now = new Date();
-        // HooferSailingMobile.now = Ext.Date.add(moment('2013-10-10T10:01:01Z').toDate(), Ext.Date.MINUTE, 90);
-
-        // me.compassPoints = Ext.create('HooferSailingMobile.store.CompassPoints', {
-        //     winds: Ext.getStore('Winds')
-        // });
         HooferSailingMobile.model.Flag.on('load', this.updateFlag, this);
-
     },
 
     updateFlag: function(flag, color, updated) {
@@ -79227,8 +79251,15 @@ Ext.define('HooferSailingMobile.controller.Refresh', {
     config: {
         stores: ['Fleets', 'Winds'],
         models: ['Flag'],
-        refs: {},
-        control: {},
+        refs: {
+            conditions: 'conditions'
+        },
+
+        control: {
+            conditions: {
+                refreshdata: 'userRefresh'
+            }
+        },
 
         interval: 0, // 0 = off
         intervalId: -1, // Used to make sure we don't refresh using an old timer
@@ -79275,7 +79306,7 @@ Ext.define('HooferSailingMobile.controller.Refresh', {
             Ext.Msg.alert('Error', 'You are not connected to the Internet.');
         }
     },
-    refreshFleets: function(){
+    refreshFleets: function() {
         if (Ext.device.Connection.isOnline()) {
             Ext.getStore('Fleets').loadUsingAdapter();
         } else {
@@ -79291,6 +79322,60 @@ Ext.define('HooferSailingMobile.controller.Refresh', {
             Ext.Msg.alert('Error', 'You are not connected to the Internet.');
         }
     },
+
+    userRefresh: function() {
+        var me = this;
+        var doMask = Ext.Function.createThrottled(function(mask) {
+            if (mask) {
+                me.getConditions().mask();
+            } else {
+                me.getConditions().unmask();
+            }
+        }, 1000);
+        if (Ext.device.Connection.isOnline()) {
+            doMask(true);
+        }
+        Ext.getStore('Winds').on('fetch', function() {
+            doMask(false);
+        }, this, {
+            single: true
+        });
+        this.refresh();
+    }
+
+});
+
+Ext.define('HooferSailingMobile.controller.Orientation', {
+    extend:  Ext.app.Controller ,
+    compassPoints: null,
+    config: {
+
+        refs: {
+            windsForecast: 'windsforecast'
+        },
+
+        control: {
+            viewport: {
+                orientationchange: 'onViewportOrientationChange'
+            },
+            conditions: {
+                firsttime: 'onConditionsPainted'
+            }
+        }
+    },
+    onConditionsPainted: function(conditions) {
+        var dom = conditions.element.dom;
+        this.getWindsForecast().setSize({
+            height: dom.clientHeight,
+            width: dom.clientWidth
+        })
+    },
+    onViewportOrientationChange: function() {
+        this.getWindsForecast().setSize({
+            height: conditions.getHeight(),
+            width: conditions.width
+        })
+    }
 
 });
 
@@ -79315,7 +79400,7 @@ Ext.application({
                                                          
       
 
-    controllers: ['Boats', 'Refresh'],
+    controllers: ['Conditions', 'Refresh', 'Orientation'],
 
     views: [
         'Main'

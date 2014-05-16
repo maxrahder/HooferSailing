@@ -7,7 +7,7 @@ Ext.define('HooferSailingMobile.view.Main', {
         'HooferSailingMobile.view.Conditions',
         'Ext.draw.Component',
         'HooferSailingMobile.view.RotatingImage',
-        // 'HooferSailingMobile.view.WindsForecast',
+        //'HooferSailingMobile.view.WindsForecast',
         'Ext.draw.sprite.Image'
     ],
     config: {
@@ -27,6 +27,13 @@ Ext.define('HooferSailingMobile.view.Main', {
             iconCls: 'anchor',
             title: 'Boats',
             xtype: 'boats'
-        }]
+        }
+        // , 
+        // {
+        //     iconCls: 'anchor',
+        //     title: 'Winds',
+        //     xtype: 'windsforecast'
+        // }
+        ]
     }
 });
