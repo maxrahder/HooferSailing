@@ -40,7 +40,7 @@ Ext.define('HooferSailingMobile.store.Fleets', {
 				// Omit Winter Kiting, Tanks, and within Techs, Tech Sails.
 				Ext.Object.each(response, function(key, value, object) {
 
-					if (!((key === 'Winter Kiting') || (key === 'Tanks'))) {
+					if (!((key === 'Winter Kiting') || (key === 'Tanks') || (key === 'Tools'))) {
 						var datum = {};
 
 						datum.name = key;

@@ -6,6 +6,10 @@
 
 // Custom code goes here..
 
+.windsforecast .x-innerhtml {
+	height: 100%;
+}
+
 // Examples of using the icon mixin:
 // @include icon('user');
 
@@ -14,3 +18,4 @@
 @include icon('delete');
 @include icon('check2');
 @include icon('chart');
+

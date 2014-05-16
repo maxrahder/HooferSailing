@@ -121,6 +121,7 @@ Ext.define('HooferSailingMobile.store.Winds', {
 				me.setData(d);
 
 				if (!me.buoyTransmitting) {
+					me.fireEvent('fetch', me);
 					return;
 				}
 

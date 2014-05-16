@@ -18,7 +18,7 @@ Ext.define('Path.controller.Application', {
 	launch: function(app) {
 		this.initViewport();
 		Ext.create('Ext.ux.PathMenu',{
-			bottom: 10,
+			top: 10,
 			left: 10,
 			items: [
 				{

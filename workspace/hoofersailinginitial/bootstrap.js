@@ -754,7 +754,7 @@ Ext.ClassManager.addNameAlternateMappings({
   "Ext.viewport.WindowsPhone": [
     "Ext.viewport.WP"
   ],
-  "HooferSailingMobile.controller.Boats": [],
+  "HooferSailingMobile.controller.Conditions": [],
   "HooferSailingMobile.controller.Refresh": [],
   "HooferSailingMobile.model.Boat": [],
   "HooferSailingMobile.model.Flag": [],
@@ -764,12 +764,14 @@ Ext.ClassManager.addNameAlternateMappings({
   "HooferSailingMobile.store.Winds": [],
   "HooferSailingMobile.util.Compass": [],
   "HooferSailingMobile.util.Date": [],
+  "HooferSailingMobile.util.PullRefresh": [],
   "HooferSailingMobile.util.Util": [],
   "HooferSailingMobile.view.Boats": [],
   "HooferSailingMobile.view.Conditions": [],
   "HooferSailingMobile.view.ConditionsFlag": [],
   "HooferSailingMobile.view.Main": [],
-  "HooferSailingMobile.view.RotatingImage": []
+  "HooferSailingMobile.view.RotatingImage": [],
+  "HooferSailingMobile.view.WindsForecast": []
 });
 Ext.ClassManager.addNameAliasMappings({
   "Ext.AbstractComponent": [],
@@ -1713,7 +1715,7 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.viewport.Ios": [],
   "Ext.viewport.Viewport": [],
   "Ext.viewport.WindowsPhone": [],
-  "HooferSailingMobile.controller.Boats": [],
+  "HooferSailingMobile.controller.Conditions": [],
   "HooferSailingMobile.controller.Refresh": [],
   "HooferSailingMobile.model.Boat": [],
   "HooferSailingMobile.model.Flag": [],
@@ -1723,6 +1725,9 @@ Ext.ClassManager.addNameAliasMappings({
   "HooferSailingMobile.store.Winds": [],
   "HooferSailingMobile.util.Compass": [],
   "HooferSailingMobile.util.Date": [],
+  "HooferSailingMobile.util.PullRefresh": [
+    "plugin.hooferspullrefresh"
+  ],
   "HooferSailingMobile.util.Util": [],
   "HooferSailingMobile.view.Boats": [
     "widget.boats"
@@ -1738,5 +1743,8 @@ Ext.ClassManager.addNameAliasMappings({
   ],
   "HooferSailingMobile.view.RotatingImage": [
     "widget.rotatingimage"
+  ],
+  "HooferSailingMobile.view.WindsForecast": [
+    "widget.windsforecast"
   ]
 });

@@ -4,8 +4,15 @@ Ext.define('HooferSailingMobile.controller.Refresh', {
     config: {
         stores: ['Fleets', 'Winds'],
         models: ['Flag'],
-        refs: {},
-        control: {},
+        refs: {
+            conditions: 'conditions'
+        },
+
+        control: {
+            conditions: {
+                refreshdata: 'userRefresh'
+            }
+        },
 
         interval: 0, // 0 = off
         intervalId: -1, // Used to make sure we don't refresh using an old timer
@@ -52,7 +59,7 @@ Ext.define('HooferSailingMobile.controller.Refresh', {
             Ext.Msg.alert('Error', 'You are not connected to the Internet.');
         }
     },
-    refreshFleets: function(){
+    refreshFleets: function() {
         if (Ext.device.Connection.isOnline()) {
             Ext.getStore('Fleets').loadUsingAdapter();
         } else {
@@ -68,5 +75,25 @@ Ext.define('HooferSailingMobile.controller.Refresh', {
             Ext.Msg.alert('Error', 'You are not connected to the Internet.');
         }
     },
+
+    userRefresh: function() {
+        var me = this;
+        var doMask = Ext.Function.createThrottled(function(mask) {
+            if (mask) {
+                me.getConditions().mask();
+            } else {
+                me.getConditions().unmask();
+            }
+        }, 1000);
+        if (Ext.device.Connection.isOnline()) {
+            doMask(true);
+        }
+        Ext.getStore('Winds').on('fetch', function() {
+            doMask(false);
+        }, this, {
+            single: true
+        });
+        this.refresh();
+    }
 
 });
