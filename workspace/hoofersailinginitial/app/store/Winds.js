@@ -3,12 +3,12 @@ Ext.define('HooferSailingMobile.store.Winds', {
 	requires: ['Ext.data.JsonP', 'HooferSailingMobile.util.Compass'],
 	// Gets the past five minutes of buoy data to calculate current
 	// speed and direction. We're averaging the speeds.
-	// TODO: Average the direction, which obviously, will be a 
-	// little tricky.
+
 	// Note: The interval setting seems to be ignored by the 
 	// buoy server. It's always returning five second data, which
 	// is maybe a little more than we'd like. I think five minutes at
 	// ten second intervals is probably fine.
+	
 	config: {
 		url: 'http://metobs.ssec.wisc.edu/app/mendota/buoy/data/jsonp',
 		symbols: 'dir:spd:wt_1.0',

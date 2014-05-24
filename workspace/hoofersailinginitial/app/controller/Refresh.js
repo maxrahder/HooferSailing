@@ -2,7 +2,7 @@ Ext.define('HooferSailingMobile.controller.Refresh', {
     extend: 'Ext.app.Controller',
     requires: ['Ext.device.Connection'],
     config: {
-        stores: ['Fleets', 'Winds'],
+        stores: ['Fleets', 'WindsConditions'],
         models: ['Flag'],
         refs: {
             conditions: 'conditions'
@@ -53,8 +53,10 @@ Ext.define('HooferSailingMobile.controller.Refresh', {
 
     refreshConditions: function() {
         if (Ext.device.Connection.isOnline()) {
-            Ext.getStore('Winds').fetch();
+            Ext.getStore('WindsConditions').fetch();
+            HooferSailingMobile.model.Flag.update('checkingtheflag');
             HooferSailingMobile.model.Flag.load();
+            HooferSailingMobile.model.SunriseSunset.load();
         } else {
             Ext.Msg.alert('Error', 'You are not connected to the Internet.');
         }
@@ -77,23 +79,23 @@ Ext.define('HooferSailingMobile.controller.Refresh', {
     },
 
     userRefresh: function() {
-        var me = this;
-        var doMask = Ext.Function.createThrottled(function(mask) {
-            if (mask) {
-                me.getConditions().mask();
-            } else {
-                me.getConditions().unmask();
-            }
-        }, 1000);
         if (Ext.device.Connection.isOnline()) {
+            var me = this;
+            var doMask = Ext.Function.createThrottled(function(mask) {
+                if (mask) {
+                    me.getConditions().mask();
+                } else {
+                    me.getConditions().unmask();
+                }
+            }, 1000);
             doMask(true);
+            Ext.getStore('WindsConditions').on('fetch', function() {
+                doMask(false);
+            }, this, {
+                single: true
+            });
+            this.refresh();
         }
-        Ext.getStore('Winds').on('fetch', function() {
-            doMask(false);
-        }, this, {
-            single: true
-        });
-        this.refresh();
     }
 
 });

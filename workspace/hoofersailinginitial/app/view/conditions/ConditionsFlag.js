@@ -1,4 +1,4 @@
-Ext.define('HooferSailingMobile.view.ConditionsFlag', {
+Ext.define('HooferSailingMobile.view.conditions.ConditionsFlag', {
 	extend: 'Ext.Img',
 	xtype: 'conditionsflag',
 	requires: [],

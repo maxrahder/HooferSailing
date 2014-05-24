@@ -1,11 +1,11 @@
-Ext.define('HooferSailingMobile.view.Conditions', {
+Ext.define('HooferSailingMobile.view.conditions.Conditions', {
     extend: 'Ext.Container',
     xtype: 'conditions',
     requires: [
         'Ext.TitleBar',
-        'HooferSailingMobile.view.Boats',
-        'HooferSailingMobile.view.RotatingImage',
-        'HooferSailingMobile.view.ConditionsFlag'
+        'HooferSailingMobile.view.conditions.Hours',
+        'HooferSailingMobile.view.conditions.RotatingImage',
+        'HooferSailingMobile.view.conditions.ConditionsFlag'
     ],
     initialize: function() {
         this.on('painted', function() {
@@ -71,7 +71,9 @@ Ext.define('HooferSailingMobile.view.Conditions', {
             ]
         }, {
             xtype: 'conditionsflag'
-        }]
+        },{
+            xtype: 'hours'
+        }, ]
 
     },
     updateConditions: function(data) {

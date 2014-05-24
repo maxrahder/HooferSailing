@@ -1,6 +1,6 @@
 Ext.define('HooferSailingMobile.view.Boats', {
 	extend: 'Ext.navigation.View',
-	requires: ['Ext.dataview.DataView','HooferSailingMobile.util.PullRefresh'],
+	requires: ['Ext.dataview.DataView'],
 	xtype: 'boats',
 	config: {
 		// Initially, the navigation view has one thing in it --
@@ -19,9 +19,6 @@ Ext.define('HooferSailingMobile.view.Boats', {
 				'{name}',
 				'</p>'
 			],
-			// plugins: [{
-			// 	ptype: 'hooferspullrefresh'
-			// }],
 			listeners: {
 				itemtap: function(dataview, index, target, record) {
 					var navigationView = dataview.up('boats');

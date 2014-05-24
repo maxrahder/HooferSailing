@@ -4,11 +4,9 @@ Ext.define('HooferSailingMobile.view.Main', {
     requires: [
         'Ext.TitleBar',
         'HooferSailingMobile.view.Boats',
-        'HooferSailingMobile.view.Conditions',
+        'HooferSailingMobile.view.conditions.Conditions',
         'Ext.draw.Component',
-        'HooferSailingMobile.view.RotatingImage',
-        //'HooferSailingMobile.view.WindsForecast',
-        'Ext.draw.sprite.Image'
+        //'HooferSailingMobile.view.WindsForecast'
     ],
     config: {
         tabBarPosition: 'bottom',
@@ -16,7 +14,7 @@ Ext.define('HooferSailingMobile.view.Main', {
             iconCls: 'flag',
             title: 'Conditions',
             xtype: 'conditions',
-            store: 'Winds',
+            store: 'WindsConditions',
             listeners: {
                 element: 'element',
                 doubletap: function() {

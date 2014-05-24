@@ -1,4 +1,4 @@
-Ext.define('HooferSailingMobile.view.RotatingImage', {
+Ext.define('HooferSailingMobile.view.conditions.RotatingImage', {
 	extend: 'Ext.Component',
 	xtype: 'rotatingimage',
 	config: {
