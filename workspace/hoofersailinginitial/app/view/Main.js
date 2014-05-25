@@ -1,6 +1,7 @@
 Ext.define('HooferSailingMobile.view.Main', {
     extend: 'Ext.tab.Panel',
     xtype: 'main',
+    style: 'font-size: ' + 100*(window.outerHeight/568) +'%',
     requires: [
         'Ext.TitleBar',
         'HooferSailingMobile.view.Boats',
