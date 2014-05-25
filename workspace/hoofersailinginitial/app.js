@@ -9,7 +9,6 @@
     changes and its generated code, it will produce a "merge conflict" that you
     will need to resolve manually.
 */
-
 Ext.Loader.setConfig({
     disableCaching: true
 });
@@ -49,7 +48,10 @@ Ext.application({
         Ext.fly('appLoadingIndicator').destroy();
 
         // Initialize the main view
-        Ext.Viewport.add(Ext.create('HooferSailingMobile.view.Main'));
+        Ext.Viewport.add(Ext.create('HooferSailingMobile.view.Main', {
+            style: 'font-size: ' + 100 * (window.outerHeight / 568) + '%'
+        }));
+        
     },
 
     onUpdated: function() {
