@@ -15,13 +15,3 @@ Ext.define('HooferSailingMobile.view.conditions.ConditionsFlag', {
 
 });
 
-// '<tpl if="color">',
-// '<img src="resources/images/Flags/{color}.png" ',
-// 'style="',
-// 'margin-top: .3em; ',
-// 'display: block;',
-// 'margin-left: auto;',
-// 'margin-right: auto; ',
-// 'height: 120px; ',
-// '"/>',
-// '</tpl>',

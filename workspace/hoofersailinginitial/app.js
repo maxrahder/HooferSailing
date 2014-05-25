@@ -19,7 +19,7 @@ Ext.application({
         'Ext.MessageBox', 'HooferSailingMobile.util.Util'
     ],
 
-    controllers: ['Conditions', 'Refresh'],
+    controllers: ['Conditions', 'Refresh', 'Popups'],
 
     views: [
         'Main'
