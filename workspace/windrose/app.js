@@ -10,6 +10,22 @@
     will need to resolve manually.
 */
 
+Ext.define('WindRose.Override', {
+    override: 'Chart.HighCharts',
+    constructor: function(config){
+        console.log('Chart.HighCharts#constructor()');
+        this.callParent(arguments);
+    }
+})
+
+Ext.Loader.setConfig({
+    enabled : true,
+    disableCaching : true, // For debug only
+    paths : {
+        'Chart' : 'Chart'
+    }
+});
+
 Ext.application({
     name: 'WindRose',
 
@@ -20,6 +36,7 @@ Ext.application({
     views: [
         'Main'
     ],
+    stores: ['Winds'],
 
     icon: {
         '57': 'resources/icons/Icon.png',

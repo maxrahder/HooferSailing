@@ -26,21 +26,21 @@ Ext.application({
     ],
 
     icon: {
-        '57': 'resources/images/Burgee_57x57.png',
-        '72': 'resources/images/Burgee_72x72.png',
-        '114': 'resources/images/Burgee_114x114.png',
-        '144': 'resources/images/Burgee_144x144.png'
+        '57': 'resources/icons/Burgee_57x57.png',
+        '72': 'resources/icons/Burgee_72x72.png',
+        '114': 'resources/icons/Burgee_114x114.png',
+        '144': 'resources/icons/Burgee_144x144.png'
     },
 
     isIconPrecomposed: true,
 
     startupImage: {
-        '320x460': 'resources/startup/320x460.jpg',
+        '320x460': 'resources/startup/320x460.png',
         '640x920': 'resources/startup/640x920.png',
-        '768x1004': 'resources/startup/768x1004.png',
         '748x1024': 'resources/startup/748x1024.png',
-        '1536x2008': 'resources/startup/1536x2008.png',
-        '1496x2048': 'resources/startup/1496x2048.png'
+        '768x1004': 'resources/startup/768x1004.png',
+        '1496x2048': 'resources/startup/1496x2048.png',
+        '1536x2008': 'resources/startup/1536x2008.png'
     },
 
     launch: function() {
@@ -51,7 +51,7 @@ Ext.application({
         Ext.Viewport.add(Ext.create('HooferSailingMobile.view.Main', {
             style: 'font-size: ' + 100 * (window.outerHeight / 568) + '%'
         }));
-        
+
     },
 
     onUpdated: function() {

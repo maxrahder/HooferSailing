@@ -40,22 +40,16 @@ Ext.define('HooferSailingMobile.view.conditions.Conditions', {
             tpl: [
                 '<div style="',
                 '    vertical-align: middle;',
+                '    text-align: center; ',
                 '    margin-top: 0em; ',
                 '">',
 
-                '<p style="',
-                '    text-align: center; ',
-                '    margin-top: 0em; ',
-                '    font-size: 3em; ',
-                '">',
+                '<p style="font-size: 3em; margin-bottom: 0;">',
                 '<b>{knots}</b> kn',
-                '</p>',
+                '</p`>',
 
-                '<p style="',
-                '    text-align: center; ',
-                '    font-size: 1.5em; ',
-                '">',
-                '{gusts} kn gusts</span>',
+                '<p style="font-size: 1.5em; margin-top: 0;">',
+                '{gusts} kn gusts',
                 '</p>',
 
                 '<p style="',
