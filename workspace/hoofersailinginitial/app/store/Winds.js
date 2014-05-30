@@ -126,7 +126,8 @@ Ext.define('HooferSailingMobile.store.Winds', {
 				}
 
 				if (i > 0) {
-					me.setWaterTemperature(buoyData[i - 1][2]);
+					var t = buoyData[i - 1][2] || buoyData[i - 1][3];
+					me.setWaterTemperature(t);
 				}
 
 				// Figure out the most common wind direction

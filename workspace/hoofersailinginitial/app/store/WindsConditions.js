@@ -12,7 +12,7 @@ Ext.define('HooferSailingMobile.store.WindsConditions', {
 	// ten second intervals is probably fine.
 	
 	config: {
-		symbols: 'dir:spd:wt_1.0',
+		symbols: 'dir:spd:wt_1.0:skin',
 		interval: '00:00:10',
 		begin: '-00:10:00',
 		averageKnots: 0,
