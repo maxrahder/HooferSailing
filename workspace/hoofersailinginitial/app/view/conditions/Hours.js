@@ -6,7 +6,7 @@ Ext.define('HooferSailingMobile.view.conditions.Hours', {
 		tpl: [
 			'<tpl if="this.isData(values)">',
 			'<div style="text-align:center">',
-			'Sunset {[Ext.Date.format(values.sunset, "g:m a")]}',
+			'Sunset {[Ext.Date.format(values.sunset, "g:i a")]}',
 			'</div>',
 			'</tpl>',
 			'<div style="text-align:center">',

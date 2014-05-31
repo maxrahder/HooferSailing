@@ -6,7 +6,7 @@ Ext.define('HooferSailingMobile.model.SunriseSunset', {
 	load: function() {
 		var me = this;
 		Ext.data.JsonP.request({
-			url: '//api.wunderground.com/api/b2e26ece224ebd4d/astronomy/q/WI/Madison.json',
+			url: '//api.wunderground.com/api/b2e26ece224ebd4d/astronomy/q/WI/Madison.json?_dc=' + new Date().getTime(),
 			success: function(result, request) {
 				var sun = result.sun_phase;
 				me.sunrise = moment(sun.sunrise.hour + ':' + sun.sunrise.minute, 'H:m').toDate();
