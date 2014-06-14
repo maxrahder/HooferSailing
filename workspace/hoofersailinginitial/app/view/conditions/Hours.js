@@ -2,11 +2,13 @@ Ext.define('HooferSailingMobile.view.conditions.Hours', {
 	extend: 'Ext.Component',
 	xtype: 'hours',
 	config: {
-		sunset: '',
+		data: {
+			sunset: SunCalc.getTimes(new Date(), 43.076328, -89.399856).sunset
+		},
 		tpl: [
 			'<tpl if="this.isData(values)">',
 			'<div style="text-align:center">',
-			'<tpl if="sunset">Sunset {[Ext.Date.format(values.sunset, "g:i a")]}</tpl>',
+			'Sunset {[Ext.Date.format(values.sunset, "g:i a")]}',
 			'</div>',
 			'</tpl>',
 			'<div style="text-align:center">',
@@ -18,10 +20,9 @@ Ext.define('HooferSailingMobile.view.conditions.Hours', {
 			}
 		]
 	},
-	updateSunset: function(sunset) {
+	refreshHours: function() {
 		this.setData({
-			sunset: sunset
+			sunset: SunCalc.getTimes(new Date(), 43.076328, -89.399856).sunset
 		});
 	}
-
 });

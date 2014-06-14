@@ -5,7 +5,8 @@ Ext.define('HooferSailingMobile.controller.Refresh', {
         stores: ['Fleets', 'WindsConditions'],
         models: ['Flag'],
         refs: {
-            conditions: 'conditions'
+            conditions: 'conditions',
+            hours: 'hours'
         },
 
         control: {
@@ -56,7 +57,9 @@ Ext.define('HooferSailingMobile.controller.Refresh', {
             Ext.getStore('WindsConditions').fetch();
             HooferSailingMobile.model.Flag.update('checkingtheflag');
             HooferSailingMobile.model.Flag.load();
-            HooferSailingMobile.model.SunriseSunset.load();
+            if (this.getHours()){
+                this.getHours().refreshHours();
+            }
         } else {
             Ext.Msg.alert('Error', 'You are not connected to the Internet.');
         }

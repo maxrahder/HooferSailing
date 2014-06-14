@@ -9,6 +9,7 @@
     changes and its generated code, it will produce a "merge conflict" that you
     will need to resolve manually.
 */
+
 Ext.Loader.setConfig({
     disableCaching: true
 });
