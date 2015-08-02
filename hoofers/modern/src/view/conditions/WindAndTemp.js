@@ -2,18 +2,18 @@ Ext.define('Hoofers.view.conditions.WindAndTemp', {
     extend: 'Ext.Component',
     xtype: 'windandtemp',
     config: {
+        wide: true,
         flag: '',
         color: '',
         conditions: {},
         data: {},
+        cls: 'x-pack-center x-vertical x-layout-box',
         tpl: [
 
             '<div style="',
-            '    vertical-align: middle;',
             '    text-align: center; ',
             '    margin-top: 0em; ',
             '">',
-
 
             '<i style="',
             'font-size: 10em; ',
@@ -29,22 +29,31 @@ Ext.define('Hoofers.view.conditions.WindAndTemp', {
             '<b>{averageKnots}</b> kt',
             '</p>',
 
+            '<tpl if="this.gusting(values)">',
             '<p style="font-size: 1.5em; margin: -0.5em 0 0 0;">',
-            '{gusts} kt gusts',
+            'From {lulls} to {gusts} kts',
             '</p>',
+            '</tpl>',
+            '<tpl if="!this.gusting(values)">',
+            '<p style="font-size: 1.5em; margin: -0.5em 0 0 0;">',
+            'Steady winds',
+            '</p>',
+            '</tpl>',
 
-            '<tpl if="waterTemperature">',
             '<p style="',
-            '    margin: 0.2em 0 0.2em 0;',
+            '    margin: 0.2em 0 0 0;',
             '    text-align: center; ',
             '    font-size: 1.5em; ',
             '">',
             'Water temp. ',
             '{waterTemperature}&deg;F',
             '</p>',
-            '</tpl>',
 
-            '</div>'
+            '</div>', {
+                gusting: function(values) {
+                    return ((values.gusts - values.lulls) > 2);
+                }
+            }
         ]
 
     },

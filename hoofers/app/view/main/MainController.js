@@ -61,6 +61,7 @@ Ext.define('Hoofers.view.main.MainController', {
         var o = {
             averageKnots: winds.getAverageKnots(),
             gusts: winds.getGusts(),
+            lulls: winds.getLulls(),
             windDirectionDegrees: Hoofers.util.Compass.roseToDegrees(winds.getWindDirectionRose()),
             windDirectionRose: winds.getWindDirectionRose(),
             waterTemperature: winds.getWaterTemperature(),
