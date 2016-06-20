@@ -42,22 +42,23 @@ Ext.define('Test.view.chart.ChartView', {
         type: 'line',
         xField: 'time',
         yField: 'windSpeedKnots'
-            // }, {
-            //     type: 'scatter',
-            //     xField: 'time',
-            //     yField: 'windSpeedKnots',
-            //     marker: {
-            //         type: 'text',
-            //         fontFamily: 'FontAwesome',
-            //         text: '\uf0aa'
-            //     },
-            //     renderer: function(series, sprite, data, index) {
-            //         console.log(arguments);
-            //         var store = data.store;
-            //         var result = {
-            //             y: 0
-            //         };
-            //         return result;
-            //     }
+
+        // }, {
+        //     type: 'scatter',
+        //     xField: 'time',
+        //     yField: 'windSpeedKnots',
+        //     marker: {
+        //         type: 'text',
+        //         fontFamily: 'FontAwesome',
+        //         text: '\uf0aa'
+        //     },
+        //     renderer: function(series, sprite, data, index) {
+        //         console.log(arguments);
+        //         var store = data.store;
+        //         var result = {
+        //             y: 0
+        //         };
+        //         return result;
+        //     }
     }]
 });
