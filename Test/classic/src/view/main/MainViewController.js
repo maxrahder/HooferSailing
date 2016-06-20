@@ -8,10 +8,9 @@ Ext.define('Test.view.main.MainViewController', {
         me.callParent(arguments);
         me.onPlay();
     },
-    fetch: function(config) {
+    fetch: function(begin, interval) {
         var vm = this.getViewModel();
-        config = config || {};
-        Test.util.Buoy.fetch(config).then(function(data) {
+        Test.util.Buoy.fetch(begin, interval).then(function(data) {
             var store = vm.getStore('buoyData');
             store.setData(data);
         });

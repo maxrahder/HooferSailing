@@ -20,9 +20,10 @@ Ext.define('Test.view.chart.ChartView', {
         type: 'numeric',
         position: 'left',
         title: {
-            text: 'Wind Speed (meters per second)',
+            text: 'Wind Speed (knots)',
             fontSize: 15
         },
+        fields: ['windSpeedKnots'],
         grid: true,
         minimum: 0
     }, {
@@ -31,12 +32,32 @@ Ext.define('Test.view.chart.ChartView', {
         title: {
             text: 'Time',
             fontSize: 15
+        },
+        renderer: function(axis, point) {
+            return Ext.Date.format(point, 'H:i')
         }
     }],
 
     series: [{
         type: 'line',
         xField: 'time',
-        yField: 'windSpeedMetersPerSecond'
+        yField: 'windSpeedKnots'
+            // }, {
+            //     type: 'scatter',
+            //     xField: 'time',
+            //     yField: 'windSpeedKnots',
+            //     marker: {
+            //         type: 'text',
+            //         fontFamily: 'FontAwesome',
+            //         text: '\uf0aa'
+            //     },
+            //     renderer: function(series, sprite, data, index) {
+            //         console.log(arguments);
+            //         var store = data.store;
+            //         var result = {
+            //             y: 0
+            //         };
+            //         return result;
+            //     }
     }]
 });
