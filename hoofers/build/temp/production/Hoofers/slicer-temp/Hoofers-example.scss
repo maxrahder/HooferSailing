@@ -1,5 +1,5 @@
 $app-name:  dynamic( 'Hoofers' );
-$image-search-path: '/Applications/XAMPP/xamppfiles/htdocs/HooferSailing/hoofers/build/production/Hoofers/classic/resources';
+$image-search-path: '/Users/maxrahder/HooferSailing/hoofers/build/production/Hoofers/classic/resources';
 $theme-name:  dynamic( 'theme-triton' );
 $include-ext-abstractcomponent: dynamic(true);;
 $include-ext-abstractcontainer: dynamic(true);;
@@ -876,6 +876,7 @@ $include-ext-window-toast: dynamic(true);;
 $include-ext-window-window: dynamic(true);;
 $include-hoofers-application: dynamic(true);;
 $include-hoofers-model-boat: dynamic(true);;
+$include-hoofers-model-buoydata: dynamic(true);;
 $include-hoofers-model-flag: dynamic(true);;
 $include-hoofers-model-fleet: dynamic(true);;
 $include-hoofers-model-winds: dynamic(true);;
