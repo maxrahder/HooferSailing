@@ -54,12 +54,18 @@ Ext.define('Hoofers.view.main.MainController', {
         vm.set('flag', 'checkingtheflag');
         vm.getStore('fleet').loadUsingAdapter();
         Hoofers.model.Flag.load();
-        Hoofers.model.BuoyData.fetch().then(function(data) {
-            var d = Hoofers.model.Winds.summarizeConditions(data);
-            me.updateConditions(d);
-            foo = data;
-            console.log(data);
-        });
+        Hoofers.model.BuoyData.fetch().then(
+            function(data) {
+                var d = Hoofers.model.Winds.summarizeConditions(data);
+                me.updateConditions(d);
+                foo = data;
+                console.log(data);
+            },
+            function() {
+                me.getViewModel().set('conditions', {
+                    transmitting: false
+                });
+            });
     },
 
 
@@ -77,6 +83,7 @@ Ext.define('Hoofers.view.main.MainController', {
         */
         var me = this;
         var o = {
+            transmitting: true,
             averageKnots: Math.round(me.MPS_TO_KNOTS * data.averageWindSpeed),
             gusts: Math.round(me.MPS_TO_KNOTS * data.gusts),
             lulls: Math.round(me.MPS_TO_KNOTS * data.lulls),

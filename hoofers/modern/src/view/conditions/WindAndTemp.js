@@ -15,6 +15,14 @@ Ext.define('Hoofers.view.conditions.WindAndTemp', {
             '    margin-top: 0em; ',
             '">',
 
+            '<tpl if="this.beforeTransmitting(values)">',
+
+            '<i style="font-size: 8em; color: #aaaaaa;" ',
+            'class="fa fa-wifi"></i>',
+            '<p style="font-size: 1.2em; margin: 0em 2em 2em 2em;">Checking the Lake Mendota buoy</p>',
+
+            '<tpl elseif="transmitting">',
+
             '<i style="',
             'font-size: 10em; ',
             'color: {color}; ',
@@ -34,6 +42,7 @@ Ext.define('Hoofers.view.conditions.WindAndTemp', {
             'From {lulls} to {gusts} kts',
             '</p>',
             '</tpl>',
+
             '<tpl if="!this.gusting(values)">',
             '<p style="font-size: 1.5em; margin: -0.5em 0 0 0;">',
             'Steady winds',
@@ -49,12 +58,24 @@ Ext.define('Hoofers.view.conditions.WindAndTemp', {
             '{waterTemperature}&deg;F',
             '</p>',
 
+            '<tpl else>',
+
+            '<i style="font-size: 8em; color: #aaaaaa;" ',
+            'class="fa fa-meh-o"></i>',
+
+            '<p style="font-size: 1.2em; margin: 0em 2em 2em 2em;">There is no information on winds or water temperature because the Lake Mendota buoy is not transmitting</p>',
+
+
+            '</tpl>',
             '</div>', {
                 gusting: function(values) {
                     return ((values.gusts - values.lulls) > 2);
+                },
+                beforeTransmitting: function(values) {
+                    return !Ext.isDefined(values.transmitting);
                 }
             }
-        ]
+        ],
 
     },
     flagToColor: {
