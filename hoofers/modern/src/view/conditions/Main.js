@@ -18,64 +18,34 @@ Ext.define('Hoofers.view.conditions.Main', {
         }
     },
     updateWide: function(wide) {
-        console.log(this.$className);
-        console.log('setWide: ' + wide);
         this.setActiveItem(wide ? 1 : 0);
     },
     config: {
         wide: false,
         layout: 'card',
-        items: [{
-            layout: {
-                type: 'vbox',
-                pack: 'center'
-            },
-            items: [{
-                xtype: 'button',
-                cls: 'x-fa fa-refresh',
-                top: 8,
-                right: 8,
-                handler: 'refresh'
-            }, {
-                xtype: 'windandtemp',
-                bind: {
-                    conditions: '{conditions}',
-                    flag: '{flag}'
-                }
-            }, {
-                xtype: 'conditionsflag',
-                bind: {
-                    color: '{flag}'
-                }
-            }, {
-                xtype: 'hours'
-            }]
-        }, {
-            layout: {
-                type: 'hbox',
-                pack: 'center'
-            },
-            items: [{
-                xtype: 'button',
-                cls: 'x-fa fa-refresh',
-                top: 8,
-                right: 8,
-                handler: 'refresh'
-            }, {
-                xtype: 'windandtemp',
-                margin: '0 20 0 0',
-                bind: {
-                    conditions: '{conditions}',
-                    flag: '{flag}'
-                }
-            }, {
-                xtype: 'container',
-                margin: '0 0 0 20',
+
+        items: [
+
+            {
                 layout: {
                     type: 'vbox',
                     pack: 'center'
                 },
                 items: [{
+                    xtype: 'button',
+                    cls: 'x-fa fa-refresh',
+                    top: 8,
+                    right: 8,
+                    handler: 'refresh'
+                }, {
+                    xtype: 'windandtemp',
+                    bind: {
+                        conditions: '{conditions}',
+                        flag: '{flag}'
+                    }
+                }, {
+                    html: '<div style="height: 2em;"">&nbsp;</div>'
+                }, {
                     xtype: 'conditionsflag',
                     bind: {
                         color: '{flag}'
@@ -83,8 +53,45 @@ Ext.define('Hoofers.view.conditions.Main', {
                 }, {
                     xtype: 'hours'
                 }]
-            }]
-        }]
+            },
+
+            {
+                layout: {
+                    type: 'hbox',
+                    pack: 'center'
+                },
+                items: [{
+                    xtype: 'button',
+                    cls: 'x-fa fa-refresh',
+                    top: 8,
+                    right: 8,
+                    handler: 'refresh'
+                }, {
+                    xtype: 'windandtemp',
+                    margin: '0 20 0 0',
+                    bind: {
+                        conditions: '{conditions}',
+                        flag: '{flag}'
+                    }
+                }, {
+                    xtype: 'container',
+                    margin: '0 0 0 20',
+                    layout: {
+                        type: 'vbox',
+                        pack: 'center'
+                    },
+                    items: [{
+                        xtype: 'conditionsflag',
+                        bind: {
+                            color: '{flag}'
+                        }
+                    }, {
+                        xtype: 'hours'
+                    }]
+                }]
+            }
+
+        ]
     }
 
 });

@@ -63,7 +63,7 @@ Ext.define('Hoofers.view.conditions.WindAndTemp', {
             '<i style="font-size: 8em; color: #aaaaaa;" ',
             'class="fa fa-meh-o"></i>',
 
-            '<p style="font-size: 1.2em; margin: 0em 2em 2em 2em;">There is no information on winds or water temperature because the Lake Mendota buoy is not transmitting</p>',
+            '<p style="font-size: 1.2em; margin: 0em 2em 0em 2em;">There is no information on winds or<br>water temperature because the Lake<br>Mendota buoy is not transmitting</p>',
 
 
             '</tpl>',
