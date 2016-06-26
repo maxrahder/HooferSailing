@@ -54,6 +54,7 @@ Ext.define('Hoofers.view.main.MainController', {
         vm.set('flag', 'checkingtheflag');
         vm.getStore('fleet').loadUsingAdapter();
         Hoofers.model.Flag.load();
+        vm.set('conditions', {});
         Hoofers.model.BuoyData.fetch().then(
             function(data) {
                 var d = Hoofers.model.Winds.summarizeConditions(data);
@@ -62,7 +63,7 @@ Ext.define('Hoofers.view.main.MainController', {
                 console.log(data);
             },
             function() {
-                me.getViewModel().set('conditions', {
+                vm.set('conditions', {
                     transmitting: false
                 });
             });
