@@ -15,7 +15,7 @@ Ext.define('Hoofers.view.main.Main', {
     listeners: {
         resize: function(o) {
             var fontScale = (screen.height / 680) * 100;
-            console.log(screen.height + ' ' + fontScale);
+            // console.log(screen.height + ' ' + fontScale);
             o.setStyle('font-size', fontScale + '%');
         }
     },

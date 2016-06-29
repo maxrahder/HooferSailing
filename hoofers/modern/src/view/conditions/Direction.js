@@ -14,7 +14,7 @@ Ext.define('Hoofers.view.conditions.Direction', {
             '-ms-transform: rotate({degrees}deg); ', // IE 9
             '-webkit-transform: rotate({degrees}deg); ', // Safari and Chrome
             '" ',
-            'class="fa fa-arrow-circle-up"></i>',
+            'class="fa fa-arrow-circle-up"></i>'
         ]
     },
     flagToColor: {

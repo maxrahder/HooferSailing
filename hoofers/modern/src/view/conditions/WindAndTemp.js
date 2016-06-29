@@ -75,7 +75,7 @@ Ext.define('Hoofers.view.conditions.WindAndTemp', {
                     return !Ext.isDefined(values.transmitting);
                 }
             }
-        ],
+        ]
 
     },
     flagToColor: {
@@ -104,6 +104,6 @@ Ext.define('Hoofers.view.conditions.WindAndTemp', {
     },
     updateFlag: function(flag) {
         this.setColor(this.flagToColor[flag] || 'gray');
-    },
+    }
 
 });

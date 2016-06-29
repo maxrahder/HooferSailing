@@ -59,8 +59,8 @@ Ext.define('Hoofers.view.main.MainController', {
             function(data) {
                 var d = Hoofers.model.Winds.summarizeConditions(data);
                 me.updateConditions(d);
-                foo = data;
-                console.log(data);
+                // foo = data;
+                // console.log(data);
             },
             function() {
                 vm.set('conditions', {
@@ -68,7 +68,6 @@ Ext.define('Hoofers.view.main.MainController', {
                 });
             });
     },
-
 
     MPS_TO_KNOTS: 1.94384,
 
