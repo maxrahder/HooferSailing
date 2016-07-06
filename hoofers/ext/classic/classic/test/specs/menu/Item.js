@@ -1,3 +1,5 @@
+/* global Ext, jasmine, expect, xit */
+
 describe('Ext.menu.Item', function () {
     var menu, item;
 
@@ -16,9 +18,14 @@ describe('Ext.menu.Item', function () {
         menu = item = null;
     });
 
-    function clickItem(theItem) {
+    function clickItem(theItem, doClick) {
         theItem = theItem || item;
         jasmine.fireMouseEvent(theItem.itemEl.dom, 'click');
+            
+        // Simulated events does not cause default action on anchors with href
+        if (doClick) {
+            theItem.itemEl.dom.click();
+        }
     }
 
     describe('on click', function () {
@@ -120,7 +127,7 @@ describe('Ext.menu.Item', function () {
                             }
                         },
                         handler: function() {
-                            order.push('handler')
+                            order.push('handler');
                         }
                     });
                     clickItem();
@@ -308,7 +315,7 @@ describe('Ext.menu.Item', function () {
                 }]);
 
                 menu.activeItem = menu.focusedItem = item;
-                clickItem();
+                clickItem(item, Ext.isIE9m);
 
                 waitsFor(function () {
                     return location.hash === '#ledzep';
@@ -336,7 +343,7 @@ describe('Ext.menu.Item', function () {
                 }]);
 
                 menu.activeItem = menu.focusedItem = item;
-                clickItem();
+                clickItem(item, Ext.isIE9m);
 
                 waitsFor(function () {
                     return location.hash === hashValue;
@@ -361,7 +368,7 @@ describe('Ext.menu.Item', function () {
             });
         });
 
-        it("should gain focus but not activate on mouseover", function() {
+        it("should gain focus and activate on mouseover", function() {
             makeMenu([{
                 text: 'Foo',
                 disabled: true
@@ -372,7 +379,7 @@ describe('Ext.menu.Item', function () {
                 return item.containsFocus === true;
             }, "Never focused");
             runs(function() {
-                expect(item.activated).toBe(false);
+                expect(item.activated).toBe(true);
             });
         });
 
@@ -631,6 +638,120 @@ describe('Ext.menu.Item', function () {
                     });
                 });
             });
+        });
+    });
+
+    describe('icon', function() {
+        it('should switch from using icon to glyph', function() {
+            makeMenu({
+                text: 'Foo',
+                icon: 'resources/images/foo.gif'
+            });
+
+            // Must start with icon
+            // Some browsers quote the url value, some don't. Remove quotes.
+            expect(Ext.String.endsWith(item.iconEl.getStyle('background-image').replace(/\"/g, ''), 'resources/images/foo.gif)')).toBe(true);
+
+            // Hex 48 is "H". Must switch to using that with no background image
+            item.setGlyph('x48@FontAwesome');
+            expect(item.iconEl.getStyle('background-image')).toBe('none');
+            expect(item.iconEl.getStyle('font-family')).toBe('FontAwesome');
+            expect(item.iconEl.dom.innerHTML).toBe('H');
+        });
+        it('should switch from using icon to iconCls', function() {
+            makeMenu({
+                text: 'Foo',
+                icon: 'resources/images/foo.gif'
+            });
+
+            // Must start with icon
+            // Some browsers quote the url value, some don't. Remove quotes.
+            expect(Ext.String.endsWith(item.iconEl.getStyle('background-image').replace(/\"/g, ''), 'resources/images/foo.gif)')).toBe(true);
+
+            item.setIconCls('foo-icon-class');
+
+            // No glyph character
+            expect(item.iconEl.dom.innerHTML).toBe('');
+            
+            // iconEl must use the iconCls
+            expect(item.iconEl.hasCls('foo-icon-class')).toBe(true);
+
+            expect(item.iconEl.getStyle('background-image')).toBe('none');
+        });
+    });
+
+    describe('iconCls', function() {
+        it('should switch from using iconCls to glyph', function() {
+            makeMenu({
+                text: 'Foo',
+                iconCls: 'foo-icon-class'
+            });
+
+            // Must start with iconCls
+            expect(item.iconEl.hasCls('foo-icon-class')).toBe(true);
+
+            // Hex 48 is "H". Must switch to using that with no background image
+            item.setGlyph('x48@FontAwesome');
+            expect(Ext.String.endsWith(item.iconEl.hasCls('foo-icon-class'))).toBe(false);
+            expect(item.iconEl.getStyle('font-family')).toBe('FontAwesome');
+            expect(item.iconEl.dom.innerHTML).toBe('H');
+        });
+        it('should switch from using iconCls to icon', function() {
+            makeMenu({
+                text: 'Foo',
+                iconCls: 'foo-icon-class'
+            });
+
+            // Must start with iconCls
+            expect(item.iconEl.hasCls('foo-icon-class')).toBe(true);
+
+            item.setIcon('resources/images/foo.gif');
+
+            expect(Ext.String.endsWith(item.iconEl.hasCls('foo-icon-class'))).toBe(false);
+            
+            // iconEl must use the image as the background image
+            // Some browsers quote the url value, some don't. Remove quotes.
+            expect(Ext.String.endsWith(item.iconEl.getStyle('background-image').replace(/\"/g, ''), 'resources/images/foo.gif)')).toBe(true);
+        });
+    });
+
+    describe('glyph', function() {
+        it('should switch from using glyph to icon', function() {
+            makeMenu({
+                text: 'Foo',
+                glyph: 'x48@FontAwesome'
+            });
+
+            // Hex 48 is "H". Must switch to using that with no background image
+            expect(item.iconEl.getStyle('font-family')).toBe('FontAwesome');
+            expect(item.iconEl.dom.innerHTML).toBe('H');
+
+            item.setIcon('resources/images/foo.gif');
+
+            // No glyph character
+            expect(item.iconEl.dom.innerHTML).toBe('');
+            
+            // iconEl must use the image as the background image
+            // Some browsers quote the url value, some don't. Remove quotes.
+            expect(Ext.String.endsWith(item.iconEl.getStyle('background-image').replace(/\"/g, ''), 'resources/images/foo.gif)')).toBe(true);
+        });
+        it('should switch from using glyph to iconCls', function() {
+            makeMenu({
+                text: 'Foo',
+                glyph: 'x48@FontAwesome'
+            });
+
+            // Hex 48 is "H". Must switch to using that with no background image
+            expect(item.iconEl.getStyle('font-family')).toBe('FontAwesome');
+            expect(item.iconEl.dom.innerHTML).toBe('H');
+
+            item.setIconCls('foo-icon-class');
+
+            // No glyph character
+            expect(item.iconEl.dom.innerHTML).toBe('');
+            
+            // iconEl must use the iconCls
+            expect(item.iconEl.hasCls('foo-icon-class')).toBe(true);
         });
     });
 });

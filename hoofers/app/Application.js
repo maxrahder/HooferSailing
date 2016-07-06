@@ -6,6 +6,8 @@
 Ext.define('Hoofers.Application', {
     extend: 'Ext.app.Application',
 
+    requires: ['Hoofers.util.Units'],
+
     name: 'Hoofers',
 
     stores: [

@@ -10,29 +10,46 @@
  *
  *     @example
  *     var store = Ext.create('Ext.data.Store', {
- *        fields: ['name', 'email', 'phone'],
- *        data: [
- *            { 'name': 'Lisa',  "email":"lisa@simpsons.com",  "phone":"555-111-1224"  },
- *            { 'name': 'Bart',  "email":"bart@simpsons.com",  "phone":"555-222-1234" },
- *            { 'name': 'Homer', "email":"home@simpsons.com",  "phone":"555-222-1244"  },
- *            { 'name': 'Marge', "email":"marge@simpsons.com", "phone":"555-222-1254"  }
- *        ]
- *     );
+ *         fields: ['name', 'email', 'phone'],
+ *         data: [{
+ *             name: 'Lisa',
+ *             email: 'lisa@simpsons.com',
+ *             phone: '555-111-1224'
+ *         }, {
+ *             name: 'Bart',
+ *             email: 'bart@simpsons.com',
+ *             phone: '555-111-1234'
+ *         }, {
+ *             name: 'Homer',
+ *             email: 'homer@simpsons.com',
+ *             phone: '555-222-1244'
+ *         }, {
+ *             name: 'Marge',
+ *             email: 'marge@simpsons.com',
+ *             phone: '555-222-1254'
+ *         }]
+ *     });
  *
  *     Ext.create('Ext.grid.Grid', {
- *        store: store,
- *        plugins: [{
- *            type: 'gridviewoptions'
- *        }],
- *        columns: [
- *            { text: 'Name',  dataIndex: 'name', width: 200},
- *            { text: 'Email', dataIndex: 'email', width: 250},
- *            { text: 'Phone', dataIndex: 'phone', width: 120}
- *        ],
- *        height: 200,
- *        layout: 'fit',
- *        fullscreen: true
- *     );
+ *         store: store,
+ *         plugins: [{
+ *             type: 'gridviewoptions'
+ *         }],
+ *         columns: [{
+ *             text: 'Name',
+ *             dataIndex: 'name',
+ *             width: 200
+ *         }, {
+ *             text: 'Email',
+ *             dataIndex: 'email',
+ *             width: 250
+ *         }, {
+ *             text: 'Phone',
+ *             dataIndex: 'phone',
+ *             width: 120
+ *         }],
+ *         fullscreen: true
+ *     });
  *
  * Developers may modify the menu and its contents by overriding {@link #sheet} and
  * {@link #columnList} respectively.
@@ -77,10 +94,11 @@ Ext.define('Ext.grid.plugin.ViewOptions', {
                     role: 'donebutton'
                 }
             }],
-            hideOnMaskTap: false,
+            hidden: true,
+            hideOnMaskTap: true,
             enter: 'right',
             exit: 'right',
-            modal: false,
+            modal: true,
             translatable: {
                 translationMethod: 'csstransform'
             },
@@ -163,28 +181,13 @@ Ext.define('Ext.grid.plugin.ViewOptions', {
      */
     _groupedColumnCls: Ext.baseCSSPrefix + 'column-options-grouped',
 
-    /**
-     * Determines the menu's visibility when the grid is loaded.
-     */
-    sheetVisible: false,
-
     init: function(grid) {
         this.setGrid(grid);
-        grid.add(this.getSheet());
-        this.getSheet().translate(this.getSheetWidth());
-
-        this.getSheet().down('button[role=donebutton]').on({
-            tap: 'onDoneButtonTap',
-            scope: this
-        });
     },
 
     updateGrid: function(grid, oldGrid) {
         if (oldGrid) {
             oldGrid.getHeaderContainer().renderElement.un({
-                dragstart: 'onDragStart',
-                drag: 'onDrag',
-                dragend: 'onDragEnd',
                 longpress: 'onHeaderLongPress',
                 scope: this
             });
@@ -198,9 +201,7 @@ Ext.define('Ext.grid.plugin.ViewOptions', {
 
         if (grid) {
             grid.getHeaderContainer().renderElement.on({
-                dragstart: 'onDragStart',
-                drag: 'onDrag',
-                dragend: 'onDragEnd',
+                contextmenu: 'onHeaderContextMenu',
                 longpress: 'onHeaderLongPress',
                 scope: this
             });
@@ -248,9 +249,7 @@ Ext.define('Ext.grid.plugin.ViewOptions', {
     },
 
     updateSheet: function(sheet) {
-        var sheetWidth = this.getSheetWidth();
-        sheet.setWidth(sheetWidth);
-        sheet.translate(sheetWidth);
+        sheet.setWidth(this.getSheetWidth());
 
         sheet.add(this.getColumnList());
     },
@@ -409,6 +408,7 @@ Ext.define('Ext.grid.plugin.ViewOptions', {
             if (!headerNode) {
                 idx = header.getParent().indexOf(header);
                 headerNode = parentNode.insertChild(idx, {
+                    groupable: false,
                     header: true,
                     hidden: header.isHidden(),
                     hiddenCls: hiddenCls,
@@ -442,35 +442,14 @@ Ext.define('Ext.grid.plugin.ViewOptions', {
             record.parentNode.removeChild(record, true);
         }
     },
-
-    onDragStart: function() {
-        var sheetWidth = this.getSheetWidth(),
-            sheet = this.getSheet();
-
-        if (!this.sheetVisible) {
-            sheet.translate(sheetWidth);
-            this.startTranslate = sheetWidth;
-        } else {
-            sheet.translate(0);
-            this.startTranslate = 0;
-        }
-    },
-
-    onDrag: function(e) {
-        this.getSheet().translate(Math.max(this.startTranslate + e.deltaX, 0));
-    },
-
-    onDragEnd: function(e) {
-        var me = this;
-        if (e.flick.velocity.x > 0.1) {
-            me.hideViewOptions();
-        } else {
-            me.showViewOptions();
-        }
+    
+    onHeaderContextMenu: function(e) {
+        // Stop context menu from being triggered by a longpress
+        e.preventDefault();
     },
 
     onHeaderLongPress: function(e) {
-        if (!this.sheetVisible) {
+        if (!this.getSheet().isVisible()) {
             this.showViewOptions();
         }
     },
@@ -480,16 +459,7 @@ Ext.define('Ext.grid.plugin.ViewOptions', {
 
         this.getGrid().getHeaderContainer().setSortable(true);
 
-        sheet.translate(this.getSheetWidth(), 0, {duration: 100});
-        sheet.getTranslatable().on('animationend', function() {
-            if (sheet.getModal()) {
-                sheet.getModal().destroy();
-                sheet.setModal(null);
-            }
-            sheet.hide();
-        }, this, {single: true});
-
-        this.sheetVisible = false;
+        sheet.hide();
     },
 
     showViewOptions: function() {
@@ -497,7 +467,9 @@ Ext.define('Ext.grid.plugin.ViewOptions', {
             sheet = me.getSheet(),
             modal = null;
 
-        if (!me.sheetVisible) {
+        me.setup();
+
+        if (!me.getSheet().isVisible()) {
             // Since we may have shown the header in response to a longpress we don't
             // want the succeeeding "tap" to trigger column sorting, so we temporarily
             // disable sort-on-tap while the ViewOptions are shown
@@ -506,26 +478,29 @@ Ext.define('Ext.grid.plugin.ViewOptions', {
             me.updateListInfo();
 
             sheet.show();
-
-            sheet.translate(0, 0, {duration: 100});
-            sheet.getTranslatable().on('animationend', function() {
-                sheet.setModal(true);
-
-                modal = sheet.getModal();
-                modal.element.onBefore({
-                    tap: 'hideViewOptions',
-                    dragstart: 'onDragStart',
-                    drag: 'onDrag',
-                    dragend: 'onDragEnd',
-                    scope: me
-                });
-            }, me, {single: true});
-
-            me.sheetVisible = true;
         }
     },
 
     privates: {
+        setup: function() {
+            var me = this,
+                sheet;
+
+            if (me.doneSetup) {
+                return;
+            }
+            me.doneSetup = true;
+
+            sheet = me.getSheet();
+            me.getGrid().add(sheet);
+            sheet.translate(me.getSheetWidth());
+
+            sheet.down('button[role=donebutton]').on({
+                tap: 'onDoneButtonTap',
+                scope: me
+            });
+        },
+
         updateListInfo: function() {
             var grid = this.getGrid(),
                 store = grid.getStore(),

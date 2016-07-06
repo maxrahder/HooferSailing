@@ -49,11 +49,12 @@ Ext.define('Ext.draw.gradient.Gradient', {
     },
 
     /**
+     * @method
      * @protected
      * Generates the gradient for the given context.
      * @param {Ext.draw.engine.SvgContext} ctx The context.
      * @param {Object} bbox
-     * @return {Object}
+     * @return {CanvasGradient/Ext.draw.engine.SvgContext.Gradient/Ext.draw.Color.NONE}
      */
     generateGradient: Ext.emptyFn
 

@@ -628,7 +628,7 @@ Ext.define('Ext.form.field.HtmlEditor', {
         return Ext.String.format(
                '<!DOCTYPE html>' +
                '<html><head><style type="text/css">' +
-               (Ext.isOpera ? 'p{margin:0;}' : '') +
+               (Ext.isOpera || Ext.isIE ? 'p{margin:0;}' : '') +
                'body{border:0;margin:0;padding:{0}px;direction:' + (me.rtl ? 'rtl;' : 'ltr;') +
                (Ext.isIE8 ? Ext.emptyString : 'min-') +
                'height:{1}px;box-sizing:border-box;-moz-box-sizing:border-box;-webkit-box-sizing:border-box;cursor:text;background-color:white;' +
@@ -1126,7 +1126,7 @@ Ext.define('Ext.form.field.HtmlEditor', {
             }
 
             // We need to be sure we remove all our events from the iframe on unload or we're going to LEAK!
-            Ext.getWin().on('beforeunload', me.beforeDestroy, me);
+            Ext.getWin().on('unload', me.destroyEditor, me);
             doc.editorInitialized = true;
 
             me.initialized = true;
@@ -1139,7 +1139,7 @@ Ext.define('Ext.form.field.HtmlEditor', {
     /**
      * @private
      */
-    beforeDestroy: function(){
+    destroyEditor: function(){
         var me = this,
             monitorTask = me.monitorTask,
             doc, prop;
@@ -1148,7 +1148,7 @@ Ext.define('Ext.form.field.HtmlEditor', {
             Ext.TaskManager.stop(monitorTask);
         }
         if (me.rendered) {
-            Ext.getWin().un(me.beforeDestroy, me);
+            Ext.getWin().un('unload', me.destroyEditor, me);
 
             doc = me.getDoc();
             if (doc) {
@@ -1178,7 +1178,14 @@ Ext.define('Ext.form.field.HtmlEditor', {
             delete me.toolbar;
             delete me.inputCmp;
         }
-        me.callParent();
+    },
+
+    /**
+     * @private
+     */
+    beforeDestroy: function(){
+        this.destroyEditor();
+        this.callParent();
     },
 
     /**
@@ -1487,11 +1494,12 @@ Ext.define('Ext.form.field.HtmlEditor', {
 
     /**
      * @private
+     * Load time branching for fastest keydown performance.
      */
-    fixKeys: (function () { // load time branching for fastest keydown performance
+    fixKeys: (function () {
         var tag;
 
-        if (Ext.isIE) {
+        if (Ext.isIE10m) {
             return function (e) {
                 var me = this,
                     k = e.getKey(),
@@ -1501,6 +1509,8 @@ Ext.define('Ext.form.field.HtmlEditor', {
 
                 if (k === e.TAB) {
                     e.stopEvent();
+
+                    // TODO: add tab support for IE 11.
                     if (!readOnly) {
                         range = doc.selection.createRange();
                         if (range){
@@ -1512,41 +1522,19 @@ Ext.define('Ext.form.field.HtmlEditor', {
                             me.deferFocus();
                         }
                     }
-                } else if (k === e.ENTER) {
-                    if (!readOnly) {
-                        if (Ext.isIE10m) {
-                            range = doc.selection.createRange();
-                            if (range) {
-                                target = range.parentElement();
-                                if (!target || target.tagName.toLowerCase() !== 'li') {
-                                    e.stopEvent();
-                                    range.pasteHTML('<br />');
-                                    range.collapse(false);
-                                    range.select();
-                                }
-                            }
-                        } else {
-                            // IE 11
-                            range = doc.getSelection().getRangeAt(0);
-                            if (range && range.commonAncestorContainer.parentNode.tagName.toLowerCase() !== 'li') {
-                                // Use divs so it doesn't double-space.
-                                e.stopEvent();
-                                tag = doc.createElement('div');
-                                range.insertNode(tag);
-                            }
-                        }
-                    }
                 }
             };
         }
 
         if (Ext.isOpera) {
-            return function(e){
+            return function(e) {
                 var me = this,
                     k = e.getKey(),
                     readOnly = me.readOnly;
+
                 if (k === e.TAB) {
                     e.stopEvent();
+
                     if (!readOnly) {
                         me.win.focus();
                         me.execCmd('InsertHTML','&#160;&#160;&#160;&#160;');
@@ -1556,7 +1544,8 @@ Ext.define('Ext.form.field.HtmlEditor', {
             };
         }
 
-        return null; // not needed, so null
+        // Not needed, so null.
+        return null;
     }()),
 
     /**
@@ -1570,16 +1559,16 @@ Ext.define('Ext.form.field.HtmlEditor', {
                     doc = me.getDoc(),
                     readOnly = me.readOnly,
                     innerHTML;
-                
+
                 if (!readOnly && (k === e.BACKSPACE || k === e.DELETE)) {
                     innerHTML = doc.body.innerHTML;
-                    
+
                     // If HtmlEditor had some input and user cleared it, IE inserts <p>&nbsp;</p>
                     // which makes an impression that there is still some text, and creeps
                     // into source mode when toggled. We don't want this.
                     //
                     // See https://sencha.jira.com/browse/EXTJSIV-8542
-                    // 
+                    //
                     // N.B. There is **small** chance that user could go to source mode,
                     // type '<p>&nbsp;</p>', switch back to visual mode, type something else
                     // and then clear it -- the code below would clear the <p> tag as well,
@@ -1593,7 +1582,7 @@ Ext.define('Ext.form.field.HtmlEditor', {
                 }
             };
         }
-        
+
         return null;
     }()),
 
@@ -1763,3 +1752,4 @@ Ext.define('Ext.form.field.HtmlEditor', {
         }
     }
 });
+

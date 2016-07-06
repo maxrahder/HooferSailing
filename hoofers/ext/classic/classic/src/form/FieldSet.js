@@ -166,6 +166,15 @@ Ext.define('Ext.form.FieldSet', {
         '</div>'
     ],
 
+    /**
+     * @cfg stateEvents
+     * @inheritdoc Ext.state.Stateful#cfg-stateEvents
+     * @localdoc By default the following stateEvents are added:
+     * 
+     *  - {@link #event-resize} - _(added by Ext.Component)_
+     *  - {@link #event-collapse}
+     *  - {@link #event-expand}
+     */
     stateEvents : [ 'collapse', 'expand' ],
 
     maskOnDisable: false,
@@ -313,13 +322,6 @@ Ext.define('Ext.form.FieldSet', {
         
         legend = new Ext.container.Container(legendCfg);
         
-        // Mark the legend as immune to collapse so that when the fieldset
-        // *is* collapsed and the toggle tool or checkbox is focused,
-        // calling isVisible(true) on it will return true instead of false.
-        // See also below in createCheckboxCmp and createToggleCmp.
-        legend.collapseImmune = true;
-        legend.getInherited().collapseImmune = true;
-        
         return legend;
     },
 
@@ -444,6 +446,7 @@ Ext.define('Ext.form.FieldSet', {
         // Create the Legend component if needed
         if (legend) {
             legend.ownerLayout.configureItem(legend);
+            me.setLegendCollapseImmunity(legend);
             tree = legend.getRenderTree();
             Ext.DomHelper.generateMarkup(tree, out);
         }
@@ -476,10 +479,12 @@ Ext.define('Ext.form.FieldSet', {
                 me.legend = legend = me.createLegendCt();
                 me.addTitleClasses();
                 legend.ownerLayout.configureItem(legend);
+                me.setLegendCollapseImmunity(legend);
                 legend.render(me.el, 0);
             }
             me.titleCmp.update(title);
             
+            // ariaLabel property was htmlEncoded in initComponent
             me.ariaEl.dom.setAttribute('aria-label', me.ariaLabel);
         } else if (legend) {
             me.titleCmp.update(title);
@@ -652,6 +657,19 @@ Ext.define('Ext.form.FieldSet', {
          */
         onCheckChange: function(cmp, checked) {
             this.setExpanded(checked);
+        },
+
+        setLegendCollapseImmunity: function(legend) {
+            // Mark the legend as immune to collapse so that when the fieldset
+            // *is* collapsed and the toggle tool or checkbox is focused,
+            // calling isVisible(true) on it will return true instead of false.
+            // See also below in createCheckboxCmp and createToggleCmp.
+            // 
+            // It is important to defer this until the inherited hierarchy is setup
+            // completely, otherwise we could cause our inheritedState to get 
+            // initialized incorrectly.
+            legend.collapseImmune = true;
+            legend.getInherited().collapseImmune = true;
         },
 
         setupRenderTpl: function (renderTpl) {

@@ -1,3 +1,5 @@
+/* global Ext, jasmine, expect */
+
 describe('Ext.grid.header.Container', function () {
     var createGrid = function (storeCfg, gridCfg) {
         store = Ext.create('Ext.data.Store', Ext.apply({
@@ -68,6 +70,48 @@ describe('Ext.grid.header.Container', function () {
                 return menu.isVisible() && menu.containsFocus;
             });
         });
+        
+        if (Ext.supports.TouchEvents) {
+            it('should show the menu on trigger mousedown+mouseup', function() {
+                var col,
+                    menu;
+
+                createGrid({}, {
+                    renderTo: Ext.getBody()
+                });
+
+                col = grid.columns[0];
+                col.triggerEl.show();
+                jasmine.fireMouseEvent(col.triggerEl.dom, 'mousedown');
+                jasmine.fireMouseEvent(col.triggerEl.dom, 'mouseup');
+
+                menu = col.activeMenu;
+
+                // Should have shown the header menu
+                expect(menu && menu.isVisible()).toBe(true);
+            });
+            it('should show the menu on trigger touchstart+touchend', function() {
+                var col,
+                    menu,
+                    x, y;
+
+                createGrid({}, {
+                    renderTo: Ext.getBody()
+                });
+
+                col = grid.columns[0];
+                col.triggerEl.show();
+                x = col.triggerEl.getX() + col.triggerEl.getWidth() / 2;
+                y = col.triggerEl.getY() + col.triggerEl.getHeight() / 2;
+                jasmine.fireTouchEvent(col.triggerEl.dom, 'touchstart', [{ pageX: x, pageY: y }]);
+                jasmine.fireTouchEvent(col.triggerEl.dom, 'touchend', [{ pageX: x, pageY: y }]);
+
+                menu = col.activeMenu;
+
+                // Should have shown the header menu
+                expect(menu && menu.isVisible()).toBe(true);
+            });
+        }
     });
 
     describe('columnManager delegations', function () {
@@ -273,6 +317,73 @@ describe('Ext.grid.header.Container', function () {
         it("should focus last column header on End key", function() {
             jasmine.syncPressKey(grid.headerCt.el, 'end');
             jasmine.expectFocused(grid.headerCt.gridVisibleColumns[1]);
+        });
+    });
+
+    describe('Disabling column hiding', function() {
+        beforeEach(function() {
+            createGrid();
+        });
+        
+        it('should disable hiding the last visible column', function() {
+            var menu,
+                col = grid.columns[0],
+                colItem,
+                colMenu,
+                nameItem,
+                emailItem;
+
+            // Open the header menu and mouseover the "Columns" item.
+            col.triggerEl.show();
+            jasmine.fireMouseEvent(col.triggerEl.dom, 'click');
+            menu = col.activeMenu;
+            colItem = menu.child('#columnItem');
+            jasmine.fireMouseEvent(colItem.el.dom, 'mouseover');
+
+            // Wait for the column show/hide menu to appear
+            waitsFor(function() {
+                colMenu = colItem.menu;
+                return colMenu && colMenu.isVisible();
+            });
+            
+            // Hide the "Name" column, leaving only the "Email" column visible
+            runs(function() {
+                nameItem = colMenu.child('[text=Name]');
+                emailItem = colMenu.child('[text=Email]');
+                jasmine.fireMouseEvent(nameItem.el.dom, 'click');
+            });
+
+            // The "Email" column is the last visible column, so its
+            // hide menu check item must be disabled.
+            waitsFor(function() {
+                return emailItem.disabled;
+            });
+        });
+    });
+    
+    describe("reconfiguring parent grid", function() {
+        it("should enable tabIndex on its el after adding columns", function() {
+            createGrid({}, { columns: [] });
+            
+            jasmine.expectNoAriaAttr(grid.headerCt.el, 'tabIndex');
+            
+            grid.reconfigure(null, [
+                { header: 'Name',  dataIndex: 'name', width: 100 },
+                { header: 'Email', dataIndex: 'email', flex: 1 },
+                { header: 'Phone', dataIndex: 'phone', flex: 1, hidden: true }
+            ]);
+            
+            jasmine.expectAriaAttr(grid.headerCt.el, 'tabIndex', '0');
+        });
+        
+        it("should disable tabIndex on its el after removing all columns", function() {
+            createGrid();
+            
+            jasmine.expectAriaAttr(grid.headerCt.el, 'tabIndex', '0');
+            
+            grid.reconfigure(null, []);
+            
+            jasmine.expectNoAriaAttr(grid.headerCt.el, 'tabIndex');
         });
     });
 });

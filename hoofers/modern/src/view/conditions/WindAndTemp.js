@@ -15,64 +15,59 @@ Ext.define('Hoofers.view.conditions.WindAndTemp', {
             '    margin-top: 0em; ',
             '">',
 
-            '<tpl if="this.beforeTransmitting(values)">',
-
-            '<i style="font-size: 8em; color: #aaaaaa;" ',
-            'class="fa fa-wifi"></i>',
-            '<p style="font-size: 1.2em; margin: 0em 2em 2em 2em;">Checking the Lake Mendota buoy</p>',
-
-            '<tpl elseif="transmitting">',
+            '<tpl if="this.transmitting(values)">',
 
             '<i style="',
             'font-size: 10em; ',
             'color: {color}; ',
-            'transform: rotate({windDirectionDegrees+180}deg); ',
-            '-ms-transform: rotate({windDirectionDegrees+180}deg); ', // IE 9
-            '-webkit-transform: rotate({windDirectionDegrees+180}deg); ', // Safari and Chrome
+            'transform: rotate({conditions.windDirectionDegrees+180}deg); ',
+            '-ms-transform: rotate({conditions.windDirectionDegrees+180}deg); ', // IE 9
+            '-webkit-transform: rotate({conditions.windDirectionDegrees+180}deg); ', // Safari and Chrome
             '" ',
             'class="fa fa-arrow-circle-up"></i>',
 
 
-            '<p style="font-size: 4em; margin: 0em 0 0 0;">',
-            '<b>{averageKnots}</b> kt',
+            '<p style="font-size: 4em; margin: 0em 0 0em 0;">',
+            '<b>{conditions.windAverage}</b> {conditions.speedUnits}',
             '</p>',
 
             '<tpl if="this.gusting(values)">',
-            '<p style="font-size: 1.5em; margin: -0.5em 0 0 0;">',
-            'From {lulls} to {gusts} kts',
+            '<p style="font-size: 1.5em; margin: 0em 0 0 0;">',
+            'From {conditions.windLulls} to {conditions.windGusts} {conditions.windSpeedUnits}',
             '</p>',
-            '</tpl>',
-
-            '<tpl if="!this.gusting(values)">',
+            '<tpl else>',
             '<p style="font-size: 1.5em; margin: -0.5em 0 0 0;">',
             'Steady winds',
             '</p>',
             '</tpl>',
 
             '<p style="',
-            '    margin: 0.2em 0 0 0;',
+            '    margin: 0.6em 0 0 0;',
             '    text-align: center; ',
             '    font-size: 1.5em; ',
             '">',
             'Water temp. ',
-            '{waterTemperature}&deg;F',
+            '{conditions.waterTemperature}&deg;{conditions.temperatureUnits}',
             '</p>',
 
             '<tpl else>',
 
             '<i style="font-size: 8em; color: #aaaaaa;" ',
+            'class="fa fa-wifi"></i>',
+            '<p style="font-size: 1.2em; margin: 0em 2em 2em 2em;">Checking the Lake Mendota buoy</p>',
+            '<i style="font-size: 8em; color: #aaaaaa;" ',
             'class="fa fa-meh-o"></i>',
 
             '<p style="font-size: 1.2em; margin: 0em 2em 0em 2em;">There is no information on winds or<br>water temperature because the Lake<br>Mendota buoy is not transmitting</p>',
 
-
             '</tpl>',
+
             '</div>', {
                 gusting: function(values) {
-                    return ((values.gusts - values.lulls) > 2);
+                    return ((values.windGusts - values.windLulls) > 2);
                 },
-                beforeTransmitting: function(values) {
-                    return !Ext.isDefined(values.transmitting);
+                transmitting: function(values) {
+                    return !Ext.Object.isEmpty(values.conditions);
                 }
             }
         ]
@@ -91,9 +86,10 @@ Ext.define('Hoofers.view.conditions.WindAndTemp', {
     },
 
     doIt: function() {
-        var data = Ext.apply(this.getConditions(), {
+        var data = {
+            conditions: this.getConditions(),
             color: this.getColor()
-        });
+        };
         this.setData(data);
     },
     updateConditions: function(conditions) {

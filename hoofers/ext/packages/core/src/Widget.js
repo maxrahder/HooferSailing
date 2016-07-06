@@ -86,7 +86,7 @@ Ext.define('Ext.Widget', {
      * After construction of a widget the reference elements are accessible as follows:
      *
      *     var foo = new FooWidget(),
-     *         innerEl = foo.innerEl; // an Ext.Element that wraps the innerElement
+     *         innerEl = foo.innerElement; // an Ext.Element that wraps the innerElement
      *
      * The reference attribute is optional, but all Widgets must have a `'element'`
      * reference on some element within the template (usually the outermost one).
@@ -123,6 +123,24 @@ Ext.define('Ext.Widget', {
 
     cachedConfig: {
         /**
+         * @cfg {String/Boolean} [baseCls=true]
+         * The base CSS class to apply to this widget's element.
+         * Used as the prefix for {@link #ui}-specific class names.
+         * When set to `true` the {@link #classCls} will be used as the baseCls
+         * @accessor
+         * @protected
+         */
+        baseCls: true,
+
+        /**
+         * @cfg {String} ui The ui to be used on this Component
+         *
+         * When a ui is configured, a CSS class name, created by appending the ui name
+         * to the {@link #baseCls}, is added to the element {@link #element}.
+         */
+        ui: null,
+
+        /**
          * @cfg {String/Object} style
          * Additional CSS styles that will be rendered into an inline style attribute when
          * the widget is rendered.
@@ -147,7 +165,81 @@ Ext.define('Ext.Widget', {
          * string syntax for better performance.
          * @accessor
          */
-        style: null
+        style: null,
+
+        /**
+         * @cfg {Object}
+         *
+         * Emulates the behavior of the CSS
+         * {@link https://www.w3.org/TR/pointerevents/#the-touch-action-css-property touch-action}
+         * property in a cross-browser compatible manner.
+         *
+         * Keys in this object are touch action names, and values are `false` to disable
+         * a touch action or `true` to enable it.  Accepted keys are:
+         *
+         * - `panX`
+         * - `panY`
+         * - `pinchZoom`
+         * - `doubleTapZoom`
+         *
+         * All touch actions are enabled (`true`) by default, so it is usually only necessary
+         * to specify which touch actions to disable.  For example, the following disables
+         * only horizontal scrolling and pinch-to-zoom on the component's main element:
+         *
+         *     touchAction: {
+         *         panX: false,
+         *         pinchZoom: false
+         *     }
+         *
+         * Touch actions can be specified on reference elements using the reference element
+         * name, for example:
+         *
+         *     // disables horizontal scrolling on the main element, and double-tap-zoom
+         *     // on the child element named "body"
+         *     touchAction: {
+         *         panY: false
+         *         body: {
+         *             doubleTapZoom: false
+         *         }
+         *     }
+         *
+         * The primary motivation for setting the touch-action of an element is to prevent
+         * the browser's default handling of a gesture such as pinch-to-zoom, or
+         * drag-to-scroll, so that the application can implement its own handling of that
+         * gesture on the element.  Suppose, for example, a component has a custom drag
+         * handler on its element and wishes to prevent horizontal scrolling of its container
+         * while it is being dragged:
+         *
+         *     Ext.create('Ext.Widget', {
+         *         touchAction: {
+         *             panX: false
+         *         },
+         *         listeners: {
+         *             drag: function(e) {
+         *                 // implement drag logic
+         *             }
+         *         }
+         *     });
+         */
+        touchAction: null
+    },
+
+    config: {
+        /**
+         * @cfg {String/String[]} userCls
+         * One or more CSS classes to add to the component's primary element. This config
+         * is intended solely for use by the component instantiator (the "user"), not by
+         * derived classes.
+         *
+         * For example:
+         *
+         *      items: [{
+         *          xtype: 'button',
+         *          userCls: 'my-button'
+         *      ...
+         *      }]
+         */
+        userCls: null
     },
 
     eventedConfig: {
@@ -180,7 +272,41 @@ Ext.define('Ext.Widget', {
      * @protected
      */
     template: [],
-    
+
+    /**
+     * A CSS class to apply to the main element that will be inherited down the class
+     * hierarchy.  Subclasses may override this property on their prototype to add their
+     * own CSS class in addition to the CSS classes inherited from ancestor classes via
+     * the prototype chain.  For example
+     *
+     *     Ext.define('Foo', {
+     *         extend: 'Ext.Widget',
+     *         classCls: 'foo'
+     *     });
+     *
+     *     Ext.define('Bar', {
+     *         extend: 'Foo',
+     *         classCls: 'bar'
+     *     });
+     *
+     *     var bar = new Bar();
+     *
+     *     console.log(bar.element.className); // outputs 'foo bar'
+     *
+     * @protected
+     * @property
+     */
+    classCls: null,
+
+    /**
+     * When set to `true` during widget class definition, that class will be the "root" for
+     * {@link #classCls} inheritance. Derived classes may set this to `true` to avoid
+     * inheriting a {@link #classCls} from their superclass.
+     * @property
+     * @protected
+     */
+    classClsRoot: true,
+
     constructor: function(config) {
         var me = this,
             controller;
@@ -236,6 +362,27 @@ Ext.define('Ext.Widget', {
         this.el.addCls(cls);
     },
 
+    applyBaseCls: function(baseCls) {
+        var prefix = Ext.baseCSSPrefix,
+            xtype = this.xtype;
+
+        if (baseCls === true) {
+            baseCls = this.classCls || (prefix + xtype);
+        } else if (!baseCls) {
+            baseCls = prefix + xtype;
+        }
+
+        return baseCls;
+    },
+
+    applyTouchAction: function(touchAction, oldTouchAction) {
+        if (oldTouchAction != null) {
+            touchAction = Ext.merge({}, oldTouchAction, touchAction);
+        }
+
+        return touchAction;
+    },
+
     applyWidth: function(width) {
         return this.filterLengthValue(width);
     },
@@ -284,11 +431,11 @@ Ext.define('Ext.Widget', {
 
     /**
      * A template method for modifying the {@link #element} config before it is processed.
-     * By default adds the result of `this.getTemplate()` as the `children` array of {@link
-     * #element} if `children` were not specified in the original {@link #element} config.
-     * Typically this method should not need to be implemented in subclasses.  Instead the
-     * {@link #element} property should be use to configure the element template for a
-     * given Widget subclass.
+     * By default adds the result of `this.getTemplate()` as the `children` array of 
+     * {@link #element} if `children` were not specified in the original 
+     * {@link #element} config.  Typically this method should not need to be implemented 
+     * in subclasses.  Instead the {@link #element} property should be use to configure 
+     * the element template for a given Widget subclass.
      *
      * This method is called once when the first instance of each Widget subclass is
      * created.  The element config object that is returned is cached and used as the template
@@ -329,6 +476,33 @@ Ext.define('Ext.Widget', {
     },
 
     /**
+     * @private
+     */
+    getClassCls: function() {
+        var proto = this.self.prototype,
+            prototype = proto,
+            classes, classCls;
+
+        while (prototype) {
+            classCls = prototype.classCls;
+
+            if (classCls) {
+                (classes || (classes = [])).push(classCls);
+            }
+
+            if (prototype.classClsRoot && prototype.hasOwnProperty('classClsRoot')) {
+                break;
+            }
+
+            prototype = prototype.superclass;
+        }
+
+        proto.classClsList = classes;
+
+        return classes;
+    },
+
+    /**
      * Initializes the Element for this Widget instance.  If this is the first time a
      * Widget of this type has been instantiated the {@link #element} config will be
      * processed to create an Element.  This Element is then cached on the prototype (see
@@ -345,23 +519,24 @@ Ext.define('Ext.Widget', {
             // iPads and lower, possibly other older iOS devices. See EXTJS-16494.
             referenceList = me.referenceList = me.referenceList = [],
             cleanAttributes = true,
+            isFirstInstance = !prototype.hasOwnProperty('renderTemplate'),
             renderTemplate, renderElement, element, referenceNodes, i, ln, referenceNode,
-            reference;
+            reference, classCls;
 
-        if (prototype.hasOwnProperty('renderTemplate')) {
-            // we have already created an instance of this Widget type, so the element
-            // config has already been processed, and the resulting DOM has been cached on
-            // the prototype (see afterCachedConfig).  This means we can obtain our element
-            // by simply cloning the cached element.
-            renderTemplate = me.renderTemplate.cloneNode(true);
-            renderElement = renderTemplate.firstChild;
-        } else {
+        if (isFirstInstance) {
             // this is the first instantiation of this widget type.  Process the element
             // config from scratch to create our Element.
             cleanAttributes = false;
             renderTemplate = document.createDocumentFragment();
             renderElement = Ext.Element.create(me.processElementConfig.call(prototype), true);
             renderTemplate.appendChild(renderElement);
+        } else {
+            // we have already created an instance of this Widget type, so the element
+            // config has already been processed, and the resulting DOM has been cached on
+            // the prototype (see afterCachedConfig).  This means we can obtain our element
+            // by simply cloning the cached element.
+            renderTemplate = me.renderTemplate.cloneNode(true);
+            renderElement = renderTemplate.firstChild;
         }
 
         referenceNodes = renderTemplate.querySelectorAll('[reference]');
@@ -393,6 +568,16 @@ Ext.define('Ext.Widget', {
                 // element reference needs to be established ASAP, so add the reference
                 // immediately, not "on-demand"
                 element = me.el = me.addElementReference(reference, referenceNode);
+
+                // Poke our id in our magic attribute to enable Component#fromElement
+                element.dom.setAttribute('data-componentid', id);
+
+                if (isFirstInstance) {
+                    classCls = me.getClassCls();
+                    if (classCls) {
+                        element.addCls(classCls);
+                    }
+                }
             } else {
                 me.addElementReferenceOnDemand(reference, referenceNode);
             }
@@ -476,11 +661,32 @@ Ext.define('Ext.Widget', {
      * @param {Number} height The new height for the Component.
      */
     setSize: function(width, height) {
+        // Allow setSize to be called with a result from getSize.
+        if (width && typeof width === 'object') {
+            return this.setSize(width.width, width.height);
+        }
         if (width !== undefined) {
             this.setWidth(width);
         }
         if (height !== undefined) {
             this.setHeight(height);
+        }
+    },
+
+    updateBaseCls: function(newBaseCls, oldBaseCls) {
+        var me = this,
+            element = me.element;
+
+        if (oldBaseCls) {
+            element.removeCls(oldBaseCls);
+        }
+
+        if (newBaseCls) {
+            element.addCls(newBaseCls);
+        }
+
+        if (!me.isConfiguring) {
+            me.syncUiCls();
         }
     },
 
@@ -507,6 +713,29 @@ Ext.define('Ext.Widget', {
         this.element.applyStyles(style);
     },
 
+    updateTouchAction: function(touchAction) {
+        var name, childEl, value, hasRootActions;
+
+        for (name in touchAction) {
+            childEl = this[name];
+            value = touchAction[name];
+
+            if (childEl && childEl.isElement) {
+                childEl.setTouchAction(value);
+            } else {
+                hasRootActions = true;
+            }
+        }
+
+        if (hasRootActions) {
+            this.el.setTouchAction(touchAction);
+        }
+    },
+
+    updateUi: function() {
+        this.syncUiCls();
+    },
+
     /**
      * @param width
      * @protected
@@ -523,11 +752,68 @@ Ext.define('Ext.Widget', {
         this.element.setHeight(height);
     },
 
+    /**
+     * Walks up the ownership hierarchy looking for an ancestor Component which matches
+     * the passed simple selector.
+     *
+     * Example:
+     *
+     *     var owningTabPanel = grid.up('tabpanel');
+     *
+     * @param {String} selector (optional) The simple selector to test.
+     * @param {String/Number/Ext.Component} [limit] This may be a selector upon which to stop the upward scan, or a limit of the number of steps, or Component reference to stop on.
+     * @return {Ext.Container} The matching ancestor Container (or `undefined` if no match was found).
+     */
+    up: function(selector, limit) {
+        var result = this.getRefOwner(),
+            limitSelector = typeof limit === 'string',
+            limitCount = typeof limit === 'number',
+            limitComponent = limit && limit.isComponent,
+            steps = 0;
+
+        if (selector) {
+            for (; result; result = result.getRefOwner()) {
+                steps++;
+                if (selector.isComponent || selector.isWidget) {
+                    if (result === selector) {
+                        return result;
+                    }
+                } else {
+                    if (Ext.ComponentQuery.is(result, selector)) {
+                        return result;
+                    }
+                }
+
+                // Stop when we hit the limit selector
+                if (limitSelector && result.is(limit)) {
+                    return;
+                }
+                if (limitCount && steps === limit) {
+                    return;
+                }
+                if (limitComponent && result === limit) {
+                    return;
+                }
+            }
+        }
+        return result;
+    },
+
+    updateLayout: Ext.emptyFn, // empty fn for modern/classic compat
+
     // Temporary workarounds to keep Ext.ComponentManager from throwing errors when dealing
     // Widgets.  TODO: remove these emptyFns when proper focus handling is implmented
     onFocusEnter: Ext.emptyFn,
     onFocusLeave: Ext.emptyFn,
     isAncestor: function () { return false; },
+
+    /**
+     * Returns `true` if this Component's element is currently visible.
+     * @return {Boolean} `true` if currently visible.
+     */
+    isVisible: function() {
+        return this.el.isVisible();
+    },
 
     //-------------------------------------------------------------------------
 
@@ -580,27 +866,19 @@ Ext.define('Ext.Widget', {
             referenceEl.component = me;
 
             if (listeners) {
-                // TODO: these references will be needed when we use delegation to listen
+                // TODO: These references will be needed when we use delegation to listen
                 // for element events, but for now, we'll just attach the listeners directly
                 // referenceEl.reference = name;
                 // referenceEl.component = me;
                 // referenceEl.listeners = listeners;
 
-                // at this point "listeners" exists on the class prototype.  We need to clone
+                // At this point "listeners" exists on the class prototype.  We need to clone
                 // it before poking the scope reference onto it, because it is used as the
                 // options object by Observable and so can't be safely shared.
+                //
                 listeners = Ext.clone(listeners);
 
-                // the outermost listeners object always needs the scope option.  this covers
-                // a listeners object with the following shape
-                //
-                //    {
-                //        click: 'onClick'
-                //        scope: this
-                //    }
-                listeners.scope = me;
-
-                // if the listener is specified as an object it needs to have the scope
+                // If the listener is specified as an object it needs to have the scope
                 // option added to that object, for example:
                 //
                 //    {
@@ -609,6 +887,7 @@ Ext.define('Ext.Widget', {
                 //            scope: this
                 //        }
                 //    }
+                //
                 for (eventName in listeners) {
                     listener = listeners[eventName];
                     if (typeof listener === 'object') {
@@ -616,9 +895,20 @@ Ext.define('Ext.Widget', {
                     }
                 }
 
-                // hopefully in the future we can stop calling on() here, and just use
+                // The outermost listeners object always needs the scope option. This covers
+                // a listeners object with the following shape:
+                //
+                //    {
+                //        click: 'onClick'
+                //        scope: this
+                //    }
+                //
+                listeners.scope = me; // do this *after* the above loop over listeners
+
+                // Hopefully in the future we can stop calling on() here, and just use
                 // event delegation to dispatch events to Widgets that have declared their
-                // listeners in their template
+                // listeners in their template.
+                //
                 referenceEl.on(listeners);
             }
 
@@ -802,6 +1092,50 @@ Ext.define('Ext.Widget', {
         reattachToBody: function() {
             // See detachFromBody
             this.isDetached = false;
+        },
+
+        syncUiCls: function() {
+            var me = this,
+                prototype = me.self.prototype,
+                ui = me.getUi(),
+                currentUiCls = me.currentUiCls,
+                element = me.element,
+                baseCls = me.getBaseCls(),
+                classClsList = me.classClsList,
+                uiCls = [],
+                uiSuffix, i, ln;
+
+            if (currentUiCls) {
+                element.removeCls(currentUiCls);
+            }
+
+            if (ui) {
+                uiSuffix = '-' + ui;
+                if (baseCls && (baseCls !== me.classCls)) {
+                    uiCls.push(baseCls + uiSuffix);
+                }
+
+                if (classClsList) {
+                    for (i = 0, ln = classClsList.length; i < ln; i++) {
+                        uiCls.push(classClsList[i] + uiSuffix);
+                    }
+                }
+
+                element.addCls(uiCls);
+
+                me.currentUiCls = uiCls;
+
+                // Since ui is a cached config, we must store the first instance on the
+                // prototype, so that the second instance can call setUi() and the old
+                // ui class will be removed correctly
+                if (!prototype.currentUiCls) {
+                    prototype.currentUiCls = uiCls;
+                }
+            }
+        },
+
+        updateUserCls: function (newCls, oldCls) {
+            this.element.replaceCls(oldCls, newCls);
         }
     }
 }, function(Widget) {

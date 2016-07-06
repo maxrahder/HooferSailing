@@ -128,6 +128,7 @@ Ext.define('Ext.picker.Month', {
     totalYears: 10,
     yearOffset: 5, // 10 years in total, 2 per row
     monthOffset: 6, // 12 months, 2 per row
+    alignOnScroll: false,
 
     /**
      * @event cancelclick
@@ -267,9 +268,20 @@ Ext.define('Ext.picker.Month', {
             body = me.bodyEl;
 
         me.callParent();
+        
+        // Month picker is not focusable and essentially is pointer only thing.
+        // Clicking on it will focus the document body, which may disrupt the state
+        // of the floating parent such as Date picker or a menu, and cause it to hide.
+        // To work around that, we stop the mousedown events completely.
+        if (me.up('[floating=true]')) {
+            me.el.on('mousedown', me.onElClick, me, {translate: false});
+        }
 
-        me.mon(body, 'click', me.onBodyClick, me);
-        me.mon(body, 'dblclick', me.onBodyClick, me);
+        body.on({
+            scope: me,
+            click: 'onBodyClick',
+            dblclick: 'onBodyClick'
+        });
 
         // keep a reference to the year/month elements since we'll be re-using them
         me.years = body.select('.' + me.baseCls + '-year a');
@@ -446,6 +458,10 @@ Ext.define('Ext.picker.Month', {
         var year = this.value[1];
         offset = offset || 0;
         return year === null ? defaultValue : year + offset;
+    },
+    
+    onElClick: function(e) {
+        e.stopEvent();
     },
 
     /**

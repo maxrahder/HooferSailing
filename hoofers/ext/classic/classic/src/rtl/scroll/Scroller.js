@@ -13,5 +13,32 @@ Ext.define('Ext.rtl.scroll.Scroller', {
     },
 
     // Empty updater - workaround for https://sencha.jira.com/browse/EXTJS-14574
-    updateRtl: Ext.emptyFn
+    updateRtl: Ext.emptyFn,
+
+    privates: {
+        convertX: function(x) {
+            var element;
+
+            if (this.getRtl()) {
+                element = this.getElement();
+
+                if (element) {
+                    x = element.rtlNormalizeScrollLeft(x);
+                }
+            }
+
+            return x;
+        },
+
+        getElementScroll: function(element) {
+            return this.getRtl() ? element.rtlGetScroll() : element.getScroll();
+        },
+
+        updateSpacerXY: function(pos) {
+            if (this.getRtl()) {
+                pos.x = -pos.x;
+            }
+            this.callOverridden([pos]);
+        }
+    }
 });

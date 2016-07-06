@@ -2,8 +2,8 @@ Ext.define('Hoofers.model.Winds', {
     extend: 'Ext.util.Observable',
     singleton: true,
     requires: ['Ext.data.JsonP', 'Hoofers.util.Compass'],
-    // Gets the past five minutes of buoy data to calculate current
-    // speed and direction. We're averaging the speeds.
+    // Average the past five minutes of buoy data to calculate current
+    // speed and direction.
 
     // Note: The interval setting seems to be ignored by the
     // buoy server. It's always returning five second data, which
@@ -43,7 +43,7 @@ Ext.define('Hoofers.model.Winds', {
     summarizeConditions: function(buoyData) {
         var me = this;
         // buoyData is an array of arrays. Each element holds
-        // - Wind direction (degrees)
+        // - Wind direction (degrees centigrade)
         // - Wind speed (meters per second)
         // - Water temperature at 1 meter (celsius)
         // - Time (string), of the form "2016-06-09 23:06:10Z"

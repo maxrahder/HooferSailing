@@ -10,7 +10,7 @@ $selectfield-trigger-font-size: dynamic(1.24em);
 
 /**
  * @var {number}
- * SelectField trigger font-size in the {@link Ext.Component#$enable-big big} sizing scheme
+ * SelectField trigger font-size in the {@link Global_CSS#$enable-big big} sizing scheme
  */
 $selectfield-trigger-font-size-big: dynamic(1.2em);
 
@@ -32,3 +32,8 @@ $selectfield-trigger-icon: dynamic($fa-var-caret-down $selectfield-trigger-font-
  * SelectField trigger color
  */
 $selectfield-trigger-color: dynamic($neutral-dark-color);
+
+$selectfield-trigger-margin-top: dynamic(-($selectfield-trigger-size / 2));
+$selectfield-trigger-right: dynamic(.4em);
+
+$selectfield-selected-item-icon: dynamic($fa-var-check);

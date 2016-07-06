@@ -50,17 +50,7 @@ Ext.define('Hoofers.model.Boat', {
         'use', {
             name: 'outAgo',
             calculate: function(data) {
-                var outTime = data.outTime;
-                if (outTime) {
-                    var pluralize = Hoofers.util.Util.pluralize;
-                    var elapsed = Ext.Date.getElapsed(Hoofers.now, outTime);
-                    var seconds = Math.round(elapsed / 1000, 0);
-                    var minutes = Math.round(seconds / 60, 0);
-                    var hours = Math.floor(minutes / 60, 0);
-                    minutes = (minutes % 60);
-                    var result = (hours ? pluralize(hours, 'hour') + ' ' : '') + pluralize(minutes, 'minute');
-                    return result;
-                }
+                return Hoofers.util.Util.hoursMinutes(data.outTime);
             }
         }
     ]

@@ -11,10 +11,6 @@ Ext.define('Hoofers.view.conditions.Flag', {
         return (color || 'none');
     },
     updateColor: function(color) {
-            this.setSrc('resources/images/Flags/' + color + '.png');
-        }
-        // listeners: {
-        //     tap: 'onFlagTap'
-        // }
-
+        this.setSrc('resources/images/Flags/' + color + '.png');
+    }
 });

@@ -106,7 +106,7 @@ Ext.define('Ext.dataview.List', {
 
     /**
      * @event disclose
-     * @preventable doDisclose
+     * @preventable
      * Fires whenever a disclosure is handled
      * @param {Ext.dataview.List} this The List instance
      * @param {Ext.data.Model} record The record associated to the item
@@ -116,6 +116,30 @@ Ext.define('Ext.dataview.List', {
      */
 
     config: {
+        /**
+         * @cfg {Object} container
+         * This config is used to control the internal {@link Ext.Container} created to
+         * manage this list's items. One common use for this is to apply a {@link #userCls}
+         * to the item container.
+         *
+         *      {
+         *          xtype: 'list',
+         *          container: {
+         *              userCls: 'mylist-cls'
+         *          },
+         *          ...
+         *      }
+         *
+         * @since 6.0.1
+         */
+        container: {
+            lazy: true,
+            $value: {
+                xtype: 'container',
+                scrollable: {}
+            }
+        },
+
         /**
          * @cfg layout
          * Hide layout config in DataView. It only causes confusion.
@@ -181,6 +205,13 @@ Ext.define('Ext.dataview.List', {
          * @accessor
          */
         disclosureProperty: 'disclosure',
+
+        /**
+         * @cfg {String} disclosurePressedCls
+         * The CSS class to apply to an disclosure on the view while it is being pressed.
+         * @accessor
+         */
+        disclosurePressedCls: 'x-disclosure-pressed',
 
         /**
          * @cfg {Boolean} useComponents
@@ -290,18 +321,18 @@ Ext.define('Ext.dataview.List', {
     topVisibleIndex: 0,
     visibleCount: 0,
 
-    constructor: function() {
-        var me = this, layout;
+    // that's the "delegate" used to capture item events
+    eventsSelector: '.' + Ext.baseCSSPrefix + 'list-item',
 
-        me.callParent(arguments);
-
-        //<debug>
-        layout = this.getLayout();
+    //<debug>
+    constructor: function(config) {
+        this.callParent([config]);
+        var layout = this.getLayout();
         if (layout && !layout.isFit) {
             Ext.Logger.error('The base layout for a DataView must always be a Fit Layout');
         }
-        //</debug>
     },
+    //</debug>
 
     // We create complex instance arrays and objects in beforeInitialize so that we can use these inside of the initConfig process.
     beforeInitialize: function() {
@@ -315,6 +346,7 @@ Ext.define('Ext.dataview.List', {
             headerItems: [],
             updatedItems: [],
             headerMap: [],
+            recordMap: {},
             scrollDockItems: {
                 top: [],
                 bottom: []
@@ -343,11 +375,11 @@ Ext.define('Ext.dataview.List', {
             xtype: 'listitemheader',
             html: '&nbsp;',
             translatable: {
-                translationMethod: this.translationMethod
+                translationMethod: me.translationMethod
             },
             cls: [baseCls + '-header', baseCls + '-header-swap']
         });
-        pinnedHeader.translate(0, -10000);
+        me.translate(pinnedHeader, 0, -10000);
         pinnedHeader.$position = -10000;
         scrollViewElement.insertFirst(pinnedHeader.renderElement);
 
@@ -361,14 +393,11 @@ Ext.define('Ext.dataview.List', {
     /**
      * @private
      */
-    createContainer: function() {
-        return Ext.factory({
-            xtype: 'container',
-            scrollable: {
-                autoRefresh: !this.getInfinite(),
-                x: false
-            }
-        });
+    createContainer: function () {
+        var config = Ext.merge({
+        }, this.getContainer());
+
+        return Ext.create(config);
     },
 
     getScrollable: function() {
@@ -379,13 +408,12 @@ Ext.define('Ext.dataview.List', {
     initialize: function() {
         var me = this,
             container = me.container,
-            scrollViewElement = me.scrollViewElement,
             indexBar = me.getIndexBar(),
             triggerEvent = me.getTriggerEvent(),
             triggerCtEvent = me.getTriggerCtEvent();
 
         if (indexBar) {
-            scrollViewElement.appendChild(indexBar.renderElement);
+            me.container.element.appendChild(indexBar.renderElement);
         }
 
         if (triggerEvent) {
@@ -398,6 +426,8 @@ Ext.define('Ext.dataview.List', {
         container.element.on({
             delegate: '.' + me.getBaseCls() + '-disclosure',
             tap: 'handleItemDisclosure',
+            touchstart: 'handleItemDisclosureTouchStart',
+            touchend: 'handleItemDisclosureTouchEnd',
             scope: me
         });
 
@@ -415,13 +445,38 @@ Ext.define('Ext.dataview.List', {
             singletap: 'onItemSingleTap',
             doubletap: 'onItemDoubleTap',
             swipe: 'onItemSwipe',
-            delegate: '.' + Ext.baseCSSPrefix + 'list-item',
+            delegate: me.eventsSelector,
             scope: me
         });
 
         if (me.getStore()) {
-            me.refresh();
+            if (me.isPainted()) {
+                me.refresh();
+            } else {
+                me.on({
+                    painted: 'refresh',
+                    single: true
+                });
+            }
         }
+    },
+
+    getRefItems: function(deep) {
+        var result = [],
+            candidates = this.callParent([deep]),
+            len = candidates.length,
+            i, candidate;
+
+        // We must only return list items that are part of the rendered block.
+        // Check that their record is defined
+        for (i = 0; i < len; i++) {
+            candidate = candidates[i];
+            if (!candidate.isGridRow || candidate.getRecord() != null) {
+                result[result.length] = candidate;
+            }
+        }
+
+        return result;
     },
 
     onScroll: function(scroller, x, y) {
@@ -448,7 +503,7 @@ Ext.define('Ext.dataview.List', {
             me.showEmptyScrollDock();
 
             pinnedHeader.$position = -10000;
-            pinnedHeader.translate(0, -10000);
+            me.translate(pinnedHeader, 0, -10000);
         }
         else if (infinite && me.itemsCount) {
             me.handleItemUpdates(y);
@@ -464,6 +519,8 @@ Ext.define('Ext.dataview.List', {
         if (grouped && me.groups && me.groups.length && me.getPinHeaders()) {
             me.handlePinnedHeader(y);
         }
+
+        me.handleIndexBarSize();
 
         // This is a template method that can be intercepted by plugins to do things when scrolling
         me.onScrollBinder(x, y);
@@ -623,7 +680,7 @@ Ext.define('Ext.dataview.List', {
             headerIndices = me.headerIndices,
             headerMap = me.headerMap,
             variableHeights = me.getVariableHeights(),
-            itemIndex, i, j, jln, item, height, scrollDockHeight;
+            itemIndex, body, i, j, jln, item, height, scrollDockHeight;
 
         for (i = 0; i < ln; i++) {
             item = updatedItems[i];
@@ -658,8 +715,13 @@ Ext.define('Ext.dataview.List', {
                     }
                 }
 
-                if (headerIndices && headerIndices[itemIndex]) {
+                if (item.getHeader && headerIndices && item.getHeader() && headerIndices[itemIndex]) {
                     height += me.headerHeight;
+                }
+
+                // body height may vary so we dynamically get the height per item
+                if (item.getBody && (body = item.getBody()) && body.renderElement && body.isVisible()) {
+                    height += body.renderElement.getHeight();
                 }
 
                 itemMap.setItemHeight(itemIndex, height);
@@ -668,7 +730,6 @@ Ext.define('Ext.dataview.List', {
         }
 
         itemMap.update();
-        height = itemMap.getTotalHeight();
 
         headerMap.length = 0;
         for (i in headerIndices) {
@@ -677,26 +738,9 @@ Ext.define('Ext.dataview.List', {
             }
         }
 
-        me.setScrollerHeight(height);
-
         me.updatedItems.length = 0;
-    },
 
-    setScrollerHeight: function(height) {
-        var me = this,
-            scroller = me.container.getScrollable(),
-            scrollSize = scroller.getSize();
-
-        if (height != scrollSize.y) {
-            scroller.setSize({
-                // When using a TouchScroller we can pass the x scrollSize to prevent
-                // the scroller from reading the DOM to determine the x size.
-                // When using a DomScroller we pass null so that only the y size gets set
-                // (DomScroller does not need to read the dom to determine missing dimensions)
-                x: scroller.isTouchScroller ? scrollSize.x : null,
-                y: height
-            });
-        }
+        me.refreshScroller(true);
     },
 
     handleItemTransforms: function() {
@@ -706,7 +750,7 @@ Ext.define('Ext.dataview.List', {
             itemMap = me.getItemMap(),
             scrollDockItems = me.scrollDockItems,
             grouped = me.isGrouping(),
-            item, transY, i, jln, j;
+            item, header, transY, i, jln, j;
 
         for (i = 0; i < itemsCount; i++) {
             item = listItems[i];
@@ -718,23 +762,24 @@ Ext.define('Ext.dataview.List', {
                 jln = scrollDockItems.top.length;
                 if (item.isFirst && jln) {
                     for (j = 0; j < jln; j++) {
-                        scrollDockItems.top[j].translate(0, transY);
+                        me.translate(scrollDockItems.top[j], 0, transY);
                         transY += scrollDockItems.top[j].$scrollDockHeight;
                     }
                 }
 
-                if (grouped && me.headerIndices && me.headerIndices[item.$dataIndex]) {
-                    item.getHeader().translate(0, transY);
+                header = item.getHeader && item.getHeader();
+                if (grouped && header && me.headerIndices && me.headerIndices[item.$dataIndex]) {
+                    me.translate(header, 0, transY);
                     transY += me.headerHeight;
                 }
 
-                item.translate(0, transY);
+                me.translate(item, 0, transY);
                 transY += item.$ownItemHeight;
 
                 jln = scrollDockItems.bottom.length;
                 if (item.isLast && jln) {
                     for (j = 0; j < jln; j++) {
-                        scrollDockItems.bottom[j].translate(0, transY);
+                        me.translate(scrollDockItems.bottom[j], 0, transY);
                         transY += scrollDockItems.bottom[j].$scrollDockHeight;
                     }
                 }
@@ -758,11 +803,11 @@ Ext.define('Ext.dataview.List', {
 
         if (record) {
             pushedHeader = y + headerMap[closestHeader + 1] - headerHeight;
-            // Top of the list or above (hide the floating header offscreen)
+            // Top of the list or above (hide the pinned header offscreen)
             if (y >= 0 || (closestHeader === 0 && totalScrollDockTopHeight + y >= 0) || (closestHeader === 0 && -y <= headerMap[closestHeader])) {
                 transY = -10000;
             }
-            // Scroll the floating header a bit
+            // Scroll the pinned header a bit
             else if (pushedHeader < 0) {
                 transY = pushedHeader;
             }
@@ -779,7 +824,7 @@ Ext.define('Ext.dataview.List', {
             }
 
             if (pinnedHeader.$position != transY) {
-                pinnedHeader.translate(0, transY);
+                me.translate(pinnedHeader, 0, transY);
                 pinnedHeader.$position = transY;
             }
         }
@@ -804,22 +849,29 @@ Ext.define('Ext.dataview.List', {
             item.addCls(itemCls);
         }
 
-        header = item.getHeader();
-        if (!infinite) {
-            header.addCls(itemCls);
-        } else {
-            header.setTranslatable({
-                translationMethod: this.translationMethod
-            });
-            header.translate(0, -10000);
+        header = item.getHeader && item.getHeader();
+        if (header) {
+            if (!infinite) {
+                header.addCls(itemCls);
+            } else {
+                header.setTranslatable({
+                    translationMethod: this.translationMethod
+                });
+                me.translate(header, 0, -10000);
 
-            scrollElement.insertFirst(header.renderElement);
+                scrollElement.insertFirst(header.renderElement);
+            }
         }
 
         container.doAdd(item);
         listItems.push(item);
 
         return item;
+    },
+
+    onItemHeightChange: function() {
+        this.handleItemHeights();
+        this.updateAllListItems();
     },
 
     setItemsCount: function(itemsCount, itemConfig) {
@@ -854,11 +906,13 @@ Ext.define('Ext.dataview.List', {
 
     updateListItem: function(item, index, info) {
         var me = this,
+            recordMap = me.recordMap,
+            oldRecord = item.getRecord(),
             store = info.store,
             record = store.getAt(index),
             headerIndices = me.headerIndices,
             footerIndices = me.footerIndices,
-            header = item.getHeader(),
+            header = item.getHeader && item.getHeader(),
             scrollDockItems = me.scrollDockItems,
             updatedItems = me.updatedItems,
             infinite = me.getInfinite(),
@@ -868,7 +922,7 @@ Ext.define('Ext.dataview.List', {
             headerCls = [],
             itemRemoveCls = [info.headerCls, info.footerCls, info.firstCls, info.lastCls, info.selectedCls, info.stripeCls],
             headerRemoveCls = [info.headerCls, info.footerCls, info.firstCls, info.lastCls],
-            ln, i, scrollDockItem, classCache, groupKey, currentItemCls, currentHeaderCls;
+            ln, i, scrollDockItem, viewModel;
 
         // When we update a list item, the header and scrolldocks can make it have to be retransformed.
         // For that reason we want to always set the position to -10000 so that the next time we translate
@@ -880,16 +934,21 @@ Ext.define('Ext.dataview.List', {
         // We begin by hiding/showing the item and its header depending on a record existing at this index
         if (!record) {
             item.setRecord(null);
+            if (oldRecord && recordMap[oldRecord.internalId] === item) {
+                delete recordMap[oldRecord.internalId];
+            }
             if (infinite) {
-                item.translate(0, -10000);
+                me.translate(item, 0, -10000);
             } else {
                 item.hide();
             }
 
-            if (infinite) {
-                header.translate(0, -10000);
-            } else {
-                header.hide();
+            if (header) {
+                if (infinite) {
+                    me.translate(header, 0, -10000);
+                } else {
+                    header.hide();
+                }
             }
             item.$hidden = true;
             return;
@@ -906,11 +965,12 @@ Ext.define('Ext.dataview.List', {
 
         // If this item was previously used for the first record in the store, and now it will not be, then we hide
         // any scrollDockTop items and change the isFirst flag
-        if (item.isFirst && index !== 0 && scrollDockItems.top.length) {
-            for (i = 0, ln = scrollDockItems.top.length; i < ln; i++) {
+        if (item.isFirst && index !== 0) {
+            ln = scrollDockItems.top.length;
+            for (i = 0; i < ln; i++) {
                 scrollDockItem = scrollDockItems.top[i];
                 if (infinite) {
-                    scrollDockItem.translate(0, -10000);
+                    me.translate(scrollDockItem, 0, -10000);
                 }
             }
             item.isFirst = false;
@@ -918,11 +978,12 @@ Ext.define('Ext.dataview.List', {
 
         // If this item was previously used for the last record in the store, and now it will not be, then we hide
         // any scrollDockBottom items and change the istLast flag
-        if (item.isLast && index !== storeCount - 1 && scrollDockItems.bottom.length) {
-            for (i = 0, ln = scrollDockItems.bottom.length; i < ln; i++) {
+        if (item.isLast && index !== storeCount - 1) {
+            ln = scrollDockItems.bottom.length;
+            for (i = 0; i < ln; i++) {
                 scrollDockItem = scrollDockItems.bottom[i];
                 if (infinite) {
-                    scrollDockItem.translate(0, -10000);
+                    me.translate(scrollDockItem, 0, -10000);
                 }
             }
             item.isLast = false;
@@ -935,10 +996,19 @@ Ext.define('Ext.dataview.List', {
         }
 
         // This is where we actually update the item with the record
-        if (item.getRecord() === record) {
+        if (oldRecord === record) {
             item.updateRecord(record);
         } else {
+            if (oldRecord && recordMap[oldRecord.internalId] === item) {
+                delete recordMap[oldRecord.internalId];
+            }
+            recordMap[record.internalId] = item;
             item.setRecord(record);
+
+            viewModel = item.getViewModel();
+            if (viewModel) {
+                viewModel.set('record', record);
+            }
         }
 
         if (me.isSelected(record)) {
@@ -946,7 +1016,7 @@ Ext.define('Ext.dataview.List', {
         }
 
         if (info.grouped) {
-            if (headerIndices[index]) {
+            if (header && headerIndices[index]) {
                 itemCls.push(info.headerCls);
                 headerCls.push(info.headerCls);
                 header.setHtml(grouper.getGroupString(record));
@@ -955,9 +1025,9 @@ Ext.define('Ext.dataview.List', {
                     header.renderElement.insertBefore(item.renderElement);
                 }
                 header.show();
-            } else {
+            } else if (header) {
                 if (infinite) {
-                    header.translate(0, -10000);
+                    me.translate(header, 0, -10000);
                 } else {
                     header.hide();
                 }
@@ -968,9 +1038,9 @@ Ext.define('Ext.dataview.List', {
             }
         }
 
-        if (!info.grouped) {
+        if (header && !info.grouped) {
             if (infinite) {
-                header.translate(0, -10000);
+                me.translate(header, 0, -10000);
             } else {
                 header.hide();
             }
@@ -1016,44 +1086,28 @@ Ext.define('Ext.dataview.List', {
             }
         }
 
-        if (info.striped && index % 2 == 1) {
+        if (info.striped && index % 2 === 1) {
             itemCls.push(info.stripeCls);
         }
 
-        currentItemCls = item.renderElement.getData().classList.slice();
-        currentHeaderCls = header.renderElement.getData().classList.slice();
-
-        if (currentItemCls) {
-            for (i = 0; i < itemRemoveCls.length; i++) {
-                Ext.Array.remove(currentItemCls, itemRemoveCls[i]);
-            }
-            itemCls = Ext.Array.merge(itemCls, currentItemCls);
+        item.renderElement.replaceCls(itemRemoveCls, itemCls);
+        if (header) {
+            header.renderElement.replaceCls(headerRemoveCls, headerCls);
         }
-
-        if (currentHeaderCls) {
-            for (i = 0; i < headerRemoveCls.length; i++) {
-                Ext.Array.remove(currentHeaderCls, headerRemoveCls[i]);
-            }
-            headerCls = Ext.Array.merge(headerCls, currentHeaderCls);
-        }
-
-        classCache = itemCls.join(' ');
-
-        if (item.classCache !== classCache) {
-            item.renderElement.setCls(itemCls);
-            item.classCache = classCache;
-        }
-
-        header.renderElement.setCls(headerCls);
     },
 
     updateAllListItems: function() {
         var me = this,
-            store = me.getStore(),
-            items = me.listItems,
-            info = me.getListItemInfo(),
-            topRenderedIndex = me.topRenderedIndex,
-            i, ln;
+            store, items, info, topRenderedIndex, i, ln;
+
+        if (!me.initialized) {
+            return;
+        }
+
+        store = me.getStore();
+        items = me.listItems;
+        info = me.getListItemInfo();
+        topRenderedIndex = me.topRenderedIndex;
 
         if (store) {
             for (i = 0, ln = items.length; i < ln; i++) {
@@ -1105,6 +1159,18 @@ Ext.define('Ext.dataview.List', {
         }
     },
 
+    updateStore: function(store, oldStore) {
+        var me = this,
+            container = me.container;
+
+        me.callParent([store, oldStore]);
+
+        if (me._fireResizeOnNextLoad && me.hasLoadedStore) {
+            me._fireResizeOnNextLoad = false;
+            me.onContainerResize(container, { height: container.element.getHeight() });
+        }
+    },
+
     onLoad: function(store) {
         var me = this,
             container = me.container;
@@ -1120,7 +1186,7 @@ Ext.define('Ext.dataview.List', {
     onContainerResize: function(container, size) {
         var me = this,
             store = me.getStore(),
-            currentVisibleCount, newVisibleCount, minHeight, listItems, itemMap, itemConfig;
+            currentVisibleCount, newVisibleCount, minHeight, listItems, item, itemMap, itemBody, itemConfig;
 
         if (!me.headerHeight) {
             me.headerHeight = parseInt(me.pinnedHeader.renderElement.getHeight(), 10);
@@ -1130,7 +1196,7 @@ Ext.define('Ext.dataview.List', {
             itemMap = me.getItemMap();
             minHeight = itemMap.getMinimumHeight();
 
-            if (!store.getCount() && !store.isLoaded()) {
+            if (!store || (!store.getCount() && !store.isLoaded())) {
                 // If the store is not yet loaded we can't measure the height of the first item
                 // to determine minHeight
                 // TODO: refactor
@@ -1153,19 +1219,29 @@ Ext.define('Ext.dataview.List', {
                     // shortly
                     itemConfig = me.getListItemConfig();
                     me.createItem(itemConfig);
-                    me.updateListItem(listItems[0], 0, me.getListItemInfo());
+                    item = listItems[0];
+                    me.updateListItem(item, 0, me.getListItemInfo());
                     me.visibleCount++;
 
+                    minHeight = item.element.getHeight();
+
+                    // If we have a RowBody that is visible on first render we need to subtract its height
+                    // as the minHeight of the row would be the collapsed state when the RowBody is hidden
+                    itemBody = item.getBody && item.getBody();
+                    if (itemBody && itemBody.renderElement && itemBody.isVisible()) {
+                        minHeight -= itemBody.renderElement.getHeight();
+                    }
                 }
 
-                minHeight = listItems[0].element.getHeight();
                 // cache the minimum height on the itemMap for next time
                 itemMap.setMinimumHeight(minHeight);
                 me.getItemMap().populate(me.getStore().getCount(), me.topRenderedIndex);
             }
 
             currentVisibleCount = me.visibleCount;
-            newVisibleCount = Math.ceil(size.height / minHeight);
+
+            // (minHeight || 1) here as a protection in case minHeight is 0 would assign Infinity to newVisibleCount
+            newVisibleCount = Math.ceil(size.height / (minHeight || 1));
 
             if (newVisibleCount != currentVisibleCount) {
                 me.visibleCount = newVisibleCount;
@@ -1180,15 +1256,36 @@ Ext.define('Ext.dataview.List', {
         }
     },
 
-    refreshScroller: function() {
+    refreshScroller: function(skipOnRefresh) {
+        var me = this,
+            scroller = me.container.getScrollable(),
+            height, scrollSize;
+
+        if (me.getInfinite()) {
+            height = me.getItemMap().getTotalHeight();
+            scrollSize = scroller.getSize();
+
+            if (height != scrollSize.y) {
+                scroller.setSize({
+                    y: height
+                });
+            }
+        }
+
+        me.afterRefreshScroller(scroller, skipOnRefresh);
+    },
+
+    afterRefreshScroller: function(scroller, skipOnRefresh) {
         var me = this;
 
-        if (me.isPainted()) {
-            if (!me.getInfinite() && me.getGrouped() && me.getPinHeaders()) {
+        if (me.getInfinite()) {
+            if (!skipOnRefresh) {
+                me.onScrollerRefresh(scroller);
+            }
+        } else {
+            if (me.getGrouped() && me.getPinHeaders()) {
                 me.updateHeaderMap();
             }
-
-            me.container.getScrollable().refresh();
         }
     },
 
@@ -1235,7 +1332,7 @@ Ext.define('Ext.dataview.List', {
 
     updatePinHeaders: function(pinnedHeaders) {
         if (this.isPainted()) {
-            this.pinnedHeader.translate(0, pinnedHeaders ? this.pinnedHeader.$position : -10000);
+            this.translate(this.pinnedHeader, 0, pinnedHeaders ? this.pinnedHeader.$position : -10000);
         }
     },
 
@@ -1267,45 +1364,39 @@ Ext.define('Ext.dataview.List', {
 
     updateIndexBar: function(indexBar, oldIndexBar) {
         var me = this,
-            scrollViewElement = me.scrollViewElement;
+            el = me.element,
+            cls = me.getBaseCls() + '-indexed';
 
         if (oldIndexBar) {
-            oldIndexBar.un({
-                index: 'onIndex',
-                scope: me
-            });
-
-            if (!indexBar) {
-                me.element.removeCls(me.getBaseCls() + '-indexed');
-            }
-
-            if (scrollViewElement) {
-                scrollViewElement.removeChild(oldIndexBar.renderElement);
-            }
+            oldIndexBar.destroy();
+            el.removeCls(cls);
         }
 
         if (indexBar) {
             indexBar.on({
-                index: 'onIndex',
-                scope: me
+                scope: me,
+                index: me.onIndex,
+                directionchange: me.handleIndexBarSize
             });
 
-            if (!oldIndexBar) {
-                me.element.addCls(me.getBaseCls() + '-indexed');
-            }
+            el.addCls(cls);
 
-            if (scrollViewElement) {
-                scrollViewElement.appendChild(indexBar.renderElement);
-            }
+            me.container.element.appendChild(indexBar.renderElement);
+
+            me.handleIndexBarSize();
         }
     },
 
     updateGrouped: function(grouped) {
-        this.handleGroupChange();
+        if (this.initialized) {
+            this.handleGroupChange();
+        }
     },
 
     onStoreGroupChange: function() {
-        this.handleGroupChange();
+        if (this.initialized) {
+            this.handleGroupChange();
+        }
     },
 
     onStoreAdd: function() {
@@ -1320,11 +1411,11 @@ Ext.define('Ext.dataview.List', {
         var me = this,
             index, item;
 
-        if (me.getInfinite() || info.indexChanged) {
+        if (info.indexChanged) {
             me.doRefresh();
         } else {
             index = store.indexOf(record);
-            item = me.listItems[index];
+            item = me.getItem(record);
             if (item) {
                 me.updateListItem(item, index, me.getListItemInfo());
             }
@@ -1337,18 +1428,21 @@ Ext.define('Ext.dataview.List', {
             infinite = me.getInfinite();
 
         if (me.pinnedHeader) {
-            me.pinnedHeader.translate(0, -10000);
+            me.translate(me.pinnedHeader, 0, -10000);
         }
+
+        me.getItemMap().populate(0, 0);
 
         if (!infinite) {
             me.setItemsCount(0);
-            scroller.scrollTo(0, 0);
         } else {
             me.topRenderedIndex = 0;
             me.topVisibleIndex = 0;
-            scroller.scrollTo(null, 0);
             me.updateAllListItems();
         }
+
+        scroller.scrollTo(null, 0);
+        me.refreshScroller();
     },
 
     showEmptyScrollDock: function() {
@@ -1361,7 +1455,7 @@ Ext.define('Ext.dataview.List', {
         for (i = 0, ln = scrollDockItems.top.length; i < ln; i++) {
             item = scrollDockItems.top[i];
             if (infinite) {
-                item.translate(0, offset);
+                me.translate(item, 0, offset);
                 offset += item.$scrollDockHeight;
             } else {
                 this.scrollElement.appendChild(item.renderElement);
@@ -1371,7 +1465,7 @@ Ext.define('Ext.dataview.List', {
         for (i = 0, ln = scrollDockItems.bottom.length; i < ln; i++) {
             item = scrollDockItems.bottom[i];
             if (infinite) {
-                item.translate(0, offset);
+                me.translate(item, 0, offset);
                 offset += item.$scrollDockHeight;
             } else {
                 this.scrollElement.appendChild(item.renderElement);
@@ -1391,13 +1485,27 @@ Ext.define('Ext.dataview.List', {
 
         for (i = 0, ln = scrollDockItems.top.length; i < ln; i++) {
             item = scrollDockItems.top[i];
-            item.translate(0, -10000);
+            me.translate(item, 0, -10000);
         }
 
         for (i = 0, ln = scrollDockItems.bottom.length; i < ln; i++) {
             item = scrollDockItems.bottom[i];
-            item.translate(0, -10000);
+            me.translate(item, 0, -10000);
         }
+    },
+
+    /**
+     * Gets a list item by record.
+     * @param {Ext.data.Model} The record
+     * @return {Ext.dataview.component.(Simple)ListItem} The list item, if found.
+     * `null` if no matching item exists.
+     */
+    getItem: function(record) {
+        var item;
+        if (record) {
+            item = this.recordMap[record.internalId];
+        }
+        return item || null;
     },
 
     /**
@@ -1510,65 +1618,35 @@ Ext.define('Ext.dataview.List', {
         return headerIndices;
     },
 
-    onIndex: function(indexBar, index) {
-        var me = this,
-            key = index.toLowerCase(),
-            store = me.getStore(),
-            groups = store.getGroups(),
-            ln = groups.length,
-            group, groupKey, i, closest;
-
-        for (i = 0; i < ln; i++) {
-            group = groups.getAt(i);
-            groupKey = group.getGroupKey().toLowerCase();
-            if (groupKey >= key) {
-                closest = group;
-                break;
-            }
-            else {
-                closest = group;
-            }
-        }
-
-        if (closest) {
-            this.scrollToRecord(closest.getAt(0));
-        }
-    },
-
     /**
      *
      * Scrolls the list so that the specified record is at the top.
      *
-     * @param record {Ext.data.Model} Record in the lists store to scroll to
-     * @param animate {Boolean} Determines if scrolling is animated to a cut
-     * @param overscroll {Boolean} Determines if list can be overscrolled
+     * @param {Ext.data.Model} record Record in the store to scroll to.
+     * @param {Boolean} [animate=false] Determines if scrolling is animated.
+     * @param {Boolean} [overscroll=true] Determines if list can be overscrolled.
      */
     scrollToRecord: function(record, animate, overscroll) {
         var me = this,
             scroller = me.container.getScrollable(),
             store = me.getStore(),
-            index = store.indexOf(record);
-
-        //stop the scroller from scrolling
-        scroller.stopAnimation();
+            index = store.indexOf(record),
+            header, offset, item,
+            elementHeight, scrollHeight, maxOffset, el;
 
         //make sure the new offsetTop is not out of bounds for the scroller
-        var elementHeight = scroller.getElement().getHeight(),
-            scrollHeight = scroller.getSize().y,
-            maxOffset = scrollHeight - elementHeight,
-            offset, item;
+        elementHeight = scroller.getElement().getHeight();
+        scrollHeight = scroller.getSize().y;
+        maxOffset = scrollHeight - elementHeight;
 
         if (me.getInfinite()) {
             offset = me.getItemMap().map[index];
-        }
-        else {
+        } else {
             item = me.listItems[index];
-            if (item.getHeader().isPainted()) {
-                offset = item.getHeader().renderElement.dom.offsetTop;
-            }
-            else {
-                offset = item.renderElement.dom.offsetTop;
-            }
+            header = item.getHeader && item.getHeader();
+
+            el = header && header.isPainted() ? header : item;
+            offset = el.renderElement.dom.offsetTop;
         }
 
         if (!overscroll) {
@@ -1578,7 +1656,7 @@ Ext.define('Ext.dataview.List', {
         scroller.scrollTo(0, offset, !!animate);
     },
 
-    onItemAdd: function(item) {
+    onItemAdd: function(item, index) {
         var me = this,
             config = item.config;
 
@@ -1599,19 +1677,19 @@ Ext.define('Ext.dataview.List', {
                 item.setTranslatable({
                     translationMethod: this.translationMethod
                 });
-                item.translate(0, -10000);
+                me.translate(item, 0, -10000);
                 item.$scrollDockHeight = 0;
             }
 
             me.container.doAdd(item);
         } else {
-            me.callParent(arguments);
+            me.callParent([item, index]);
         }
     },
 
     /**
      * Returns all the items that are docked in the scroller in this list.
-     * @return {Array} An array of the scrollDock items
+     * @return {Ext.Component[]} An array of the scrollDock items
      */
     getScrollDockedItems: function() {
         return this.scrollDockItems.bottom.slice().concat(this.scrollDockItems.top.slice());
@@ -1628,21 +1706,26 @@ Ext.define('Ext.dataview.List', {
         for (i = 0; i < ln; i++) {
             item = items[i];
             if (item.isLast) {
-                this.updatedItems.push(item);
-                this.refreshScroller();
+                me.updatedItems.push(item);
+                if (me.isPainted()) {
+                    me.refreshScroller();
+                }
                 break;
             }
         }
     },
 
     onItemTouchStart: function(e) {
-        this.container.innerElement.on({
-            touchmove: 'onItemTouchMove',
-            delegate: '.' + Ext.baseCSSPrefix + 'list-item',
-            single: true,
-            scope: this
-        });
-        this.callParent(this.parseEvent(e));
+        var isDisclosure = e.getTarget('.' + this.getBaseCls() + '-disclosure');
+        if (!isDisclosure) {
+            this.container.innerElement.on({
+                touchmove: 'onItemTouchMove',
+                delegate: '.' + Ext.baseCSSPrefix + 'list-item',
+                single: true,
+                scope: this
+            });
+            this.callParent(this.parseEvent(e));
+        }
     },
 
     onItemTouchMove: function(e) {
@@ -1650,12 +1733,15 @@ Ext.define('Ext.dataview.List', {
     },
 
     onItemTouchEnd: function(e) {
-        this.container.innerElement.un({
-            touchmove: 'onItemTouchMove',
-            delegate: '.' + Ext.baseCSSPrefix + 'list-item',
-            scope: this
-        });
-        this.callParent(this.parseEvent(e));
+        var isDisclosure = e.getTarget('.' + this.getBaseCls() + '-disclosure');
+        if (!isDisclosure) {
+            this.container.innerElement.un({
+                touchmove: 'onItemTouchMove',
+                delegate: '.' + Ext.baseCSSPrefix + 'list-item',
+                scope: this
+            });
+            this.callParent(this.parseEvent(e));
+        }
     },
 
     onItemTap: function(e) {
@@ -1686,24 +1772,6 @@ Ext.define('Ext.dataview.List', {
         return [me, item, item.$dataIndex, e];
     },
 
-    doItemSelect: function(me, record) {
-        this.callParent(arguments);
-
-        var item = me.getItemAt(me.getStore().indexOf(record));
-        if (me.container && !me.destroyed && item && item.isComponent) {
-            item.classCache = item.renderElement.getData().classList.slice();
-        }
-    },
-
-    doItemDeselect: function(me, record) {
-        this.callParent(arguments);
-
-        var item = me.getItemAt(me.getStore().indexOf(record));
-        if (item && item.isComponent) {
-            item.classCache = item.renderElement.getData().classList.slice();
-        }
-    },
-
     applyOnItemDisclosure: function(config) {
         if (Ext.isFunction(config)) {
             return {
@@ -1723,6 +1791,20 @@ Ext.define('Ext.dataview.List', {
         me.fireAction('disclose', [me, record, item, index, e], 'doDisclose');
     },
 
+    handleItemDisclosureTouchStart: function(e) {
+        var pressedCls = this.getDisclosurePressedCls(),
+            disclosure = Ext.fly(e.target);
+
+        disclosure.addCls(pressedCls);
+    },
+
+    handleItemDisclosureTouchEnd: function (e) {
+        var pressedCls = this.getDisclosurePressedCls(),
+            disclosure = Ext.fly(e.target);
+
+        disclosure.removeCls(pressedCls);
+    },
+
     doDisclose: function(me, record, item, index, e) {
         var onItemDisclosure = me.getOnItemDisclosure();
 
@@ -1740,28 +1822,56 @@ Ext.define('Ext.dataview.List', {
 
     destroy: function() {
         var me = this,
-            items = me.listItems,
-            ln = items.length,
-            i;
-        
-        if (me.pinnedHeader) {
-            me.pinnedHeader.destroy();
-            me.pinnedHeader = null;
+            indexBarTask = me.indexBarTask;
+
+        if (indexBarTask) {
+            indexBarTask.cancel();
+            me.indexBarTask = null;
         }
+
+        me.pinnedHeader = Ext.destroy(me.pinnedHeader);
+        me.setIndexBar(null);
 
         me.callParent();
 
         if (me.onIdleBound) {
             Ext.AnimationQueue.unIdle(me.onAnimationIdle, me);
         }
-
-        for (i = 0; i < ln; i++) {
-            items[i].destroy();
-        }
-        me.listItems = null;
+        me.recordMap = me.listItems = null;
     },
 
     privates: {
+        translate: function(item, x, y) {
+            var style;
+
+            if (Ext.isIE || Ext.isEdge) {
+                // workaround for https://gist.github.com/pguerrant/75a04df9dbff34d0051938af7b4598ac
+                // TODO: feature detect this bug
+                style = item.el.dom.style;
+                style.top = (y || 0)  + 'px';
+                style.left = (x || 0) + 'px';
+            } else {
+                item.translate(x, y);
+            }
+        },
+
+        doHandleIndexBarSize: function() {
+            var me = this,
+                scroller = me.getScrollable(),
+                indexBar = me.getIndexBar(),
+                scrollerSize;
+
+            if (indexBar) {
+                if (indexBar.isVertical()) {
+                    scrollerSize = scroller.getScrollbarSize().width;
+                    if (scrollerSize !== me.lastScrollerSize) {
+                        indexBar.renderElement.setStyle('padding-right', scrollerSize + 'px');
+                        me.lastScrollerSize = scrollerSize;
+                    }
+                }
+            }
+        },
+
         handleGroupChange: function() {
             var me = this,
                 grouped = me.isGrouping(),
@@ -1772,7 +1882,7 @@ Ext.define('Ext.dataview.List', {
                 unCls = baseCls + '-ungrouped';
 
             if (pinnedHeader) {
-                pinnedHeader.translate(0, -10000);
+                me.translate(pinnedHeader, 0, -10000);
             }
 
             if (grouped) {
@@ -1793,8 +1903,43 @@ Ext.define('Ext.dataview.List', {
             }
         },
 
+        handleIndexBarSize: function() {
+            var me = this,
+                task = me.indexBarTask;
+
+            if (!task) {
+                me.indexBarTask = task = new Ext.util.DelayedTask(me.doHandleIndexBarSize, me);
+            }
+            task.delay(1);
+        },
+
         isGrouping: function() {
             return Boolean(this.getGrouped() && this.getStore().getGrouper());
+        },
+
+        onIndex: function(indexBar, index) {
+            var me = this,
+                key = index.toLowerCase(),
+                store = me.getStore(),
+                groups = store.getGroups(),
+                ln = groups.length,
+                group, groupKey, i, closest;
+
+            for (i = 0; i < ln; i++) {
+                group = groups.getAt(i);
+                groupKey = group.getGroupKey().toLowerCase();
+                if (groupKey >= key) {
+                    closest = group;
+                    break;
+                }
+                else {
+                    closest = group;
+                }
+            }
+
+            if (closest) {
+                this.scrollToRecord(closest.getAt(0));
+            }
         }
     }
 });

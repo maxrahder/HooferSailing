@@ -1,27 +1,73 @@
 Ext.define('Hoofers.view.main.MainController', {
     extend: 'Ext.app.ViewController',
-    alias: 'controller.main',
 
     requires: [
+        'Ext.MessageBox',
         'Hoofers.store.Fleet',
         'Hoofers.model.Winds',
         'Hoofers.model.Flag',
-        'Hoofers.model.BuoyData'
+        'Hoofers.model.BuoyData',
+        'Hoofers.util.Fleet'
     ],
 
     config: {
-        flag: null,
         intervalId: -1
+    },
+
+    initUnits: function(bindVariable, defaultUnits) {
+        vm = this.getViewModel();
+        var binding = '{' + bindVariable + '}';
+        vm.bind(binding, function(u) {
+            try {
+                window.localStorage.setItem(bindVariable, u.id);
+            } catch (e) {
+                // Don't render the alert too soon because it ends up
+                // being off-center. Wait a bit...
+                Ext.defer(function() {
+                    if (Ext.isSafari && (e.code === 22)) {
+                        Ext.Msg.alert('Error',
+                            'You must turn off private browsing to use wind and temperature unit preferences. Defalut values are being used.');
+                    } else {
+                        Ext.Msg.alert('Error', 'Your browser doesn\'t store wind and temperature unit preferances. Defalut values are being used.');
+                    }
+                }, 100);
+            }
+        });
+        var unitsId = window.localStorage.getItem(bindVariable);
+        var units = Hoofers.util.Units[unitsId] || defaultUnits;
+        vm.set(bindVariable, units);
     },
 
     initViewModel: function(vm) {
         var me = this;
 
+        me.initUnits('temperatureUnits', Hoofers.util.Units.F);
+        me.initUnits('speedUnits', Hoofers.util.Units.MPH);
+
         Hoofers.model.Flag.on('load', this.onFlagLoad, this);
 
         vm.bind('{interval}', me.triggerNewInterval, me);
+
+        // In theory the store would already exist, and would just
+        // have its data updated. However, there's some timing issue
+        // with Ext JS 6.2 and the setRoot() wasn't waking up the
+        // nested list and tree panel. The only way I could get it to
+        // work was to create the store on the fly.
+        Hoofers.util.Fleet.fetch().then(
+            function(root) {
+                var store = Ext.create('Ext.data.TreeStore', {
+                    model: 'Ext.data.TreeModel',
+                    root: root
+                });
+                vm.set('fleetTree', store);
+            }
+        );
+
     },
 
+    onFlagBeforeLoad: function(flag, color, date) {
+        this.getViewModel().set('flag', checkingtheflag);
+    },
     onFlagLoad: function(flag, color, date) {
         this.getViewModel().set('flag', color.toLowerCase());
     },
@@ -36,7 +82,9 @@ Ext.define('Hoofers.view.main.MainController', {
     doAutoRefresh: function(intervalId) {
         var me = this;
 
-        // Ignore invocations using an old ID
+        // The intervalId is used because the user could manually do a refersh,
+        // yet the old interval will still time out and run refresh. When the
+        // old one runs, it will see it's for the previous ID, and just return.
         if (intervalId !== this.getIntervalId()) {
             return;
         }
@@ -49,62 +97,24 @@ Ext.define('Hoofers.view.main.MainController', {
 
     refresh: function() {
         var me = this;
-        // console.log('refresh');
         var vm = me.getViewModel();
-        vm.set('flag', 'checkingtheflag');
-        vm.getStore('fleet').loadUsingAdapter();
+
         Hoofers.model.Flag.load();
-        vm.set('conditions', {});
-        Hoofers.model.BuoyData.fetch().then(
+
+        vm.getStore('fleet').loadUsingAdapter();
+
+        var interval = '00:00:10';
+        var begin = '-00:05:00';
+
+        Hoofers.model.BuoyData.fetch(begin, interval).then(
             function(data) {
                 var d = Hoofers.model.Winds.summarizeConditions(data);
-                me.updateConditions(d);
-                // foo = data;
-                // console.log(data);
+                me.getViewModel().set('rawConditions', d);
             },
-            function() {
-                vm.set('conditions', {
-                    transmitting: false
-                });
-            });
-    },
-
-    MPS_TO_KNOTS: 1.94384,
-
-    updateConditions: function(data) {
-        /* returns an object of the form
-          {
-            averageWindSpeed: number -- meters per second
-            gusts: 0: number -- meters per second
-            lulls: 0: number -- meters per second
-            windDirectionRose: String -- N, NNE, NE, ENE, E, ESE, SE, SSE, S, SSW, SW, WSW, W, WNW, NW, NNW
-            waterTemperature: number -- degrees centigrade
-          }
-        */
-        var me = this;
-        var o = {
-            transmitting: true,
-            averageKnots: Math.round(me.MPS_TO_KNOTS * data.averageWindSpeed),
-            gusts: Math.round(me.MPS_TO_KNOTS * data.gusts),
-            lulls: Math.round(me.MPS_TO_KNOTS * data.lulls),
-            windDirectionDegrees: Hoofers.util.Compass.roseToDegrees(data.windDirectionRose),
-            windDirectionRose: data.windDirectionRose,
-            waterTemperature: Math.round(32 + (9 / 5 * data.waterTemperature))
-        };
-        me.getViewModel().set('conditions', o);
-    },
-
-    onWindsFetch: function(winds) {
-        var vm = this.getViewModel();
-        var o = {
-            averageKnots: winds.getAverageKnots(),
-            gusts: winds.getGusts(),
-            lulls: winds.getLulls(),
-            windDirectionDegrees: Hoofers.util.Compass.roseToDegrees(winds.getWindDirectionRose()),
-            windDirectionRose: winds.getWindDirectionRose(),
-            waterTemperature: winds.getWaterTemperature(),
-            buoyTransmitting: winds.getBuoyTransmitting()
-        };
-        vm.set('conditions', o);
+            function(data) {
+                vm.set('conditions', null);
+            }
+        );
     }
+
 });

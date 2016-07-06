@@ -33,6 +33,12 @@ Ext.define('Hoofers.view.conditions.Main', {
                 },
                 items: [{
                     xtype: 'button',
+                    cls: 'x-fa fa-gear',
+                    top: 8,
+                    left: 8,
+                    handler: 'showSettings'
+                }, {
+                    xtype: 'button',
                     cls: 'x-fa fa-refresh',
                     top: 8,
                     right: 8,

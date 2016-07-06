@@ -23,7 +23,7 @@ Ext.define('Ext.form.trigger.Trigger', {
 
     /**
      * @cfg {String} cls
-     * CSS class to add to the trigger element.
+     * @inheritdoc Ext.panel.Header#iconCls
      */
 
     /**
@@ -36,7 +36,7 @@ Ext.define('Ext.form.trigger.Trigger', {
     /**
      * @cfg {Function/String} [handler=undefined]
      * Function to run when trigger is clicked or tapped.
-     * @declarativeHandler
+     * @controllable
      */
 
     /**
@@ -81,6 +81,14 @@ Ext.define('Ext.form.trigger.Trigger', {
      * prevents the browser's file dialog from opening.
      */
     preventMouseDown: true,
+    
+    /**
+     * @cfg {Boolean} [focusOnMouseDown=false] If `true`, the field will be focused upon
+     * mousedown on the trigger. This should be used only for main Picker field triggers
+     * that expand and collapse the picker; additional triggers should not focus the field.
+     * @private
+     */
+    focusOnMousedown: false,
 
     /**
      * @property {String}
@@ -124,7 +132,9 @@ Ext.define('Ext.form.trigger.Trigger', {
 
     renderTpl: [
         '<div id="{triggerId}" class="{baseCls} {baseCls}-{ui} {cls} {cls}-{ui} {extraCls} ',
-                '{childElCls}"<tpl if="triggerStyle"> style="{triggerStyle}"</tpl>>',
+                '{childElCls}"<tpl if="triggerStyle"> style="{triggerStyle}"</tpl>',
+                '<tpl if="ariaRole"> role="{ariaRole}"<tpl else> role="presentation"</tpl>',
+            '>',
             '{[values.$trigger.renderBody(values)]}',
         '</div>'
     ],
@@ -179,6 +189,7 @@ Ext.define('Ext.form.trigger.Trigger', {
     },
 
     /**
+     * @method
      * Allows addition of data to the render data object for the {@link #bodyTpl}.
      * @protected
      * @return {Object}
@@ -292,10 +303,15 @@ Ext.define('Ext.form.trigger.Trigger', {
         // If it was a genuine mousedown or pointerdown, NOT a touch, then focus the input field.
         // Usually, the field will be focused, but the mousedown on the trigger
         // might be the user's first contact with the field.
-        // It's definitely NOT the user's first contact with our field owns the currently
-        // active element (for example a PickerField with a GridPanel as its picker)
-        if (e.pointerType !== 'touch' && !this.field.owns(Ext.Element.getActiveElement())) {
-            this.field.inputEl.focus();
+        // It's definitely NOT the user's first contact with our field if the field
+        // has the focus.
+        // It is also possible that there are multiple triggers on the field, and only one
+        // of them causes picker expand/collapse. When picker is about to be collapsed
+        // we need to focus the input; otherwise if the picker was focused the focus will go
+        // to the document body which is not what we want. However if the mousedown was on
+        // a trigger that does not cause collapse we should NOT focus the field.
+        if (e.pointerType !== 'touch' && (!this.field.containsFocus || this.focusOnMousedown)) {
+            this.field.focus();
         }
 
         if (this.preventMouseDown) {
@@ -390,7 +406,8 @@ Ext.define('Ext.form.trigger.Trigger', {
             cls: me.cls,
             triggerStyle: triggerStyle,
             extraCls: me.extraCls,
-            baseCls: me.baseCls
+            baseCls: me.baseCls,
+            ariaRole: me.ariaRole
         });
     },
 

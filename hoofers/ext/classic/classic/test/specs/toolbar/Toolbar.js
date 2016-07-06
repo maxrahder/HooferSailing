@@ -20,8 +20,8 @@ describe("Ext.toolbar.Toolbar", function(){
         expect(toolbar.getLayout() instanceof Ext.layout.container.HBox);
     });
 
-    describe('enableOverflow', function () {
-        describe('when false', function () {
+    describe('overflow', function () {
+        describe('when enableOverflow is false', function () {
             it('should not create a menu', function () {
                 // false is the default value.
                 createToolbar({
@@ -31,7 +31,7 @@ describe("Ext.toolbar.Toolbar", function(){
             });
         });
 
-        describe('when true', function () {
+        describe('when enableOverflow is true', function () {
             it('should create an overflow menu', function () {
                 createToolbar({
                     enableOverflow: true
@@ -46,11 +46,101 @@ describe("Ext.toolbar.Toolbar", function(){
                 expect(toolbar.layout.overflowHandler.type).toBe('menu');
             });
         });
+
+        describe('overflow item values', function() {
+            it('should sync the values between master and clone fields', function() {
+                var menu, barfield, menufield;
+                createToolbar({
+                    enableOverflow: true,
+                    width: 100,
+                    items : [{
+                        text : 'Foo'
+                    },{
+                        text : 'Bar'
+                    },{
+                        text : 'Test'
+                    },{
+                        xtype: 'textfield'
+                    }]
+                });
+                menu = toolbar.layout.overflowHandler.menu;
+                menu.show();
+                
+                menufield = menu.down('textfield');
+                barfield = menufield.masterComponent;
+
+                menufield.setValue('Foo');
+                
+                expect(menufield.getValue()).toBe(barfield.getValue());
+            });
+
+            it('should sync the radio field value master and clone when master has been checked', function() {
+                var menu, barfield, menufield;
+                createToolbar({
+                    enableOverflow: true,
+                    width: 100,
+                    items : [{
+                        text : 'Foo'
+                    },{
+                        text : 'Bar'
+                    },{
+                        text : 'Test'
+                    },{
+                        xtype: 'radio',
+                        name : 'foo'
+                    }]
+                });
+                menu = toolbar.layout.overflowHandler.menu;
+                menu.show();
+
+                barfield = toolbar.down('radio');
+                menufield = barfield.overflowClone;
+                
+                barfield.setValue(true);
+                
+                expect(menufield.getValue()).toBe(barfield.getValue());
+            });
+
+            it('should sync the radio field value master and clone when clone has been clicked', function() {
+                var menu, barfield, menufield;
+                createToolbar({
+                    enableOverflow: true,
+                    width: 100,
+                    items : [{
+                        text : 'Foo'
+                    },{
+                        text : 'Bar'
+                    },{
+                        text : 'Test'
+                    },{
+                        xtype: 'radio',
+                        name : 'foo'
+                    }]
+                });
+                menu = toolbar.layout.overflowHandler.menu;
+                menu.show();
+
+                barfield = toolbar.down('radio');
+                menufield = barfield.overflowClone;
+                
+                jasmine.fireMouseEvent(menu.el, 'click');
+                jasmine.fireMouseEvent(menufield.el, 'click');
+
+                expect(menufield.getValue()).toBe(true);
+                
+                expect(menufield.getValue()).toBe(barfield.getValue());
+            });
+        });
     });
 
     describe('defaultButtonUI', function() {
         it("should use the defaultButtonUI for child buttons with no ui configured on the instance", function() {
+            // This test causes layout failure in IE8, but otherwise tests out fine.
+            // Since it's not about layout, silencing the error is OK.
+            spyOn(Ext.log, 'error');
+            
             createToolbar({
+                height: 30,
                 defaultButtonUI: 'foo',
                 items: [{
                     text: 'Bar'
@@ -61,7 +151,11 @@ describe("Ext.toolbar.Toolbar", function(){
         });
 
         it("should not use the defaultButtonUI for child buttons with ui configured on the instance", function() {
+            // See above
+            spyOn(Ext.log, 'error');
+            
             createToolbar({
+                height: 30,
                 defaultButtonUI: 'foo',
                 items: [{
                     text: 'Bar',
@@ -204,6 +298,42 @@ describe("Ext.toolbar.Toolbar", function(){
             });
             
             expectNoAria(toolbar, 'tabIndex');
+        });
+    });
+    
+    describe("ARIA", function() {
+        it("should have toolbar role with buttons", function() {
+            createToolbar({
+                items: [{
+                    xtype: 'button'
+                }]
+            });
+            
+            expectAria(toolbar, 'role', 'toolbar');
+        });
+        
+        it("should have group role with input fields", function() {
+            createToolbar({
+                items: [{
+                    xtype: 'button'
+                }, {
+                    xtype: 'textfield'
+                }]
+            });
+            
+            expectAria(toolbar, 'role', 'group');
+        });
+        
+        it("should have group role with sliders", function() {
+            createToolbar({
+                items: [{
+                    xtype: 'button'
+                }, {
+                    xtype: 'slider'
+                }]
+            });
+            
+            expectAria(toolbar, 'role', 'group');
         });
     });
 });

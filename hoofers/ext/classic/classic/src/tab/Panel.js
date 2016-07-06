@@ -651,6 +651,7 @@ Ext.define('Ext.tab.Panel', {
         var me = this,
             cfg = Ext.apply({}, item.tabConfig),
             tabBar = me.getTabBar(),
+            ariaDom,
             defaultConfig = {
                 xtype: 'tab',
                 title: item.title,
@@ -679,8 +680,17 @@ Ext.define('Ext.tab.Panel', {
         
         // We want to force the relationship of the tabpanel to the tab
         item.ariaRole = 'tabpanel';
-        item.ariaRenderAttributes = item.ariaRenderAttributes || {};
-        item.ariaRenderAttributes['aria-labelledby'] = item.tab.id;
+        
+        // Item might be already rendered and then added to the TabPanel
+        ariaDom = item.ariaEl.dom;
+        
+        if (ariaDom) {
+            ariaDom.setAttribute('aria-labelledby', item.tab.id);
+        }
+        else {
+            item.ariaRenderAttributes = item.ariaRenderAttributes || {};
+            item.ariaRenderAttributes['aria-labelledby'] = item.tab.id;
+        }
 
         item.on({
             scope : me,
@@ -812,6 +822,22 @@ Ext.define('Ext.tab.Panel', {
 
         if (item.tab && !me.destroying && item.tab.ownerCt === me.tabBar) {
             me.tabBar.remove(item.tab);
+        }
+    },
+    
+    enable: function() {
+        var me = this,
+            activeTab = me.activeTab !== null ? (me.activeTab || 0) : null,
+            wasDisabled = me.disabled;
+        
+        me.callParent(arguments);
+        
+        if (wasDisabled) {
+            activeTab = activeTab.isComponent ? activeTab : me.getComponent(activeTab);
+            
+            if (activeTab) {
+                me.getTabBar().setActiveTab(activeTab.tab);
+            }
         }
     },
 

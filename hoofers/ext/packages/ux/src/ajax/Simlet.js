@@ -18,7 +18,7 @@ Ext.define('Ext.ux.ajax.Simlet', function () {
                 value = parseInt(value, 10);
             } else if (floatRegex.test(value)) {
                 value = parseFloat(value);
-            } else if (!!(m = dateRegex.test(value))) {
+            } else if (!!(m = dateRegex.exec(value))) {
                 value = new Date(Date.UTC(+m[1], +m[2]-1, +m[3], +m[4], +m[5], +m[6]));
             }
         }
@@ -31,7 +31,7 @@ Ext.define('Ext.ux.ajax.Simlet', function () {
 
         isSimlet: true,
 
-        responseProps: ['responseText', 'responseXML', 'status', 'statusText'],
+        responseProps: ['responseText', 'responseXML', 'status', 'statusText', 'responseHeaders'],
 
         /**
          * @cfg {Number} responseText
@@ -89,6 +89,13 @@ Ext.define('Ext.ux.ajax.Simlet', function () {
             return false;
         },
 
+        doDelete: function (ctx) {
+            var me = this,
+                xhr = ctx.xhr,
+                records = xhr.options.records;
+            me.removeFromData(ctx,records);
+        },
+
         /**
          * Performs the action requested by the given XHR and returns an object to be applied
          * on to the XHR (containing `status`, `responseText`, etc.). For the most part,
@@ -125,7 +132,9 @@ Ext.define('Ext.ux.ajax.Simlet', function () {
             var ctx = this.getCtx(method, url),
                 redirect = this.doRedirect(ctx),
                 xhr;
-
+            if (options.action === 'destroy'){
+                method = 'delete';
+            }
             if (redirect) {
                 xhr = redirect;
             } else {
@@ -136,7 +145,7 @@ Ext.define('Ext.ux.ajax.Simlet', function () {
                 });
                 xhr.open(method, url, async);
             }
-
+            
             return xhr;
         },
 
@@ -187,6 +196,23 @@ Ext.define('Ext.ux.ajax.Simlet', function () {
                 url = Ext.urlAppend(url, Ext.Object.toQueryString(params));
             }
             return this.manager.openRequest(method, url);
+        },
+
+        removeFromData: function(ctx, records) {
+            var me = this,
+                data = me.getData(ctx),
+                model = (ctx.xhr.options.proxy && ctx.xhr.options.proxy.getModel()) || {},
+                idProperty = model.idProperty || 'id';
+
+            Ext.each(records, function(record) {
+                var id = record.get(idProperty);
+                for (var i = data.length; i-- > 0;) {
+                    if (data[i][idProperty] === id) {
+                        me.deleteRecord(i);
+                        break;
+                    }
+                }
+            });
         }
     };
 }());

@@ -1665,6 +1665,19 @@ describe("Ext.data.reader.Json", function() {
                 it("should return any empty dataset", function() {
                     expect(doRead(badResponse).getRecords().length).toBe(0);
                 });
+
+                it("should fire the exception event", function() {
+                    var spy = jasmine.createSpy();
+                    reader.on('exception', spy);
+                    doRead(badResponse);
+                    expect(spy.callCount).toBe(1);
+                });
+            });
+
+            describe("if the responseText is empty", function() {
+                it("should return the null result set", function() {
+                    expect(doRead({responseText: ''})).toBe(reader.getNullResultSet());
+                });
             });
         });
 

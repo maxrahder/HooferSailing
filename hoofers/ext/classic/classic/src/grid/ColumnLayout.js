@@ -32,19 +32,12 @@ Ext.define('Ext.grid.ColumnLayout', {
     beginLayout: function (ownerContext) {
         var me = this,
             owner = me.owner,
-            view = owner.grid ? owner.grid.getView() : null,
             firstCls = me.firstHeaderCls,
             lastCls = me.lastHeaderCls,
             bothCls = [firstCls, lastCls],
             items = me.getVisibleItems(),
             len = items.length,
             i, item;
-
-        if (view && view.scrollFlags.x) {
-            me.viewScrollX = view.getScrollX();
-            owner.suspendEvent('scroll');
-            view.suspendEvent('scroll');
-        }
 
         me.callParent([ ownerContext ]);
 
@@ -89,15 +82,28 @@ Ext.define('Ext.grid.ColumnLayout', {
     },
 
     moveItemBefore: function (item, before) {
-        var prevOwner = item.ownerCt;
+        var prevOwner = item.ownerCt,
+            nextSibling = before && before.nextSibling();
 
         // Due to the nature of grid headers, index calculation for
         // moving items is complicated, especially since removals can trigger
         // groups to be removed (and thus alter indexes). As such, the logic
         // is simplified by removing the item first, then calculating the index
-        // and inserting it
+        // and inserting it.
+        // When removing from previous container ensure the header is not destroyed
+        // or removed from the DOM (which would destroy focus).
+        // The layout's moveItem method will preserve focus when it does the move.
         if (item !== before && prevOwner) {
-            prevOwner.remove(item, false);
+            prevOwner.remove(item, {
+                destroy: false,
+                detach: false
+            });
+
+            // If the removal caused destruction of the before, this was
+            // the last subheader, so move to beore its next sibling
+            if (before && before.destroyed) {
+                before = nextSibling;
+            }
         }
         return this.callParent([item, before]);
     },
@@ -114,8 +120,9 @@ Ext.define('Ext.grid.ColumnLayout', {
             // locking grid will not have this set. The ownerGrid in that case would have
             // it set but will pass along true only to the normal side.
             reserveScrollbar = grid.reserveScrollbar && !vetoReserveScrollbar,
+            scrollable = grid.view.getScrollable(),
             manageScrollbar = !reserveScrollbar && !vetoReserveScrollbar &&
-                    grid.view.scrollFlags.y;
+                    scrollable && scrollable.getY();
 
         // If we have reserveScrollbar then we will always have a vertical scrollbar so
         // manageScrollbar should be false. Otherwise it is based on overflow-y:
@@ -239,29 +246,14 @@ Ext.define('Ext.grid.ColumnLayout', {
     },
 
     finishedLayout: function(ownerContext) {
-        var me = this,
-            owner = me.owner,
-            view = owner.grid ? owner.grid.getView() : null,
-            viewScrollX = me.viewScrollX;
-
-        me.callParent([ ownerContext ]);
-
-        // Keep the HeaderContainer's horizontal scroll position synced with where the user
-        // has scrolled the view to (it will reset during a layout) IF this is a top lever
-        // grid HeaderContainer and the view is doing horizontal scrolling and the
-        // HeaderContainer overflows. Only do this after the initial layout where scroll
-        // position will be at default.
-        if (view && view.scrollFlags.x) {
-            if (viewScrollX !== undefined && owner.tooNarrow && owner.componentLayoutCounter) {
-                owner.setScrollX(viewScrollX);
-            }
-            view.resumeEvent('scroll');
-            owner.resumeEvent('scroll');
+        this.callParent([ ownerContext ]);
+        if (this.owner.ariaRole === 'rowgroup') {
+            this.innerCt.dom.setAttribute('role', 'row');
         }
-        
-        if (owner.ariaRole === 'rowgroup') {
-            me.innerCt.dom.setAttribute('role', 'row');
-        }
+
+        // Wipe this array because it holds component references and gets cached on the object
+        // Can cause a circular reference
+        ownerContext.props.columnsChanged = null;
     },
 
     convertWidthsToFlexes: function(ownerContext) {

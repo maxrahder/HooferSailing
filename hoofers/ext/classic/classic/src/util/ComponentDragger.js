@@ -67,7 +67,7 @@ Ext.define('Ext.util.ComponentDragger', {
         // then use that as a drag proxy unless configured to liveDrag.
         if (comp.ghost && !comp.liveDrag) {
              me.proxy = comp.ghost();
-             me.dragTarget = me.proxy.header.el;
+             me.dragTarget = me.proxy.header ? me.proxy.header.el : me.proxy.el;
         }
 
         // Set the constrainTo Region before we start dragging.
@@ -77,6 +77,10 @@ Ext.define('Ext.util.ComponentDragger', {
 
         if (comp.beginDrag) {
             comp.beginDrag();
+        }
+        // Logic to drag components on top of iframes
+        if (comp.el.shim) {
+            Ext.dom.Element.maskIframes();
         }
     },
 
@@ -106,7 +110,7 @@ Ext.define('Ext.util.ComponentDragger', {
         // Apply constraintInsets
         if (constraintInsets) {
             constraintInsets = Ext.isObject(constraintInsets) ? constraintInsets : Ext.Element.parseBox(constraintInsets);
-            constrainTo.adjust(constraintInsets.top, constraintInsets.right, constraintInsets.bottom, constraintInsets.length);
+            constrainTo.adjust(constraintInsets.top, constraintInsets.right, constraintInsets.bottom, constraintInsets.left);
         }
 
         // Reduce the constrain region to allow for shadow
@@ -151,6 +155,10 @@ Ext.define('Ext.util.ComponentDragger', {
         }
         if (comp.endDrag) {
             comp.endDrag();
+        }
+        // Logic to drag components on top of iframes
+        if (comp.el.shim) {
+            Ext.dom.Element.unmaskIframes();
         }
     }
 });

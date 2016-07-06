@@ -1,8 +1,19 @@
 describe('Ext.grid.feature.Summary', function () {
+    var synchronousLoad = true,
+        proxyStoreLoad = Ext.data.ProxyStore.prototype.load,
+        loadStore = function() {
+            proxyStoreLoad.apply(this, arguments);
+            if (synchronousLoad) {
+                this.flushLoad.apply(this, arguments);
+            }
+            return this;
+        };
+
     function makeSuite(withLocking) {
         describe(withLocking ? "with locking" : "without locking", function() {
             var grid, view, store, summary, params, selector, 
-                data, lockedGrid, normalGrid, lockedView, normalView;
+                data, lockedGrid, normalGrid, lockedView, normalView,
+                hideMarkColumn = false;
 
             function createGrid(gridCfg, summaryCfg, storeCfg, configuredData) {
                 data = [{
@@ -38,6 +49,13 @@ describe('Ext.grid.feature.Summary', function () {
                     ftype: 'summary'
                 }, summaryCfg));
 
+                gridCfg = gridCfg || {};
+                if (gridCfg.features) {
+                    gridCfg.features.push(summary);
+                } else {
+                    gridCfg.features = summary;
+                }
+
                 grid = new Ext.grid.Panel(Ext.apply({
                     store: store,
                     columns: [{
@@ -56,11 +74,11 @@ describe('Ext.grid.feature.Summary', function () {
                         itemId: 'markColumn',
                         dataIndex: 'mark',
                         text: 'Mark',
-                        summaryType: 'average'
+                        summaryType: 'average',
+                        hidden: hideMarkColumn
                     }],
                     width: 600,
                     height: 300,
-                    features: summary,
                     renderTo: Ext.getBody()
                 }, gridCfg));
 
@@ -74,7 +92,15 @@ describe('Ext.grid.feature.Summary', function () {
                 }
             }
 
+            beforeEach(function() {
+                // Override so that we can control asynchronous loading
+                Ext.data.ProxyStore.prototype.load = loadStore;
+            });
+
             afterEach(function () {
+                // Undo the overrides.
+                Ext.data.ProxyStore.prototype.load = proxyStoreLoad;
+
                 grid = view = store = summary = params = Ext.destroy(grid);
                 if (withLocking) {
                     lockedGrid = lockedView = normalGrid = normalView = null;
@@ -158,6 +184,19 @@ describe('Ext.grid.feature.Summary', function () {
             });
 
             describe('summaryRenderer', function () {
+                it("should render a column's summary on show of the column", function() {
+                    hideMarkColumn = true;
+                    createGrid();
+                    hideMarkColumn = false;
+
+                    // Only one column, so only that column's summary shown
+                    expect(getSummaryContent()).toBe('4students');
+
+                    // When the Mark column is shown, that column's summary should be shown
+                    grid.getColumnManager().getColumns()[1].show();
+                    expect(getSummaryContent()).toBe('4students80');
+                });
+                
                 it('should be passed the expected function parameters', function () {
                     createGrid();
 
@@ -524,6 +563,7 @@ describe('Ext.grid.feature.Summary', function () {
                     });
 
                     store.load();
+                    store.flushLoad();
 
                     completeWithData({
                         data: data,
@@ -753,16 +793,8 @@ describe('Ext.grid.feature.Summary', function () {
 
             describe("buffered rendering", function() {
                 it("should not render the summary row until the last row is in the view", function() {
-
                     var data = [],
-                        i, last, rowHeight;
-
-                    function getLastNode() {
-                        var nodes = theView.getNodes(),
-                            rec = theView.getRecord(nodes[nodes.length - 1]);
-
-                        return rec ? rec.getId() : null;
-                    }
+                        i;
 
                     for (i = 1; i <= 1000; ++i) {
                         data.push({
@@ -777,63 +809,47 @@ describe('Ext.grid.feature.Summary', function () {
                         bufferedRenderer: true
                     }, null, null, data);
 
-                    var theView = withLocking ? lockedView : view;
-
-                    rowHeight = Ext.fly(theView.getNode(0)).getHeight();
+                    var theView = withLocking ? lockedView : view,
+                        scrollingView = withLocking ? normalView : view;
 
                     expect(theView.getEl().down(selector)).toBeNull();
-                    last = getLastNode();
-                    grid.scrollByDeltaY(rowHeight * 100);
-
-                    waitsFor(function() {
-                        return getLastNode() !== last;
-                    });
-
-                    runs(function() {
-                        last = getLastNode();
-                        expect(theView.getEl().down(selector)).toBeNull();
-                        grid.scrollByDeltaY(rowHeight * 200);
-                    });
-
-                    waitsFor(function() {
-                        return getLastNode() !== last;
-                    });
-
-                    runs(function() {
-                        last = getLastNode();
-                        expect(theView.getEl().down(selector)).toBeNull();
-                        grid.scrollByDeltaY(rowHeight * 400);
-                    });
-
-                    waitsFor(function() {
-                        return getLastNode() !== last;
-                    });
-
-                    runs(function() {
-                        last = getLastNode();
-                        expect(theView.getEl().down(selector)).toBeNull();
-                        grid.scrollByDeltaY(rowHeight * 100);
-                    });
-
-                    waitsFor(function() {
-                        return getLastNode() !== last;
-                    });
-
-                    runs(function() {
-                        last = getLastNode();
-                        expect(theView.getEl().down(selector)).toBeNull();
-                        // Force to the end
-                        grid.scrollByDeltaY(rowHeight * 500);
-                    });
-
-                    waitsFor(function() {
-                        return getLastNode() !== last;
-                    });
-
+                    
+                    // Scroll downwards 100px at a time
+                    // While the last row is not present, there should be no summary el.
+                    // As soon as it is present, check that the summary is there and quit.
+                    // N.B. This latch function accepts done callback and because of this
+                    // it will be called only ONCE, not in a loop!
+                    waitsFor(function(done) {
+                        scrollingView.getScrollable().on('scroll', function() {
+                            if (view.all.endIndex === store.getCount() - 1) {
+                                done();
+                            }
+                            else {
+                                expect(theView.getEl().down(selector)).toBeNull();
+                                grid.scrollByDeltaY(100);
+                            }
+                        });
+                        
+                        grid.scrollByDeltaY(100);
+                    // 15 seconds should be enough even for IE8
+                    }, 'downward scrolling to complete', 15000);
+                    
                     runs(function() {
                         expect(theView.getEl().down(selector)).not.toBeNull();
                     });
+                });
+            });
 
+            describe("summary types", function() {
+                describe("count", function() {
+                    it("should be able to provide the correct value when using grouping", function() {
+                        createGrid({
+                            features: [{ftype: 'grouping'}]
+                        }, null, {
+                            groupField: 'subject'
+                        });
+                        expect(getSummaryContent()).toBe('4students80');
+                    });
                 });
             });
         });

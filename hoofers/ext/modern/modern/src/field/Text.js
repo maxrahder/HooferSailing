@@ -97,7 +97,7 @@ Ext.define('Ext.field.Text', {
 
     /**
      * @event keyup
-     * @preventable doKeyUp
+     * @preventable
      * Fires when a key is released on the input element
      * @param {Ext.field.Text} this This field
      * @param {Ext.event.Event} e
@@ -105,7 +105,7 @@ Ext.define('Ext.field.Text', {
 
     /**
      * @event clearicontap
-     * @preventable doClearIconTap
+     * @preventable
      * Fires when the clear icon is tapped
      * @param {Ext.field.Text} this This field
      * @param {Ext.field.Input} input The field's input component.
@@ -122,7 +122,7 @@ Ext.define('Ext.field.Text', {
 
     /**
      * @event action
-     * @preventable doAction
+     * @preventable
      * Fires whenever the return key or go is pressed. FormPanel listeners
      * for this event, and submits itself whenever it fires. Also note
      * that this event bubbles up to parent containers.
@@ -135,13 +135,13 @@ Ext.define('Ext.field.Text', {
          * @cfg
          * @inheritdoc
          */
-        ui: 'text',
+        clearIcon: true,
 
         /**
-         * @cfg
-         * @inheritdoc
+         * @cfg {Boolean} labelAsPlaceHolder
+         * When true labels will be used as placeholder text and moved out when user types
          */
-        clearIcon: true,
+        labelAsPlaceHolder: null,
 
         /**
          * @cfg {String} placeHolder A string value displayed in the input (if supported) when the control is empty.
@@ -193,7 +193,9 @@ Ext.define('Ext.field.Text', {
             fastFocus: false
         },
 
-        bubbleEvents: ['action']
+        bubbleEvents: ['action'],
+
+        bodyAlign: 'stretch'
     },
 
     defaultBindProperty: 'value',
@@ -205,6 +207,7 @@ Ext.define('Ext.field.Text', {
         value: 1
     },
 
+    classCls: Ext.baseCSSPrefix + 'textfield',
     focusedCls: Ext.baseCSSPrefix + 'field-focused',
     clearableCls: Ext.baseCSSPrefix + 'field-clearable',
     emptyCls: Ext.baseCSSPrefix + 'empty',
@@ -240,7 +243,7 @@ Ext.define('Ext.field.Text', {
         var val = this._value,
             empty = val ? val.length : false;
 
-        this.toggleCls(this.emptyCls, empty);
+        this.toggleCls(this.emptyCls, !empty);
     },
 
     applyValue: function(value) {
@@ -269,10 +272,34 @@ Ext.define('Ext.field.Text', {
         }
     },
 
+    updateLabel: function (newLabel, oldLabel) {
+        this.callParent(arguments);
+
+        if (this.getLabelAsPlaceHolder()) {
+            this.setPlaceHolder(newLabel);
+        }
+    },
+
+    /**
+     * @private
+     */
+    updateLabelAsPlaceHolder: function (value) {
+        this.toggleCls(Ext.baseCSSPrefix + 'field-placeholder-label', !!value);
+    },
+
     /**
      * @private
      */
     updatePlaceHolder: function(newPlaceHolder) {
+        var labelAsPlaceHolder = this.getLabelAsPlaceHolder(),
+            label = this.getLabel();
+
+        //<debug>
+        if (labelAsPlaceHolder && newPlaceHolder !== label) {
+            Ext.Logger.warn("PlaceHolder should not be set when using 'labelAsPlaceHolder'", this);
+        }
+        //</debug>
+
         this.getComponent().setPlaceHolder(newPlaceHolder);
     },
 

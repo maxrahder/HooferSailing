@@ -53,8 +53,9 @@ describe("Ext.data.association.HasMany_legacy", function() {
             Ext.undefine('spec.Foo');
         });
         
-        var expectFn = function(key) {
-            expect(Ext.isFunction(spec.Foo.prototype[key])).toBe(true);
+        var expectFn = function(key, o) {
+            o = o || spec.Foo;
+            expect(Ext.isFunction(o.prototype[key])).toBe(true);
         }
         
         it("should read a single string", function() {
@@ -152,6 +153,32 @@ describe("Ext.data.association.HasMany_legacy", function() {
             var o = new spec.Foo();
             expect(o.posts().getTrackRemoved()).toBe(false);
         });
+
+        it("should setup the correct inverse when using a name", function() {
+            Ext.define('spec.Foo', {
+                extend: 'Ext.data.Model',
+                hasMany: {
+                    model: 'Post',
+                    name: 'comments'
+                }
+            });
+
+            expectFn('comments');
+            expectFn('getFoo', spec.Post);
+        });
+
+        it("should respect a role config", function() {
+            Ext.define('spec.Foo', {
+                extend: 'Ext.data.Model',
+                hasMany: {
+                    model: 'Post',
+                    role: 'comments'
+                }
+            });
+
+            expectFn('comments');
+            expectFn('getFoo', spec.Post);
+        });
     });
     
     describe("instance", function() {
@@ -162,7 +189,7 @@ describe("Ext.data.association.HasMany_legacy", function() {
         };
         
         var getStore = function() {
-            return rec['posts']();    
+            return rec.posts();
         };
         
         it("should return a store", function() {
@@ -196,7 +223,7 @@ describe("Ext.data.association.HasMany_legacy", function() {
         describe("autoLoad", function() {
             it("should not load the store by default", function() {
                 makeRec();
-                var spy = spyOn(Ext.data.Store.prototype, 'load').andReturn();
+                var spy = spyOn(Ext.data.ProxyStore.prototype, 'load').andReturn();
                 getStore();
                 expect(spy.callCount).toBe(0);    
             });  
@@ -207,7 +234,7 @@ describe("Ext.data.association.HasMany_legacy", function() {
                 }); 
                 
                 makeThread(3);
-                var spy = spyOn(Ext.data.Store.prototype, 'load').andReturn();
+                var spy = spyOn(Ext.data.ProxyStore.prototype, 'load').andReturn();
                 getStore();
                 expect(spy.callCount).toBe(1);          
             });
@@ -238,7 +265,25 @@ describe("Ext.data.association.HasMany_legacy", function() {
                     'user_id': 1
                 })[0];
                 expect(post.get('user_id')).toBe(3);
-            })
+            });
+
+            it("should not throw an exception when setting the id on the one model", function() {
+                Ext.define('spec.Foo', {
+                    extend: 'Ext.data.Model',
+                    hasMany: 'spec.Post'
+                });
+
+                rec = new spec.Foo({
+                    id: 1
+                });
+                rec.posts();
+
+                expect(function() {
+                    rec.setId(100);
+                }).not.toThrow();
+
+                Ext.undefine('spec.Foo');
+            });
         });
     });
     

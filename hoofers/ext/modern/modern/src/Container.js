@@ -72,7 +72,7 @@ Ext.define('Ext.Container', {
 
     requires: [
         'Ext.layout.*',
-        'Ext.ItemCollection',
+        'Ext.util.ItemCollection',
         'Ext.Mask'
     ],
 
@@ -174,8 +174,6 @@ Ext.define('Ext.Container', {
          *         ]
          *     });
          *
-         * See the [Layouts Guide](#!/guide/layouts) for more information.
-         *
          * @accessor
          */
         layout: 'default',
@@ -203,7 +201,7 @@ Ext.define('Ext.Container', {
          * called with scope: `this` (e.g. `this` is the Container instance).
          *
          */
-        control: {},
+        control: null,
 
         /**
          * @cfg {Object} defaults A set of default configurations to apply to all child Components in this Container.
@@ -289,22 +287,7 @@ Ext.define('Ext.Container', {
          *
          * @accessor
          */
-        masked: null,
-
-        /**
-         * @cfg {Boolean} modal `true` to make this Container modal. This will create a mask underneath the Container
-         * that covers its parent and does not allow the user to interact with any other Components until this
-         * Container is dismissed.
-         * @accessor
-         */
-        modal: null,
-
-        /**
-         * @cfg {Boolean} hideOnMaskTap When using a {@link #modal} Component, setting this to `true` will hide the modal
-         * mask and the Container when the mask is tapped on.
-         * @accessor
-         */
-        hideOnMaskTap: null
+        masked: null
     },
 
 
@@ -319,12 +302,15 @@ Ext.define('Ext.Container', {
     constructor: function(config) {
         var me = this;
 
-        me._items = me.items = new Ext.ItemCollection();
+        me._items = me.items = new Ext.util.ItemCollection();
         me.innerItems = [];
 
+        me.getReferences = me.getFirstReferences;
         me.onItemAdd = me.onFirstItemAdd;
 
         me.callParent(arguments);
+
+        delete me.getReferences;
 
         if (me.manageBorders) {
             me.element.addCls('x-managed-borders');
@@ -401,18 +387,9 @@ Ext.define('Ext.Container', {
     },
 
     onAdded: function(parent, instanced) {
-        var me = this,
-            modal;
+        this.callParent([parent, instanced]);
 
-        me.callParent([parent, instanced]);
-
-        me.containerOnAdded(parent, instanced);
-
-        modal = me.getModal();
-        if (modal) {
-            parent.insertBefore(modal, me);
-            modal.setZIndex(me.getZIndex() - 1);
-        }
+        this.containerOnAdded(parent, instanced);
     },
 
     onRemoved: function(destroying) {
@@ -420,77 +397,18 @@ Ext.define('Ext.Container', {
         this.callParent([destroying]);
     },
 
-    applyModal: function(modal, currentModal) {
-        var isVisible = true;
-
-        if (modal === false) {
-            modal = true;
-            isVisible = false;
-        }
-
-        currentModal = Ext.factory(modal, Ext.Mask, currentModal);
-
-        if (currentModal) {
-            currentModal.setVisibility(isVisible);
-        }
-
-        return currentModal;
-    },
-
-    updateModal: function(modal) {
-        var container = this.getParent();
-
-        if (container) {
-            if (modal) {
-                container.insertBefore(modal, this);
-                modal.setZIndex(this.getZIndex() - 1);
-            }
-            else {
-                container.remove(modal);
-            }
-        }
-    },
-
-    updateHideOnMaskTap : function(hide) {
-        var mask = this.getModal();
-
-        if (mask) {
-            mask[hide ? 'on' : 'un'].call(mask, 'tap', 'hide', this);
-        }
-    },
-
-    updateZIndex: function(zIndex) {
-        var modal = this.getModal();
-
-        this.callParent(arguments);
-
-        if (modal) {
-            modal.setZIndex(zIndex - 1);
-        }
-    },
-
     updateBaseCls: function(newBaseCls, oldBaseCls) {
         var me = this,
-            element = me.element,
-            ui = me.getUi();
+            innerElement = me.innerElement;
+
+        me.callParent([newBaseCls, oldBaseCls]);
 
         if (oldBaseCls) {
-            element.removeCls(oldBaseCls);
-            me.innerElement.removeCls(newBaseCls, null, 'inner');
-
-            if (ui) {
-                element.removeCls(me.currentUi);
-            }
+            innerElement.removeCls(oldBaseCls, null, 'inner');
         }
 
         if (newBaseCls) {
-            element.addCls(newBaseCls);
-            me.innerElement.addCls(newBaseCls, null, 'inner');
-
-            if (ui) {
-                element.addCls(newBaseCls, null, ui);
-                me.currentUi = newBaseCls + '-' + ui;
-            }
+            innerElement.addCls(newBaseCls, null, 'inner');
         }
     },
 
@@ -520,27 +438,27 @@ Ext.define('Ext.Container', {
     /**
      * @private
      */
-     applyControl: function(selectors) {
-         var selector, key, listener, listeners;
+    applyControl: function(selectors) {
+        var selector, key, listener, listeners;
 
-         for (selector in selectors) {
-             listeners = selectors[selector];
+        for (selector in selectors) {
+            listeners = selectors[selector];
 
-             for (key in listeners) {
-                 listener = listeners[key];
+            for (key in listeners) {
+                listener = listeners[key];
 
-                 if (Ext.isObject(listener)) {
-                     listener.delegate = selector;
-                 }
-             }
+                if (Ext.isObject(listener)) {
+                    listener.delegate = selector;
+                }
+            }
 
-             listeners.delegate = selector;
+            listeners.delegate = selector;
 
-             this.addListener(listeners);
-         }
+            this.addListener(listeners);
+        }
 
-         return selectors;
-     },
+        return selectors;
+    },
 
     /**
      * Initialize layout and event listeners the very first time an item is added
@@ -556,7 +474,10 @@ Ext.define('Ext.Container', {
             delete me.innerHtmlElement;
         }
 
-        me.on('innerstatechange', 'onItemInnerStateChange', me, {
+        me.on({
+            innerstatechange: 'onItemInnerStateChange',
+            floatedchange: 'onItemFloatedChange',
+            scope: me,
             delegate: '> component'
         });
 
@@ -565,8 +486,15 @@ Ext.define('Ext.Container', {
 
     //<debug>
     updateLayout: function(newLayout, oldLayout) {
-        if (oldLayout && oldLayout.isLayout) {
-            Ext.Logger.error('Replacing a layout after one has already been initialized is not currently supported.');
+        // This all should be refactored in EXTJS-18332
+        if (!oldLayout || !oldLayout.isLayout) {
+            return;
+        }
+
+        if (!oldLayout.isCompatible(newLayout)) {
+            Ext.Logger.error('Replacing a layout after one has already been initialized is not supported. ' +
+                this.$className + '#' + this.getId() + ' (' + oldLayout.$className + ' / ' +
+                (Ext.isString(newLayout) ? newLayout : JSON.stringify(newLayout)) + ')');
         }
     },
     //</debug>
@@ -592,31 +520,27 @@ Ext.define('Ext.Container', {
         //</debug>
     },
 
-    applyDefaults: function(defaults) {
-        if (defaults) {
-            this.factoryItem = this.factoryItemWithDefaults;
-            return defaults;
-        }
-    },
-
+    /**
+     * Called when an item is added to this container either during initialization of the {@link #cfg-items} config,
+     * or when new items are {@link #method-add added), or {@link #method-insert inserted}.
+     *
+     * If the passed object is *not* an instanced component, it converts the passed object into an instanced
+     * child component.
+     *
+     * It applies {@link #cfg-defaults} applied for contained child items - that is items
+     * which are not positiond using {@link Ext.Component#cfg-left left},  {@link Ext.Component#cfg-top top},
+     * {@link Ext.Component#cfg-bottom bottom}, {@link Ext.Component#cfg-right right},
+     * {@link Ext.Component#cfg-centered centered} or {@link Ext.Component#cfg-docked docked}.
+     *
+     * Derived classes can override this method to process context appropriate short-hands
+     * such as {@link Ext.Toolbar} and "->" to insert a spacer.
+     *
+     * @param {Mixed} item The item being added. May be a raw config object or an instanced
+     * Component or some other short-hand understood by the container.
+     * @return {Ext.Component} The component to be added.
+     * @protected
+     */
     factoryItem: function(item) {
-        //<debug>
-        if (!item) {
-            Ext.Logger.error("Invalid item given: " + item + ", must be either the config object to factory a new item, " +
-                "or an existing component instance");
-        }
-        //</debug>
-
-        var me = this;
-        // This forces default type to be resolved prior to any other configs that may be using it to create children
-        if (!me.$hasCachedDefaultItemClass) {
-            me.getDefaultType();
-            me.$hasCachedDefaultItemClass = true;
-        }
-        return Ext.factory(item, me.defaultItemClass);
-    },
-
-    factoryItemWithDefaults: function(item) {
         //<debug>
         if (!item) {
             Ext.Logger.error("Invalid item given: " + item + ", must be either the config object to factory a new item, " +
@@ -627,10 +551,6 @@ Ext.define('Ext.Container', {
         var me = this,
             defaults = me.getDefaults(),
             instance;
-
-        if (!defaults) {
-            return Ext.factory(item, me.defaultItemClass);
-        }
 
         // Existing instance
         if (item.isComponent) {
@@ -657,6 +577,13 @@ Ext.define('Ext.Container', {
                     )) {
                     item = Ext.mergeIf({}, item, defaults);
                 }
+            }
+
+            // This forces default type to be resolved prior to any other configs that
+            // may be using it to create children
+            if (!me.$hasCachedDefaultItemClass) {
+                me.getDefaultType();
+                me.$hasCachedDefaultItemClass = true;
             }
 
             instance = Ext.factory(item, me.defaultItemClass);
@@ -751,13 +678,13 @@ Ext.define('Ext.Container', {
      *
      * @return {Ext.Component} The Component that was removed.
      */
-    remove: function(item, destroy) {
+    remove: function(component, destroy) {
         var me = this,
             index, innerItems;
         
-        item = me.getComponent(item);
+        component = me.getComponent(component);
         
-        index = me.indexOf(item);
+        index = me.indexOf(component);
         innerItems = me.getInnerItems();
 
         if (destroy === undefined) {
@@ -765,26 +692,26 @@ Ext.define('Ext.Container', {
         }
 
         if (index !== -1) {
-            if (!me.removingAll && innerItems.length > 1 && item === me.getActiveItem()) {
+            if (!me.removingAll && innerItems.length > 1 && component === me.getActiveItem()) {
                 me.on({
                     activeitemchange: 'doRemove',
                     scope: me,
                     single: true,
                     order: 'after',
-                    args: [item, index, destroy]
+                    args: [component, index, destroy]
                 });
 
-                me.doResetActiveItem(innerItems.indexOf(item));
+                me.doResetActiveItem(innerItems.indexOf(component));
             }
             else {
-                me.doRemove(item, index, destroy);
+                me.doRemove(component, index, destroy);
                 if (innerItems.length === 0) {
                     me.setActiveItem(null);
                 }
             }
         }
 
-        return item;
+        return component;
     },
 
     doResetActiveItem: function(innerIndex) {
@@ -820,7 +747,7 @@ Ext.define('Ext.Container', {
      * @param {Boolean} destroy If `true`, {@link Ext.Component#method-destroy destroys}
      * each removed Component.
      * @param {Boolean} everything If `true`, completely remove all items including
-     * docked / centered and floating items.
+     * docked / centered and positioned items.
      *
      * @return {Ext.Component[]} Array of the removed Components
      */
@@ -896,6 +823,7 @@ Ext.define('Ext.Container', {
      *     myContainer.removeInnerAt(0); // removes the first item of the innerItems property
      *
      * @param {Number} index The index of the Component to remove.
+     * @return {Ext.Component} The removed Component
      */
     removeInnerAt: function(index) {
         var item = this.getInnerItems()[index];
@@ -1196,10 +1124,16 @@ Ext.define('Ext.Container', {
 
         layout.onItemInnerStateChange.apply(layout, arguments);
     },
+    
+    onItemFloatedChange: function(item, floated) {
+        var layout = this.getLayout();
+
+        layout.onItemFloatedChange(item, floated);
+    },
 
     /**
      * Returns all inner {@link #property-items} of this container. `inner` means that the item is not `docked` or
-     * `floating`.
+     * `positioned`.
      * @return {Array} The inner items of this container.
      */
     getInnerItems: function() {
@@ -1327,40 +1261,6 @@ Ext.define('Ext.Container', {
         }
     },
 
-    show:function(){
-        this.callParent(arguments);
-
-        var modal = this.getModal();
-
-        if (modal) {
-            modal.setHidden(false);
-        }
-
-        return this;
-    },
-
-    hide:function(){
-        this.callParent(arguments);
-
-        var modal = this.getModal();
-
-        if (modal) {
-            modal.setHidden(true);
-        }
-
-        return this;
-    },
-
-    updateHidden: function(hidden) {
-        var modal = this.getModal();
-
-        if (modal && (modal.getHidden() !== hidden)) {
-            modal.setHidden(hidden);
-        }
-
-        this.callParent(arguments);
-    },
-
     /**
      * @private
      */
@@ -1459,31 +1359,37 @@ Ext.define('Ext.Container', {
     },
 
     destroy: function() {
-        var me = this,
-            modal = me.getModal();
-
-        if (modal) {
-            modal.destroy();
-        }
+        var me = this;
 
         me.removeAll(true, true);
 
         me.callParent();
-        
-        Ext.destroy(me.items);
-        
-        me.items = null;
+
+        me.items = Ext.destroy(me.items);
     },
 
     privates: {
         applyReference: function (reference) {
           // Need to call like this because applyReference from container comes via a mixin
             return this.setupReference(reference);
+        },
+
+        /**
+         * This method is in place on the instance during construction to ensure that any
+         * {@link #lookup} or {@link #getReferences} calls have the {@link #items} initialized
+         * prior to the lookup.
+         * @private
+         */
+        getFirstReferences: function () {
+            var me = this;
+
+            delete me.getReferences;
+            me.getItems(); // create our items if we haven't yet
+
+            return me.getReferences.apply(me, arguments);
         }
     }
 
 }, function() {
     this.prototype.defaultItemClass = this;
 });
-
-

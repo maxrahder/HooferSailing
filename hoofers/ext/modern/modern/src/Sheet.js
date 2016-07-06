@@ -76,25 +76,18 @@ Ext.define('Ext.Sheet', {
             easing: 'ease-in'
         },
 
+        /**
+         * @cfg
+         * @inheritdoc
+         */
         border: null
     },
+
+    floated: true,
 
     manageBorders: false,
 
     isInputRegex: /^(input|textarea|select|a)$/i,
-
-    beforeInitialize: function() {
-        var me = this;
-        // Temporary fix for a mysterious bug on iOS where double tapping on a sheet
-        // being animated from the bottom shift the whole body up
-        if (Ext.os.is.iOS) {
-            this.element.dom.addEventListener('touchstart', function(e) {
-                if (!me.isInputRegex.test(e.target.tagName)) {
-                    e.preventDefault();
-                }
-            }, true);
-        }
-    },
 
     applyHideAnimation: function(config) {
         var exit = this.getExit(),
@@ -117,10 +110,10 @@ Ext.define('Ext.Sheet', {
         var anim = Ext.factory(config, Ext.fx.Animation);
 
         if (anim) {
-            if (exit == 'bottom') {
+            if (exit === 'bottom') {
                 direction = 'down';
             }
-            if (exit == 'top') {
+            if (exit === 'top') {
                 direction = 'up';
             }
             anim.setDirection(direction);
@@ -149,10 +142,10 @@ Ext.define('Ext.Sheet', {
         var anim = Ext.factory(config, Ext.fx.Animation);
 
         if (anim) {
-            if (enter == 'bottom') {
+            if (enter === 'bottom') {
                 direction = 'down';
             }
-            if (enter == 'top') {
+            if (enter === 'top') {
                 direction = 'up';
             }
             anim.setBefore({

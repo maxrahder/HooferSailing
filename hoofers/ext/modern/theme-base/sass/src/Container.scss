@@ -2,6 +2,12 @@
  * @class Ext.Container
  */
 
+.x-container {
+    // overflow: hidden prevents the margins of the first/last child from escaping outside
+    // the container
+    overflow: hidden;
+}
+
 .x-dock {
     @include st-box();
 
@@ -44,6 +50,7 @@
 
     &.x-dock-vertical {
         @include st-box-orient(vertical);
+        @include st-box-flex(1);
     }
 
     &.x-dock-horizontal {

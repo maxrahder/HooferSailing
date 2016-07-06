@@ -199,7 +199,7 @@
     "modern": {
         "js": [{
             // Remove this entry to individually load sources from the framework.
-            "path": "${framework.dir}/build/ext-modern-all-debug.js"
+            //"path": "${framework.dir}/build/ext-modern-all-debug.js"
         }]
     },
 
@@ -493,7 +493,7 @@
      *
      *         "modern": {
      *             "toolkit": "modern",
-     *             "theme": "theme-triton"
+     *             "theme": "theme-material"
      *         }
      *     }
      *
@@ -507,7 +507,7 @@
 
         "modern": {
             "toolkit": "modern",
-            "theme": "theme-neptune"
+            "theme": "theme-triton"
         }
     },
 

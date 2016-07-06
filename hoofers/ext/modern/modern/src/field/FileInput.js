@@ -98,9 +98,9 @@ Ext.define('Ext.field.FileInput', {
 
     /**
      * Called when the value changes on this input item
-     * @cfg me {Ext.field.FileInput}
-     * @cfg value {String} new Value
-     * @cfg startValue {String} Original Value
+     * @cfg {Object} me
+     * @cfg {String} value new Value
+     * @cfg {String} startValue Original Value
      */
     onChange: function(me, value, startValue) {
         this.fireEvent('change', me, value, startValue);
@@ -141,9 +141,8 @@ Ext.define('Ext.field.FileInput', {
         }
     },
 
-    /*
+    /**
      * Updates the accept attribute with the {@link #accept} configuration.
-     * 
      */
     applyAccept: function(value) {
         switch (value) {

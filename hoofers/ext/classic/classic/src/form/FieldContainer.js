@@ -169,7 +169,8 @@ Ext.define('Ext.form.FieldContainer', {
     },
     
     /**
-     * @protected Called when a {@link Ext.form.Labelable} instance is added to the container's subtree.
+     * @protected
+     * Called when a {@link Ext.form.Labelable} instance is added to the container's subtree.
      * @param {Ext.form.Labelable} labelItem The instance that was added
      */
     onAdd: function(labelItem) {
@@ -190,7 +191,8 @@ Ext.define('Ext.form.FieldContainer', {
     },
 
     /**
-     * @protected Called when a {@link Ext.form.Labelable} instance is removed from the container's subtree.
+     * @protected
+     * Called when a {@link Ext.form.Labelable} instance is removed from the container's subtree.
      * @param {Ext.form.Labelable} labelItem The instance that was removed
      */
     onRemove: function(labelItem, isDestroying) {
@@ -208,7 +210,11 @@ Ext.define('Ext.form.FieldContainer', {
         var me = this,
             data = me.callParent();
 
+        data.containerElCls = me.containerElCls;
         data = Ext.applyIf(data, me.getLabelableRenderData());
+        if (me.labelAlign === 'top' || me.msgTarget === 'under') {
+            data.extraFieldBodyCls += ' ' + Ext.baseCSSPrefix + 'field-container-body-vertical';
+        }
         data.tipAnchorTarget = me.id + '-containerEl';
         return data;
     },
@@ -251,7 +257,8 @@ Ext.define('Ext.form.FieldContainer', {
     },
 
     /**
-     * @private Updates the content of the labelEl if it is rendered
+     * @private
+     * Updates the content of the labelEl if it is rendered
      */
     updateLabel: function() {
         var me = this,
@@ -264,7 +271,8 @@ Ext.define('Ext.form.FieldContainer', {
 
 
     /**
-     * @private Fired when the error message of any field within the container changes, and updates the
+     * @private
+     * Fired when the error message of any field within the container changes, and updates the
      * combined error message to match.
      */
     onFieldErrorChange: function() {

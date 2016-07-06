@@ -15,14 +15,8 @@ Ext.define('Ext.data.ChainedStore', {
          */
         source: null,
 
-        /**
-         * @inheritdoc
-         */
         remoteFilter: false,
 
-        /**
-         * @inheritdoc
-         */
         remoteSort: false
     },
 
@@ -34,9 +28,6 @@ Ext.define('Ext.data.ChainedStore', {
         this.callParent(arguments);
         this.getData().addObserver(this);
     },
-
-    blockLoad: Ext.emptyFn,
-    unblockLoad: Ext.emptyFn,
 
     //<debug>
     updateRemoteFilter: function(remoteFilter, oldRemoteFilter) {
@@ -72,6 +63,10 @@ Ext.define('Ext.data.ChainedStore', {
             me.data = data = me.constructDataCollection();
         }
         return data;
+    },
+
+    getTotalCount: function() {
+        return this.getCount();
     },
 
     getSession: function() {
@@ -157,6 +152,11 @@ Ext.define('Ext.data.ChainedStore', {
         // is an descendant of a collapsed node, and so *will not be contained by this store
         me.onUpdate(record, type, modifiedFieldNames, info);
         me.fireEvent('update', me, record, type, modifiedFieldNames, info);
+    },
+    
+    onCollectionUpdateKey: function(source, details) {
+        // Must react to upstream Collection key update by firing idchanged event
+        this.fireEvent('idchanged', this, details.item, details.oldKey, details.newKey);
     },
 
     onUpdate: Ext.emptyFn,

@@ -71,7 +71,6 @@ Ext.define('Ext.chart.series.Pie', {
          * The store record field name to be used for the pie slice lengths.
          * The values bound to this field name must be positive real numbers.
          */
-        radiusField: false,
 
         /**
          * @cfg {Number} donut Specifies the radius of the donut hole, as a percentage of the chart's radius.
@@ -202,7 +201,8 @@ Ext.define('Ext.chart.series.Pie', {
             lastAngle = 0,
             totalAngle = me.getTotalAngle(),
             clockwise = me.getClockwise() ? 1 : -1,
-            sprites = me.getSprites();
+            sprites = me.getSprites(),
+            chart, sprite;
 
         if (!sprites) {
             return;
@@ -237,7 +237,15 @@ Ext.define('Ext.chart.series.Pie', {
         }
         if (recordCount < me.sprites.length) {
             for (i = recordCount; i < me.sprites.length; i++) {
-                me.sprites[i].destroy();
+                sprite = me.sprites[i];
+                // Don't want the 'labels' Markers and its 'template' sprite to be destroyed
+                // with the PieSlice MarkerHolder, as it is also used by other pie slices.
+                // So we release 'labels' before destroying the PieSlice.
+                // But first, we have to clear the instances of the 'labels'
+                // Markers created by the PieSlice MarkerHolder.
+                sprite.getMarker('labels').clear(sprite.getId());
+                sprite.releaseMarker('labels');
+                sprite.destroy();
             }
             me.sprites.length = recordCount;
         }
@@ -248,7 +256,15 @@ Ext.define('Ext.chart.series.Pie', {
                 globalAlpha: 0
             });
         }
-        me.getChart().refreshLegendStore();
+
+        chart = me.getChart();
+        // 'refreshLegendStore' will attemp to grab the 'series',
+        // which are still configuring at this point.
+        // The legend store will be refreshed inside the chart.series
+        // updater anyway.
+        if (!chart.isConfiguring) {
+            chart.refreshLegendStore();
+        }
     },
 
     updateCenter: function (center) {
@@ -327,10 +343,11 @@ Ext.define('Ext.chart.series.Pie', {
             length = items.length,
             animation = me.getAnimation() || chart && chart.getAnimation(),
             sprites = me.sprites, sprite,
-            spriteIndex = 0, rendererData,
-            i, spriteCreated = false,
+            spriteCreated = false,
+            spriteIndex = 0,
             label = me.getLabel(),
-            labelTpl = label.getTemplate();
+            labelTpl = label.getTemplate(),
+            i, rendererData;
 
         rendererData = {
             store: store,
@@ -353,14 +370,13 @@ Ext.define('Ext.chart.series.Pie', {
                         labelOverflowPadding: me.getLabelOverflowPadding()
                     });
                     labelTpl.fx.setCustomDurations({'callout': 200});
-                    sprite.bindMarker('labels', label);
                 }
                 sprite.setAttributes(me.getStyleByIndex(i));
-                sprite.rendererData = rendererData;
-                sprite.rendererIndex = spriteIndex++;
+                sprite.setRendererData(rendererData);
                 spriteCreated = true;
             }
-            sprite.fx.setConfig(animation);
+            sprite.setRendererIndex(spriteIndex++);
+            sprite.setAnimation(animation);
         }
         if (spriteCreated) {
             me.doUpdateStyles();
@@ -371,6 +387,10 @@ Ext.define('Ext.chart.series.Pie', {
     betweenAngle: function (x, a, b) {
         var pp = Math.PI * 2,
             offset = this.rotationOffset;
+
+        if (a === b) {
+            return false;
+        }
 
         if (!this.getClockwise()) {
             x *= -1;
@@ -387,8 +407,6 @@ Ext.define('Ext.chart.series.Pie', {
         b -= a;
 
         // Normalize, so that both x and b are in the [0,360) interval.
-        // Since 360 * n angles will be normalized to 0,
-        // we need to treat b === 0 as a special case.
         x %= pp;
         b %= pp;
         x += pp;
@@ -396,6 +414,8 @@ Ext.define('Ext.chart.series.Pie', {
         x %= pp;
         b %= pp;
 
+        // Because 360 * n angles will be normalized to 0,
+        // we need to treat b === 0 as a special case.
         return x < b || b === 0;
     },
 

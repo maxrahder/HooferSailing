@@ -128,23 +128,16 @@ Ext.define('Ext.grid.locking.View', {
 
     // This is injected into the two child views as the bindStore implementation.
     // Subviews in a lockable asseembly do not bind to stores.
-    subViewBindStore: function(dataSource) {
+    subViewBindStore: function(store, initial) {
         var me = this,
             selModel;
-        
+
         if (me.destroying || me.destroyed) {
             return;
         }
-        
+
         selModel = me.getSelectionModel();
-        
-        // SelectionModel must bind to the underlying store, not the dataSource (may be a FeatureStore)
-        // If dataSource is null we're unbinding, so don't bind the store. If we're reconfiguring, then the
-        // dataSource we get here will be the store
-        if (dataSource !== null && !me.ownerGrid.reconfiguring) {
-            dataSource = me.store;
-        }
-        selModel.bindStore(dataSource);
+        selModel.bindStore(store, initial);
         selModel.bindComponent(me);
     },
 
@@ -338,10 +331,22 @@ Ext.define('Ext.grid.locking.View', {
             add: me.onAdd,
             remove: me.onRemove,
             update: me.onUpdate,
-            clear: me.refresh,
+            clear: me.onDataRefresh,
             beginupdate: me.onBeginUpdate,
             endupdate: me.onEndUpdate
         };
+    },
+
+    onOwnerGridHide: function() {
+        Ext.suspendLayouts();
+        this.relayFn('onOwnerGridHide', arguments);
+        Ext.resumeLayouts(true);
+    },
+
+    onOwnerGridShow: function() {
+        Ext.suspendLayouts();
+        this.relayFn('onOwnerGridShow', arguments);
+        Ext.resumeLayouts(true);
     },
 
     onBeginUpdate: function() {
@@ -423,28 +428,30 @@ Ext.define('Ext.grid.locking.View', {
     },
 
     onUpdate: function() {
-        var normalView = this.normalGrid.view;
-
         Ext.suspendLayouts();
         this.relayFn('onUpdate', arguments);
-
-        // The update might have only updated the locked side (with no scrollbar present)
-        // Ensure that the scroll range is updated on the normal side when all layouts are complete.
-        // Note that the following resumeLayouts call probably is NOT the outermost layout resumption.
-        if (normalView.hasVariableRowHeight() && normalView.bufferedRenderer) {
-            Ext.on({
-                afterlayout: normalView.bufferedRenderer.refreshSize,
-                scope: normalView.bufferedRenderer,
-                single: true
-            });
-        }
-
         Ext.resumeLayouts(true);
     },
 
     refresh: function() {
         Ext.suspendLayouts();
         this.relayFn('refresh', arguments);
+        Ext.resumeLayouts(true);
+    },
+
+    refreshView: function() {
+        Ext.suspendLayouts();
+        this.relayFn('refreshView', arguments);
+        Ext.resumeLayouts(true);
+    },
+    
+    setScrollable: function(scrollable) {
+        Ext.suspendLayouts();
+        this.lockedView.setScrollable(scrollable);
+        if (scrollable.isScroller) {
+            scrollable = new Ext.scroll.Scroller(scrollable.initialConfig);
+        }
+        this.normalView.setScrollable(scrollable);
         Ext.resumeLayouts(true);
     },
 

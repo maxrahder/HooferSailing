@@ -1,6 +1,7 @@
+/* global Ext, jasmine, expect, spyOn */
+
 describe('grid-moving-columns', function () {
-    var testIt = Ext.isWebKit ? it : xit,
-        transformStyleName = 'webkitTransform' in document.documentElement.style ? 'webkitTransform' : 'transform',
+    var transformStyleName = 'webkitTransform' in document.documentElement.style ? 'webkitTransform' : 'transform',
         GridModel = Ext.define(null, {
             extend: 'Ext.data.Model',
             fields: [
@@ -26,7 +27,7 @@ describe('grid-moving-columns', function () {
         }),
         headerText = [],
         rowText = [],
-        grid, headerCt, locked, view, store, visibleColumns, groupHeader, 
+        grid, headerCt, locked, view, store, visibleColumns, groupHeader,
         subGroupHeader, colChangeSpy, colMoveSpy, headerCtMoveSpy;
 
     // Pass a reference to the cmp not an index!
@@ -44,6 +45,7 @@ describe('grid-moving-columns', function () {
         // Mousedown on the header to drag
         jasmine.fireMouseEvent(from.el.dom, 'mouseover', fromMx, fromMy);
         jasmine.fireMouseEvent(from.titleEl.dom, 'mousedown', fromMx, fromMy);
+        from.el.focus();
 
         // The initial move which tiggers the start of the drag
         jasmine.fireMouseEvent(from.el.dom, 'mousemove', fromMx + dragThresh, fromMy);
@@ -221,7 +223,7 @@ describe('grid-moving-columns', function () {
     });
 
     describe('destroy during column header drag', function () {
-        testIt('should move columns', function () {
+        it('should move columns', function () {
             makeGrid([{
                 dataIndex: 'field1',
                 header: 'Field1'
@@ -315,7 +317,7 @@ describe('grid-moving-columns', function () {
     });
 
     describe('Header movement using the UI', function () {
-        testIt('should move columns', function () {
+        it('should move columns', function () {
             makeGrid([{
                 dataIndex: 'field1',
                 header: 'Field1'
@@ -351,10 +353,23 @@ describe('grid-moving-columns', function () {
             testSpies([2, 2]);
             testUI('1,4,5,2');
 
-            grid.destroy();
+            // For devices we know deal with focus, test that focus is preserved.
+            if (Ext.os.deviceType === 'Desktop' && (Ext.isWebKit || Ext.isGecko)) {
+                // Wait for all the asynchronous events to unwind.
+                waits(100);
+
+                // The dragged column (now at index 1 - the cache gets refreshed after a drop)
+                // should have retained the focus that it got on mousedown.
+                runs(function() {
+                    expect(Ext.Element.getActiveElement()).toBe(visibleColumns[1].el.dom);
+                    grid.destroy();
+                });
+            } else {
+                grid.destroy();
+            }
         });
 
-        testIt('should move columns to the end of the header container', function () {
+        it('should move columns to the end of the header container', function () {
             makeGrid([{
                 dataIndex: 'field1',
                 header: 'Field1'
@@ -395,7 +410,7 @@ describe('grid-moving-columns', function () {
             grid.destroy();
         });
 
-        testIt('should move columns to the start of the header container', function () {
+        it('should move columns to the start of the header container', function () {
             makeGrid([{
                 dataIndex: 'field1',
                 header: 'Field1'
@@ -434,7 +449,7 @@ describe('grid-moving-columns', function () {
             grid.destroy();
         });
 
-        testIt('should only fire columnmove once when moving columns between column groups', function () {
+        it('should only fire columnmove once when moving columns between column groups', function () {
             makeGrid([{
                 header: 'Group 1',
                 columns: [{
@@ -479,7 +494,7 @@ describe('grid-moving-columns', function () {
             grid.destroy();
         });
 
-        testIt('should work when columns are hidden', function () {
+        it('should work when columns are hidden', function () {
             var allColumns;
 
             makeGrid([{
@@ -540,7 +555,7 @@ describe('grid-moving-columns', function () {
             grid.destroy();
         });
 
-        testIt('should work moving columns across group columns', function () {
+        it('should work moving columns across group columns', function () {
             makeGrid([{
                 dataIndex: 'field1',
                 header: 'Field1'
@@ -592,7 +607,7 @@ describe('grid-moving-columns', function () {
             grid.destroy();
         });
 
-        testIt('should work moving group columns', function () {
+        it('should work moving group columns', function () {
             makeGrid([{
                 dataIndex: 'field1',
                 header: 'Field1'
@@ -640,7 +655,7 @@ describe('grid-moving-columns', function () {
         });
 
         describe('moving column(s) out of a group to the root container', function () {
-            testIt('should work moving a column out of a group', function () {
+            it('should work moving a column out of a group', function () {
                 makeGrid([{
                     dataIndex: 'field1',
                     header: 'Field1'
@@ -700,7 +715,7 @@ describe('grid-moving-columns', function () {
                 grid.destroy();
             });
 
-            testIt('should work moving columns out of a group when columns are hidden before a group', function () {
+            it('should work moving columns out of a group when columns are hidden before a group', function () {
                 var allColumns;
 
                 makeGrid([{
@@ -809,11 +824,11 @@ describe('grid-moving-columns', function () {
                     grid.destroy();
                 }
 
-                testIt('should work', function () {
+                it('should work', function () {
                     fn();
                 });
 
-                testIt('should remove the group header when the last subheader is removed', function () {
+                it('should remove the group header when the last subheader is removed', function () {
                     fn(function () {
                         expect(groupHeader.rendered).toBe(null);
                         expect(groupHeader.ownerCt).toBe(null);
@@ -940,8 +955,8 @@ describe('grid-moving-columns', function () {
         //              });
         //
         // Note that `dropPosition` only needs to be declared if using a range.
-
-        var columns, dropPosition, order, range, sequence, subGroupHeader, onRight;
+        //
+        var columns, dropPosition, order, range, sequence, subGroupHeader, onRight, stateful, skipMove;
 
         function runTest(cfg, expectMore) {
             setVars(cfg);
@@ -950,13 +965,25 @@ describe('grid-moving-columns', function () {
             // This could be a TODO item, but I didn't see the necessity of it.
             makeGrid(columns, null, {
                 enableColumnResize: false,
-                header: false
+                header: false,
+                stateful: stateful,
+                stateId: 'quux'
             });
-            doMove();
+
+            // skipMove is useful when testing grid state for stateful unit tests.
+            if (!skipMove) {
+                doMove();
+            }
+
             testUI(order);
 
             if (expectMore) {
                 expectMore();
+            }
+
+            // Save state for stateful unit tests.
+            if (stateful) {
+                grid.saveState();
             }
 
             grid.destroy();
@@ -973,6 +1000,8 @@ describe('grid-moving-columns', function () {
             order = cfg.order;
             range = cfg.range;
             sequence = cfg.sequence;
+            skipMove = cfg.skipMove;
+            stateful = cfg.stateful;
             subGroupHeader = cfg.subGroupHeader;
             onRight = dropPosition === 'before' ? false : true;
 
@@ -1052,7 +1081,77 @@ describe('grid-moving-columns', function () {
         }
 
         afterEach(function () {
-            columns = dropPosition = subGroupHeader = order = range = sequence = subGroupHeader = onRight = null;
+            columns = dropPosition = subGroupHeader = order = range = sequence = subGroupHeader = onRight = stateful = skipMove = null;
+        });
+
+        describe('stateful', function () {
+            var columns;
+
+            beforeEach(function () {
+                columns = [{
+                    dataIndex: 'field1',
+                    stateId: 'foo1',
+                    header: 'Field1'
+                }, {
+                    dataIndex: 'field2',
+                    stateId: 'foo2',
+                    header: 'Field2'
+                }, {
+                    header: 'Group1',
+                    stateId: 'foo3',
+                    columns: [{
+                        dataIndex: 'field3',
+                        stateId: 'foo4',
+                        header: 'Field3'
+                    }, {
+                        dataIndex: 'field4',
+                        stateId: 'foo5',
+                        header: 'Field4'
+                    }, {
+                        dataIndex: 'field5',
+                        stateId: 'foo6',
+                        header: 'Field5'
+                    }, {
+                        dataIndex: 'field6',
+                        stateId: 'foo7',
+                        header: 'Field6'
+                    }]
+                }, {
+                    dataIndex: 'field7',
+                    stateId: 'foo8',
+                    header: 'Field7'
+                }, {
+                    dataIndex: 'field8',
+                    stateId: 'foo9',
+                    header: 'Field8'
+                }];
+
+                new Ext.state.Provider();
+            });
+
+            afterEach(function () {
+                Ext.state.Manager.getProvider().clear();
+                columns = null;
+            });
+
+            it('should work when moving headers within a grouped header', function () {
+                runTest({
+                    columns: columns,
+                    order: '1,2,4,5,6,3,7,8',
+                    // Move the first subheader in the first group to be the last subheader in the same group.
+                    sequence: [
+                        [2, 5, true]
+                    ],
+                    stateful: true
+                });
+
+                runTest({
+                    columns: columns,
+                    order: '1,2,4,5,6,3,7,8',
+                    skipMove: true,
+                    stateful: true
+                });
+            });
         });
 
         describe('one nested group', function () {
@@ -1093,7 +1192,7 @@ describe('grid-moving-columns', function () {
                     }
 
                     // Each spec will test that the groupHeader has been removed after the last subheader.
-                    testIt('should work when the move position is before the target header', function () {
+                    it('should work when the move position is before the target header', function () {
                         runTest({
                             columns: columns,
                             dropPosition: 'before',
@@ -1102,7 +1201,7 @@ describe('grid-moving-columns', function () {
                         }, additionalSpec);
                     });
 
-                    testIt('should work when the move position is before the target header, in reverse', function () {
+                    it('should work when the move position is before the target header, in reverse', function () {
                         runTest({
                             columns: columns,
                             order: '1,2,6,5,4,3,7,8',
@@ -1115,7 +1214,7 @@ describe('grid-moving-columns', function () {
                         }, additionalSpec);
                     });
 
-                    testIt('should work when the move position is after the target header', function () {
+                    it('should work when the move position is after the target header', function () {
                         runTest({
                             columns: columns,
                             order: '1,2,6,5,4,3,7,8',
@@ -1128,7 +1227,7 @@ describe('grid-moving-columns', function () {
                         }, additionalSpec);
                     });
 
-                    testIt('should work when the move position is after the target header, in reverse', function () {
+                    it('should work when the move position is after the target header, in reverse', function () {
                         runTest({
                             columns: columns,
                             dropPosition: 'right',
@@ -1137,7 +1236,7 @@ describe('grid-moving-columns', function () {
                         }, additionalSpec);
                     });
 
-                    testIt("should work when the move position alternates between 'before' and 'after'", function () {
+                    it("should work when the move position alternates between 'before' and 'after'", function () {
                         runTest({
                             columns: columns,
                             order: '1,2,4,3,6,5,7,8',
@@ -1155,7 +1254,7 @@ describe('grid-moving-columns', function () {
             });
 
             describe('when the headers are moved randomly', function () {
-                testIt("should work when the move position is 'before'", function () {
+                it("should work when the move position is 'before'", function () {
                     runTest({
                         columns: columns,
                         order: '6,1,3,4,2,5,7,8',
@@ -1168,7 +1267,7 @@ describe('grid-moving-columns', function () {
                     });
                 });
 
-                testIt("should work when the move position is 'after'", function () {
+                it("should work when the move position is 'after'", function () {
                     runTest({
                         columns: columns,
                         order: '1,6,2,3,4,7,5,8',
@@ -1181,7 +1280,7 @@ describe('grid-moving-columns', function () {
                     });
                 });
 
-                testIt("should work when the move position alternates between 'before' and 'after'", function () {
+                it("should work when the move position alternates between 'before' and 'after'", function () {
                     runTest({
                         columns: columns,
                         order: '6,1,4,3,2,7,5,8',
@@ -1306,7 +1405,7 @@ describe('grid-moving-columns', function () {
                         expect(subGroupHeader.rendered).toBe(null);
                     }
 
-                    testIt('should work when the move position is before the target header', function () {
+                    it('should work when the move position is before the target header', function () {
                         runTest({
                             columns: columns,
                             dropPosition: 'before',
@@ -1316,7 +1415,7 @@ describe('grid-moving-columns', function () {
                         });
                     });
 
-                    testIt('should work when the move position is before the target header, in reverse', function () {
+                    it('should work when the move position is before the target header, in reverse', function () {
                         runTest({
                             columns: columns,
                             order: '1,2,3,4,5,9,8,7,6,10,11,12,13',
@@ -1330,7 +1429,7 @@ describe('grid-moving-columns', function () {
                         });
                     });
 
-                    testIt('should work when the move position is after the target header', function () {
+                    it('should work when the move position is after the target header', function () {
                         runTest({
                             columns: columns,
                             order: '1,2,3,4,5,9,8,7,6,10,11,12,13',
@@ -1344,7 +1443,7 @@ describe('grid-moving-columns', function () {
                         });
                     });
 
-                    testIt('should work when the move position is after the target header, in reverse', function () {
+                    it('should work when the move position is after the target header, in reverse', function () {
                         runTest({
                             columns: columns,
                             dropPosition: 'right',
@@ -1354,7 +1453,7 @@ describe('grid-moving-columns', function () {
                         });
                     });
 
-                    testIt("should work when the move position alternates between 'before' and 'after'", function () {
+                    it("should work when the move position alternates between 'before' and 'after'", function () {
                         runTest({
                             columns: columns,
                             order: '1,2,3,4,5,7,9,6,8,10,11,12,13',
@@ -1368,7 +1467,7 @@ describe('grid-moving-columns', function () {
                         });
                     });
 
-                    testIt("should remove the group header when the last subheader is removed, 'before' move position", function () {
+                    it("should remove the group header when the last subheader is removed, 'before' move position", function () {
                         runTest({
                             columns: columns,
                             dropPosition: 'before',
@@ -1378,7 +1477,7 @@ describe('grid-moving-columns', function () {
                         }, additionalSpec);
                     });
 
-                    testIt("should remove the group header when the last subheader is removed, 'after' move position", function () {
+                    it("should remove the group header when the last subheader is removed, 'after' move position", function () {
                         runTest({
                             columns: columns,
                             dropPosition: 'after',
@@ -1390,7 +1489,7 @@ describe('grid-moving-columns', function () {
                 });
 
                 describe('when the Group2 subheaders are dragged into Group1 (targetHeader is not Group2)', function () {
-                    testIt('should work when the move position is before the first subheader in Group1', function () {
+                    it('should work when the move position is before the first subheader in Group1', function () {
                         runTest({
                             columns: columns,
                             order: '1,2,9,8,7,6,3,4,5,10,11,12,13',
@@ -1403,7 +1502,7 @@ describe('grid-moving-columns', function () {
                         });
                     });
 
-                    testIt('should work when the move position is before the first subheader in Group1, in reverse', function () {
+                    it('should work when the move position is before the first subheader in Group1, in reverse', function () {
                         runTest({
                             columns: columns,
                             order: '1,2,6,7,8,9,3,4,5,10,11,12,13',
@@ -1416,7 +1515,7 @@ describe('grid-moving-columns', function () {
                         });
                     });
 
-                    testIt('should work when the move position is after the last subheader in Group1', function () {
+                    it('should work when the move position is after the last subheader in Group1', function () {
                         runTest({
                             columns: columns,
                             order: '1,2,3,4,5,10,6,7,8,9,11,12,13',
@@ -1429,7 +1528,7 @@ describe('grid-moving-columns', function () {
                         });
                     });
 
-                    testIt('should work when the move position is after the last subheader in Group1, in reverse', function () {
+                    it('should work when the move position is after the last subheader in Group1, in reverse', function () {
                         runTest({
                             columns: columns,
                             order: '1,2,3,4,5,10,9,8,7,6,11,12,13',
@@ -1442,7 +1541,7 @@ describe('grid-moving-columns', function () {
                         });
                     });
 
-                    testIt('should work when the move position is before the subheader directly after Group2', function () {
+                    it('should work when the move position is before the subheader directly after Group2', function () {
                         runTest({
                             columns: columns,
                             order: '1,2,3,4,5,9,8,7,6,10,11,12,13',
@@ -1455,7 +1554,7 @@ describe('grid-moving-columns', function () {
                         });
                     });
 
-                    testIt('should work when the move position is before the subheader directly after Group2, in reverse', function () {
+                    it('should work when the move position is before the subheader directly after Group2, in reverse', function () {
                         runTest({
                             columns: columns,
                             order: '1,2,3,4,5,6,7,8,9,10,11,12,13',
@@ -1479,7 +1578,7 @@ describe('grid-moving-columns', function () {
                     //
                     // Note that also we're testing that Group2 has been removed after the last subheader has been
                     // dragged out.
-                    testIt('should work when the move position is before the first group header (Group1)', function () {
+                    it('should work when the move position is before the first group header (Group1)', function () {
                         runTest({
                             columns: columns,
                             dropPosition: 'before',
@@ -1488,7 +1587,7 @@ describe('grid-moving-columns', function () {
                         }, additionalSpec);
                     });
 
-                    testIt('should work when the move position is before the first group header (Group1), in reverse', function () {
+                    it('should work when the move position is before the first group header (Group1), in reverse', function () {
                         // Note that specifying null in a sequence and not specifying a subGroupHeader config will
                         // have the value of groupHeader default to be the first group header found, which is
                         // Group1 and the one we want.
@@ -1504,7 +1603,7 @@ describe('grid-moving-columns', function () {
                         }, additionalSpec);
                     });
 
-                    testIt('should work when the move position is after the first group header (Group1)', function () {
+                    it('should work when the move position is after the first group header (Group1)', function () {
                         runTest({
                             columns: columns,
                             order: '1,2,3,4,5,10,9,8,7,6,11,12,13',
@@ -1517,7 +1616,7 @@ describe('grid-moving-columns', function () {
                         }, additionalSpec);
                     });
 
-                    testIt('should work when the move position is after the first group header (Group1), in reverse', function () {
+                    it('should work when the move position is after the first group header (Group1), in reverse', function () {
                         runTest({
                             columns: columns,
                             dropPosition: 'right',
@@ -1526,7 +1625,7 @@ describe('grid-moving-columns', function () {
                         }, additionalSpec);
                     });
 
-                    testIt("should work when the move position alternates between 'before' and 'after'", function () {
+                    it("should work when the move position alternates between 'before' and 'after'", function () {
                         runTest({
                             columns: columns,
                             order: '1,2,3,4,5,7,9,6,8,10,11,12,13',
@@ -1865,7 +1964,7 @@ describe('grid-moving-columns', function () {
             });
 
             describe('when the headers are moved randomly', function () {
-                testIt("should work when the move position is 'before'", function () {
+                it("should work when the move position is 'before'", function () {
                     runTest({
                         columns: columns,
                         order: '6,1,9,2,3,7,4,5,8,10,11,12,13',
@@ -1878,7 +1977,7 @@ describe('grid-moving-columns', function () {
                     });
                 });
 
-                testIt("should work when the move position is 'after'", function () {
+                it("should work when the move position is 'after'", function () {
                     runTest({
                         columns: columns,
                         order: '1,6,2,3,4,8,5,10,11,12,9,13,7',
@@ -1891,7 +1990,7 @@ describe('grid-moving-columns', function () {
                     });
                 });
 
-                testIt("should work when the move position alternates between 'before' and 'after'", function () {
+                it("should work when the move position alternates between 'before' and 'after'", function () {
                     runTest({
                         columns: columns,
                         order: '1,2,9,3,6,4,7,5,8,10,11,12,13',
@@ -1973,7 +2072,7 @@ describe('grid-moving-columns', function () {
                         expect(subGroupHeader.rendered).toBe(null);
                     }
 
-                    testIt('should work when the move position is before the target header', function () {
+                    it('should work when the move position is before the target header', function () {
                         runTest({
                             columns: columns,
                             dropPosition: 'before',
@@ -1983,7 +2082,7 @@ describe('grid-moving-columns', function () {
                         }, additionalSpec);
                     });
 
-                    testIt('should work when the move position is before the target header, in reverse', function () {
+                    it('should work when the move position is before the target header, in reverse', function () {
                         runTest({
                             columns: columns,
                             order: '1,2,3,4,5,9,8,7,6,10,11,12,13,14,15,16',
@@ -1997,7 +2096,7 @@ describe('grid-moving-columns', function () {
                         }, additionalSpec);
                     });
 
-                    testIt('should work when the move position is after the target header', function () {
+                    it('should work when the move position is after the target header', function () {
                         runTest({
                             columns: columns,
                             dropPosition: 'right',
@@ -2007,7 +2106,7 @@ describe('grid-moving-columns', function () {
                         }, additionalSpec);
                     });
 
-                    testIt('should work when the move position is after the target header, in reverse', function () {
+                    it('should work when the move position is after the target header, in reverse', function () {
                         runTest({
                             columns: columns,
                             dropPosition: 'right',
@@ -2017,7 +2116,7 @@ describe('grid-moving-columns', function () {
                         }, additionalSpec);
                     });
 
-                    testIt("should work when the move position alternates between 'before' and 'after'", function () {
+                    it("should work when the move position alternates between 'before' and 'after'", function () {
                         runTest({
                             columns: columns,
                             order: '1,2,3,4,5,7,9,6,8,10,11,12,13,14,15,16',
@@ -2038,7 +2137,7 @@ describe('grid-moving-columns', function () {
                         expect(subGroupHeader.rendered).toBe(null);
                     }
 
-                    testIt('should work when the move position is after the last subheader in Group2', function () {
+                    it('should work when the move position is after the last subheader in Group2', function () {
                         // Even though we're not using the subGroupHeader in the move sequence, we specify it b/c
                         // we're referencing it in the additionalSpec.
                         runTest({
@@ -2054,7 +2153,7 @@ describe('grid-moving-columns', function () {
                         }, additionalSpec);
                     });
 
-                    testIt('should work when the move position is before the subheader directly after Group2', function () {
+                    it('should work when the move position is before the subheader directly after Group2', function () {
                         runTest({
                             columns: columns,
                             order: '1,2,3,4,5,10,11,12,9,8,7,6,13,14,15,16',
@@ -2075,7 +2174,7 @@ describe('grid-moving-columns', function () {
                         expect(subGroupHeader.rendered).toBe(null);
                     }
 
-                    testIt('should work when the move position is after the last subheader in Group1', function () {
+                    it('should work when the move position is after the last subheader in Group1', function () {
                         // Even though we're not using the subGroupHeader in the move sequence, we specify it b/c
                         // we're referencing it in the additionalSpec.
                         runTest({
@@ -2091,7 +2190,7 @@ describe('grid-moving-columns', function () {
                         }, additionalSpec);
                     });
 
-                    testIt('should work when the move position is after the last subheader in Group1, in reverse', function () {
+                    it('should work when the move position is after the last subheader in Group1, in reverse', function () {
                         runTest({
                             columns: columns,
                             dropPosition: 'after',
@@ -2100,7 +2199,7 @@ describe('grid-moving-columns', function () {
                         });
                     });
 
-                    testIt('should work when the move position is before the subheader directly after Group1', function () {
+                    it('should work when the move position is before the subheader directly after Group1', function () {
                         runTest({
                             columns: columns,
                             order: '1,2,3,4,5,10,11,12,9,8,7,6,13,14,15,16',
@@ -2114,7 +2213,7 @@ describe('grid-moving-columns', function () {
                         }, additionalSpec);
                     });
 
-                    testIt('should work when the move position is before the subheader directly after Group1, in reverse', function () {
+                    it('should work when the move position is before the subheader directly after Group1, in reverse', function () {
                         runTest({
                             columns: columns,
                             order: '1,2,3,4,5,10,11,12,6,7,8,9,13,14,15,16',
@@ -2128,7 +2227,7 @@ describe('grid-moving-columns', function () {
                         }, additionalSpec);
                     });
 
-                    testIt('should work when the targetHeader is Group1 and the move position is before', function () {
+                    it('should work when the targetHeader is Group1 and the move position is before', function () {
                         runTest({
                             columns: columns,
                             order: '1,2,9,8,7,6,3,4,5,10,11,12,13,14,15,16',
@@ -2142,7 +2241,7 @@ describe('grid-moving-columns', function () {
                         }, additionalSpec);
                     });
 
-                    testIt('should work when the targetHeader is Group1 and the move position is after', function () {
+                    it('should work when the targetHeader is Group1 and the move position is after', function () {
                         runTest({
                             columns: columns,
                             order: '1,2,3,4,5,10,11,12,13,9,8,7,6,14,15,16',
@@ -2168,7 +2267,7 @@ describe('grid-moving-columns', function () {
                         expect(subGroupHeader.ownerCt).toBe(null);
                     }
 
-                    testIt('should work when the move position is before the first group header (Group1)', function () {
+                    it('should work when the move position is before the first group header (Group1)', function () {
                         runTest({
                             columns: columns,
                             order: '1,2,6,7,8,9,3,4,5,10,11,12,13,14,15,16',
@@ -2182,7 +2281,7 @@ describe('grid-moving-columns', function () {
                         }, additionalSpec);
                     });
 
-                    testIt('should work when the move position is before the first group header (Group1), in reverse', function () {
+                    it('should work when the move position is before the first group header (Group1), in reverse', function () {
                         // Note that specifying null in a sequence and not specifying a subGroupHeader config will
                         // have the value of groupHeader default to be the first group header found, which is
                         // Group1 and the one we want.
@@ -2199,7 +2298,7 @@ describe('grid-moving-columns', function () {
                         }, additionalSpec);
                     });
 
-                    testIt('should work when the move position is after the first group header (Group1)', function () {
+                    it('should work when the move position is after the first group header (Group1)', function () {
                         runTest({
                             columns: columns,
                             order: '1,2,3,4,5,10,11,12,13,9,8,7,6,14,15,16',
@@ -2213,7 +2312,7 @@ describe('grid-moving-columns', function () {
                         }, additionalSpec);
                     });
 
-                    testIt('should work when the move position is after the first group header (Group1), in reverse', function () {
+                    it('should work when the move position is after the first group header (Group1), in reverse', function () {
                         runTest({
                             columns: columns,
                             order: '1,2,3,4,5,10,11,12,13,6,7,8,9,14,15,16',
@@ -2227,7 +2326,7 @@ describe('grid-moving-columns', function () {
                         }, additionalSpec);
                     });
 
-                    testIt("should work when the move position alternates between 'before' and 'after'", function () {
+                    it("should work when the move position alternates between 'before' and 'after'", function () {
                         runTest({
                             columns: columns,
                             order: '1,2,7,9,3,4,5,10,11,12,13,6,8,14,15,16',
@@ -3933,5 +4032,85 @@ describe('grid-moving-columns', function () {
                 });
             });
         });
+
+        describe('Dropping before group columns', function() {
+            it('should be able to move before the first item of a group column', function() {
+                grid = Ext.create('Ext.grid.Panel', {
+                    title: 'Simpsons',
+                    store: {
+                        storeId: 'simpsonsStore',
+                        fields: ['name', 'email', 'phone', 'phone1', 'phone2', 'phone3', 'phone4'],
+                        data: [{
+                            name: 'Lisa',
+                            email: 'lisa@simpsons.com',
+                            phone: '555-111-1224',
+                            phone1: '555-111-1111',
+                            phone2: '555-111-2222',
+                            phone3: '555-111-3333',
+                            phone4: '555-111-4444'
+                        }]
+                    },
+                    columnLines: true,
+                    columns: [{
+                        text: 'Name',
+                        dataIndex: 'name',
+                        flex: 1,
+                        minWidth: 100
+                    }, {
+                        text: 'Email',
+                        dataIndex: 'email',
+                        flex: 1,
+                        minWidth: 100
+                    }, {
+                        text: 'Phone',
+                        columns: [{
+                            dataIndex: 'phone1',
+                            text: 'Phone 1'
+                        }, {
+                            dataIndex: 'phone2',
+                            text: 'Phone 2'
+                        }, {
+                            dataIndex: 'phone3',
+                            text: 'Phone 3'
+                        }, {
+                            dataIndex: 'phone4',
+                            text: 'Phone 4'
+                        }]
+                    }, {
+                        text: 'Phones',
+                        columns: [{
+                            dataIndex: 'phone1',
+                            text: 'Phones 1'
+                        }, {
+                            dataIndex: 'phone2',
+                            text: 'Phones 2'
+                        }, {
+                            dataIndex: 'phone3',
+                            text: 'Phones 3'
+                        }, {
+                            dataIndex: 'phone4',
+                            text: 'Phones 4'
+                        }]
+                    }],
+                    renderTo: Ext.getBody()
+                });
+                store = grid.store;
+
+                var name = grid.down('[text=Name]'),
+                    phone = grid.down('[text=Phone]'),
+                    headers = '';
+
+                // Drag to the left of "Phone".
+                dragColumn(name, phone);
+
+                // Get new header text order
+                Ext.Array.each(grid.getVisibleColumnManager().getColumns(), function(c) {
+                    headers += c.text;
+                });
+                
+                expect(headers).toBe('EmailNamePhone 1Phone 2Phone 3Phone 4Phones 1Phones 2Phones 3Phones 4');
+            });
+        });
     });
 });
+

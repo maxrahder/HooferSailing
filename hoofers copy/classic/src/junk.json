@@ -1,0 +1,541 @@
+{
+    "420": [{
+        "equipment_ID": "62",
+        "name": "420 #10",
+        "status": 1
+    }, {
+        "equipment_ID": "63",
+        "name": "420 #11",
+        "status": 1
+    }, {
+        "equipment_ID": "64",
+        "name": "420 #12",
+        "status": 1
+    }, {
+        "equipment_ID": "65",
+        "name": "420 #13",
+        "status": 1
+    }, {
+        "equipment_ID": "66",
+        "name": "420 #14",
+        "status": 1
+    }, {
+        "equipment_ID": "67",
+        "name": "420 #15",
+        "status": 2
+    }, {
+        "equipment_ID": "68",
+        "name": "420 #16",
+        "status": 1
+    }, {
+        "equipment_ID": "69",
+        "name": "420 #17",
+        "status": 1
+    }, {
+        "equipment_ID": "70",
+        "name": "420 #18",
+        "status": 1
+    }, {
+        "equipment_ID": "59",
+        "name": "420 #7",
+        "status": 1
+    }, {
+        "equipment_ID": "60",
+        "name": "420 #8",
+        "status": 1
+    }, {
+        "equipment_ID": "61",
+        "name": "420 #9",
+        "status": 1
+    }],
+    "Badger Sloop": [{
+        "equipment_ID": "71",
+        "name": "Badger Sloop #1",
+        "status": 1
+    }, {
+        "equipment_ID": "72",
+        "name": "Badger Sloop #2",
+        "status": 1
+    }, {
+        "equipment_ID": "73",
+        "name": "Badger Sloop #3",
+        "status": 1
+    }, {
+        "equipment_ID": "74",
+        "name": "Badger Sloop #4",
+        "status": 1
+    }, {
+        "equipment_ID": "75",
+        "name": "Badger Sloop #5",
+        "status": 4,
+        "checkout": {
+            "checkouttime": "2016-07-01T18:54:28-05:00",
+            "usage": "Day Sailing"
+        }
+    }, {
+        "equipment_ID": "76",
+        "name": "Badger Sloop #6",
+        "status": 2
+    }, {
+        "equipment_ID": "77",
+        "name": "Badger Sloop #7",
+        "status": 1
+    }, {
+        "equipment_ID": "78",
+        "name": "Badger Sloop #8",
+        "status": 1
+    }],
+    "Bytes": [{
+        "equipment_ID": "142",
+        "name": "Byte #0",
+        "status": 2
+    }, {
+        "equipment_ID": "135",
+        "name": "Byte #1",
+        "status": 1
+    }, {
+        "equipment_ID": "136",
+        "name": "Byte #2",
+        "status": 2
+    }, {
+        "equipment_ID": "137",
+        "name": "Byte #3",
+        "status": 1
+    }, {
+        "equipment_ID": "138",
+        "name": "Byte #4",
+        "status": 1
+    }, {
+        "equipment_ID": "139",
+        "name": "Byte #5",
+        "status": 2
+    }, {
+        "equipment_ID": "140",
+        "name": "Byte #6",
+        "status": 2
+    }, {
+        "equipment_ID": "141",
+        "name": "Byte #7",
+        "status": 1
+    }],
+    "Heavy Keelboat": [{
+        "equipment_ID": "794",
+        "name": "Amanda Lynn",
+        "status": 2
+    }, {
+        "equipment_ID": "23",
+        "name": "Knotty Rascal",
+        "status": 1
+    }, {
+        "equipment_ID": "38",
+        "name": "Salaam",
+        "status": 2
+    }, {
+        "equipment_ID": "32",
+        "name": "Soma",
+        "status": 2
+    }, {
+        "equipment_ID": "22",
+        "name": "Spray",
+        "status": 1
+    }],
+    "J-Fleet": [{
+        "equipment_ID": "301",
+        "name": "Capri 22 (Cap)",
+        "status": 1
+    }, {
+        "equipment_ID": "47",
+        "name": "J\/22 (Stirred)",
+        "status": 1
+    }, {
+        "equipment_ID": "680",
+        "name": "J\/24 (Jag Ed)",
+        "status": 1
+    }, {
+        "equipment_ID": "300",
+        "name": "J\/24 (Scurvy Dog)",
+        "status": 1
+    }, {
+        "equipment_ID": "681",
+        "name": "J\/24 (What About Bob?)",
+        "status": 4,
+        "checkout": {
+            "checkouttime": "2016-07-02T08:39:27-05:00",
+            "usage": "Instruction"
+        }
+    }, {
+        "equipment_ID": "593",
+        "name": "O'Day 25 (Cinger)",
+        "status": 1
+    }, {
+        "equipment_ID": "37",
+        "name": "O'Day 25 (Mystique)",
+        "status": 1
+    }],
+    "Laser": [{
+        "equipment_ID": "238",
+        "name": "Laser #4000 (Blue)",
+        "status": 1
+    }, {
+        "equipment_ID": "240",
+        "name": "Laser #4003 (Green)",
+        "status": 2
+    }, {
+        "equipment_ID": "459",
+        "name": "Laser #4101 (White)",
+        "status": 1
+    }, {
+        "equipment_ID": "286",
+        "name": "Laser #4102 (Sandy Wilcox)",
+        "status": 1
+    }, {
+        "equipment_ID": "460",
+        "name": "Laser #4103 (Yellow)",
+        "status": 2
+    }, {
+        "equipment_ID": "793",
+        "name": "Laser #6549 (Off-white)",
+        "status": 2
+    }, {
+        "equipment_ID": "795",
+        "name": "Laser Ann Abby (Teal)",
+        "status": 1
+    }, {
+        "equipment_ID": "461",
+        "name": "Laser Red Hull",
+        "status": 2
+    }, {
+        "equipment_ID": "462",
+        "name": "Laser The Notorious D.U.C.K. (Ducky Smalls) (Tech Yellow)",
+        "status": 1
+    }],
+    "Scow": [{
+        "equipment_ID": "671",
+        "name": "C-Hawk ",
+        "status": 1
+    }, {
+        "equipment_ID": "670",
+        "name": "C-Lion",
+        "status": 2
+    }, {
+        "equipment_ID": "318",
+        "name": "C-Monkey",
+        "status": 1
+    }, {
+        "equipment_ID": "40",
+        "name": "C-Scow (Bumble-C)",
+        "status": 1
+    }, {
+        "equipment_ID": "51",
+        "name": "E-Scow (Habanero)",
+        "status": 1
+    }, {
+        "equipment_ID": "710",
+        "name": "E-Scow (Orca)",
+        "status": 1
+    }, {
+        "equipment_ID": "52",
+        "name": "MC-Scow Mad Scow Disease",
+        "status": 1
+    }],
+    "SUP": [{
+        "equipment_ID": "256",
+        "name": "SUP Paddle #0",
+        "status": 1
+    }, {
+        "equipment_ID": "255",
+        "name": "SUP Paddle #1",
+        "status": 1
+    }, {
+        "equipment_ID": "263",
+        "name": "SUP Paddle #11",
+        "status": 1
+    }, {
+        "equipment_ID": "264",
+        "name": "SUP Paddle #12",
+        "status": 1
+    }, {
+        "equipment_ID": "265",
+        "name": "SUP Paddle #13",
+        "status": 1
+    }, {
+        "equipment_ID": "266",
+        "name": "SUP Paddle #14",
+        "status": 1
+    }, {
+        "equipment_ID": "257",
+        "name": "SUP Paddle #2",
+        "status": 1
+    }, {
+        "equipment_ID": "258",
+        "name": "SUP Paddle #3",
+        "status": 1
+    }, {
+        "equipment_ID": "259",
+        "name": "SUP Paddle #6",
+        "status": 1
+    }, {
+        "equipment_ID": "260",
+        "name": "SUP Paddle #7",
+        "status": 1
+    }, {
+        "equipment_ID": "261",
+        "name": "SUP Paddle #8",
+        "status": 1
+    }, {
+        "equipment_ID": "262",
+        "name": "SUP Paddle #9",
+        "status": 1
+    }],
+    "Tech ": [{
+        "equipment_ID": "666",
+        "name": "Tech #31",
+        "status": 1
+    }, {
+        "equipment_ID": "667",
+        "name": "Tech #32",
+        "status": 1
+    }, {
+        "equipment_ID": "668",
+        "name": "Tech #33",
+        "status": 2
+    }, {
+        "equipment_ID": "695",
+        "name": "Tech #35",
+        "status": 1
+    }, {
+        "equipment_ID": "685",
+        "name": "Tech #36",
+        "status": 1
+    }, {
+        "equipment_ID": "684",
+        "name": "Tech #37",
+        "status": 2
+    }, {
+        "equipment_ID": "683",
+        "name": "Tech #38",
+        "status": 1
+    }, {
+        "equipment_ID": "682",
+        "name": "Tech #39",
+        "status": 1
+    }, {
+        "equipment_ID": "85",
+        "name": "Tech Hull #1",
+        "status": 1
+    }, {
+        "equipment_ID": "103",
+        "name": "Tech Hull #10",
+        "status": 1
+    }, {
+        "equipment_ID": "94",
+        "name": "Tech Hull #11",
+        "status": 1
+    }, {
+        "equipment_ID": "104",
+        "name": "Tech Hull #12",
+        "status": 2
+    }, {
+        "equipment_ID": "105",
+        "name": "Tech Hull #13",
+        "status": 1
+    }, {
+        "equipment_ID": "106",
+        "name": "Tech Hull #14",
+        "status": 1
+    }, {
+        "equipment_ID": "107",
+        "name": "Tech Hull #15",
+        "status": 1
+    }, {
+        "equipment_ID": "108",
+        "name": "Tech Hull #16",
+        "status": 2
+    }, {
+        "equipment_ID": "109",
+        "name": "Tech Hull #18",
+        "status": 1
+    }, {
+        "equipment_ID": "110",
+        "name": "Tech Hull #19",
+        "status": 1
+    }, {
+        "equipment_ID": "95",
+        "name": "Tech Hull #2",
+        "status": 1
+    }, {
+        "equipment_ID": "111",
+        "name": "Tech Hull #20",
+        "status": 1
+    }, {
+        "equipment_ID": "112",
+        "name": "Tech Hull #23",
+        "status": 2
+    }, {
+        "equipment_ID": "113",
+        "name": "Tech Hull #25",
+        "status": 1
+    }, {
+        "equipment_ID": "87",
+        "name": "Tech Hull #26",
+        "status": 2
+    }, {
+        "equipment_ID": "114",
+        "name": "Tech Hull #29",
+        "status": 1
+    }, {
+        "equipment_ID": "96",
+        "name": "Tech Hull #3",
+        "status": 1
+    }, {
+        "equipment_ID": "665",
+        "name": "Tech Hull #30",
+        "status": 1
+    }, {
+        "equipment_ID": "669",
+        "name": "Tech Hull #34",
+        "status": 2
+    }, {
+        "equipment_ID": "97",
+        "name": "Tech Hull #4",
+        "status": 1
+    }, {
+        "equipment_ID": "268",
+        "name": "Tech Hull #49",
+        "status": 1
+    }, {
+        "equipment_ID": "98",
+        "name": "Tech Hull #5",
+        "status": 2
+    }, {
+        "equipment_ID": "99",
+        "name": "Tech Hull #6",
+        "status": 2
+    }, {
+        "equipment_ID": "100",
+        "name": "Tech Hull #7",
+        "status": 2
+    }, {
+        "equipment_ID": "101",
+        "name": "Tech Hull #8",
+        "status": 1
+    }, {
+        "equipment_ID": "102",
+        "name": "Tech Hull #9",
+        "status": 2
+    }, {
+        "equipment_ID": "302",
+        "name": "Tech Hull #PS1",
+        "status": 1
+    }, {
+        "equipment_ID": "303",
+        "name": "Tech Hull #PS2",
+        "status": 1
+    }],
+    "Tools": [{
+        "equipment_ID": "307",
+        "name": "Drill 1",
+        "status": 1
+    }, {
+        "equipment_ID": "308",
+        "name": "Drill Bit 1",
+        "status": 1
+    }, {
+        "equipment_ID": "309",
+        "name": "Driver Bit 1",
+        "status": 1
+    }, {
+        "equipment_ID": "304",
+        "name": "Toolkit 1",
+        "status": 1
+    }, {
+        "equipment_ID": "305",
+        "name": "Toolkit 2",
+        "status": 1
+    }, {
+        "equipment_ID": "306",
+        "name": "Toolkit 3",
+        "status": 1
+    }],
+    "Windsurfing": [{
+        "equipment_ID": "288",
+        "name": "Windsurfer (dummy item)",
+        "status": 1
+    }],
+    "Winter Kiting": [{
+        "equipment_ID": "211",
+        "name": "Kite A",
+        "status": 1
+    }, {
+        "equipment_ID": "212",
+        "name": "Kite B",
+        "status": 1
+    }, {
+        "equipment_ID": "213",
+        "name": "Kite C",
+        "status": 1
+    }, {
+        "equipment_ID": "675",
+        "name": "Kite CC",
+        "status": 1
+    }, {
+        "equipment_ID": "214",
+        "name": "Kite D",
+        "status": 1
+    }, {
+        "equipment_ID": "676",
+        "name": "Kite DD",
+        "status": 1
+    }, {
+        "equipment_ID": "677",
+        "name": "Kite DD",
+        "status": 1
+    }, {
+        "equipment_ID": "215",
+        "name": "Kite E",
+        "status": 1
+    }, {
+        "equipment_ID": "216",
+        "name": "Kite F",
+        "status": 1
+    }, {
+        "equipment_ID": "217",
+        "name": "Kite G",
+        "status": 1
+    }, {
+        "equipment_ID": "218",
+        "name": "Kite H",
+        "status": 1
+    }, {
+        "equipment_ID": "219",
+        "name": "Kite I",
+        "status": 1
+    }, {
+        "equipment_ID": "220",
+        "name": "Kite J",
+        "status": 1
+    }, {
+        "equipment_ID": "221",
+        "name": "Kite K",
+        "status": 1
+    }, {
+        "equipment_ID": "222",
+        "name": "Kite L",
+        "status": 1
+    }, {
+        "equipment_ID": "223",
+        "name": "Kite M",
+        "status": 1
+    }, {
+        "equipment_ID": "224",
+        "name": "Kite N",
+        "status": 1
+    }, {
+        "equipment_ID": "225",
+        "name": "Kite O",
+        "status": 1
+    }, {
+        "equipment_ID": "226",
+        "name": "Kite P",
+        "status": 1
+    }]

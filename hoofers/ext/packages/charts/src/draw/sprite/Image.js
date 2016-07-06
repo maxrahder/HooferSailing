@@ -19,6 +19,10 @@ Ext.define('Ext.draw.sprite.Image', {
                  * @cfg {String} [src=''] The image source of the sprite.
                  */
                 src: 'string'
+                /**
+                 * @private
+                 * @cfg {Number} radius
+                 */
             },
             defaults: {
                 src: '',
@@ -86,5 +90,25 @@ Ext.define('Ext.draw.sprite.Image', {
             Ext.Array.include(loadingStub.pendingSprites, me);
             Ext.Array.include(loadingStub.pendingSurfaces, surface);
         }
+
+        //<debug>
+        var debug = attr.debug || this.statics().debug || Ext.draw.sprite.Sprite.debug;
+        if (debug) {
+            debug.bbox && this.renderBBox(surface, ctx);
+        }
+        //</debug>
+    },
+
+    /**
+     * @private
+     */
+    isVisible: function () {
+        var attr = this.attr,
+            parent = this.getParent(),
+            hasParent = parent && (parent.isSurface || parent.isVisible()),
+            isSeen = hasParent && !attr.hidden && attr.globalAlpha;
+
+        return !!isSeen;
     }
+
 });
