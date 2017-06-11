@@ -17,29 +17,37 @@ Ext.define('Hoofers.view.conditions.WindAndTemp', {
 
             '<tpl if="this.transmitting(values)">',
 
-            '<i style="',
-            'font-size: 10em; ',
-            'color: {color}; ',
-            'transform: rotate({conditions.windDirectionDegrees+180}deg); ',
-            '-ms-transform: rotate({conditions.windDirectionDegrees+180}deg); ', // IE 9
-            '-webkit-transform: rotate({conditions.windDirectionDegrees+180}deg); ', // Safari and Chrome
-            '" ',
-            'class="fa fa-arrow-circle-up"></i>',
 
 
-            '<p style="font-size: 4em; margin: 0em 0 0em 0;">',
-            '<b>{conditions.windAverage}</b> {conditions.speedUnits}',
-            '</p>',
+            // '<i style="',
+            // 'font-size: 10em; ',
+            // 'color: {color}; ',
+            // 'transform: rotate({conditions.windDirectionDegrees+180}deg); ',
+            // '-ms-transform: rotate({conditions.windDirectionDegrees+180}deg); ', // IE 9
+            // '-webkit-transform: rotate({conditions.windDirectionDegrees+180}deg); ', // Safari and Chrome
+            // '" ',
+            // 'class="fa fa-arrow-circle-up"></i>',
+            //
+            // '<p style="font-size: 4em; margin: 0em 0 0em 0;">',
+            // '<b>{conditions.windAverage}</b> {conditions.speedUnits}',
+            // '</p>',
+            //
+            // '<tpl if="this.gusting(values)">',
+            // '<p style="font-size: 1.5em; margin: 0em 0 0 0;">',
+            // 'From {conditions.windLulls} to {conditions.windGusts} {conditions.windSpeedUnits}',
+            // '</p>',
+            // '<tpl else>',
+            // '<p style="font-size: 1.5em; margin: -0.5em 0 0 0;">',
+            // 'Steady winds',
+            // '</p>',
+            // '</tpl>',
 
-            '<tpl if="this.gusting(values)">',
-            '<p style="font-size: 1.5em; margin: 0em 0 0 0;">',
-            'From {conditions.windLulls} to {conditions.windGusts} {conditions.windSpeedUnits}',
-            '</p>',
-            '<tpl else>',
-            '<p style="font-size: 1.5em; margin: -0.5em 0 0 0;">',
-            'Steady winds',
-            '</p>',
-            '</tpl>',
+            '<i style="font-size: 8em; color: #aaaaaa;" ',
+            'class="fa fa-meh-o"></i>',
+
+            '<p style="font-size: 1.2em; margin: 0em 2em 0em 2em;">The buoy is temporarily damaged, and is only transmitting water temperature.',
+
+
 
             '<p style="',
             '    margin: 0.6em 0 0 0;',
@@ -52,9 +60,6 @@ Ext.define('Hoofers.view.conditions.WindAndTemp', {
 
             '<tpl else>',
 
-            '<i style="font-size: 8em; color: #aaaaaa;" ',
-            'class="fa fa-wifi"></i>',
-            '<p style="font-size: 1.2em; margin: 0em 2em 2em 2em;">Checking the Lake Mendota buoy</p>',
             '<i style="font-size: 8em; color: #aaaaaa;" ',
             'class="fa fa-meh-o"></i>',
 

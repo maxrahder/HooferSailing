@@ -2080,18 +2080,17 @@ Ext.Microloader = Ext.Microloader || (function () {
 
                     // Manifest is not in local storage. Fetch it from the server
                     } else {
-                        Boot.fetch(Microloader.applyCacheBuster(url), function (result) {
-                            manifest = new Manifest({
-                                url: url,
-                                content: result.content
-                            });
 
-                            manifest.cache();
-                            if (postProcessor) {
-                                postProcessor(manifest);
-                            }
-                            Microloader.load(manifest);
-                        });
+                        if (location.href.indexOf('file:/') === 0) {
+                            Manifest.url = Microloader.applyCacheBuster(url + 'p');
+                            Boot.load(Manifest.url);
+                        }
+                        else {
+                            Manifest.url = url;
+                            Boot.fetch(Microloader.applyCacheBuster(url), function(result) {
+                                Microloader.setManifest(result.content);
+                            });
+                        }
                     }
 
                 // Embedded Manifest into JS file
@@ -2101,6 +2100,22 @@ Ext.Microloader = Ext.Microloader || (function () {
                     });
                     Microloader.load(manifest);
                 }
+            },
+
+            /**
+             *
+             * @param cfg
+             */
+            setManifest: function(cfg) {
+                var manifest = new Manifest({
+                    url: Manifest.url,
+                    content: cfg
+                });
+                manifest.cache();
+                if (postProcessor) {
+                    postProcessor(manifest);
+                }
+                Microloader.load(manifest);
             },
 
             /**
@@ -2530,7 +2545,7 @@ Ext.Microloader = Ext.Microloader || (function () {
                     // as we are still very early in the lifecycle
                     Ext.defer(function() {
                         Ext.GlobalEvents.fireEvent('appupdate', Microloader.appUpdate);
-                    }, 100);
+                    }, 1000);
                 }
             },
 

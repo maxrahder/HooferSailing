@@ -56,7 +56,7 @@ Ext.define('Hoofers.util.Fleet', {
     },
     sortBoats: function(a, b) {
         //statusText: ['','Available', 'Secured', 'Reserved', 'Checked out'],
-        statusSort = [0, 1, 4, 3, 2];
+        var statusSort = [0, 1, 4, 3, 2];
         var result = (statusSort[a.statusCode] - statusSort[b.statusCode]);
         if (result === 0) {
             result = a.checkout.localeCompare(b.checkout);

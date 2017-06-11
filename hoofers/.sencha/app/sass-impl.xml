@@ -226,7 +226,7 @@
                                     -config=${build.out.json.path}
                                     -compress=${build.css.compress}
                                     -split=${build.css.selector.limit}
-                                    -saveFile=${app.dir}/${app.sass.save}
+                                    -saveFile=${app.dir}/${app.sass.generated.var}
                                     ${app.out.scss}
                                     ${app.out.css}
                             </x-sencha-command>

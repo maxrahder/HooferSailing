@@ -203,10 +203,6 @@
     overflow: hidden;
     padding: 0 0 0 0;
 }
-/* /Users/maxrahder/HooferSailing/hoofers/ext/packages/core/sass/src/list/TreeItem.scss:565 */
-.x-big .x-treelist {
-    background-position:  0%;
-}
 /* /Users/maxrahder/HooferSailing/hoofers/ext/packages/core/sass/src/list/TreeItem.scss:573 */
 .x-treelist-container,
 .x-treelist-root-container {
@@ -368,10 +364,6 @@
 /* /Users/maxrahder/HooferSailing/hoofers/ext/packages/core/sass/src/list/TreeItem.scss:296 */
 .x-treelist-item-floated > .x-treelist-container {
     margin-left: -16px;
-}
-/* /Users/maxrahder/HooferSailing/hoofers/ext/packages/core/sass/src/list/TreeItem.scss:299 */
-.x-big .x-treelist-item-floated > .x-treelist-container {
-    margin-left: 0;
 }
 /* /Users/maxrahder/HooferSailing/hoofers/ext/packages/core/sass/src/list/TreeItem.scss:305 */
 .x-treelist-item-floated > * > * > .x-treelist-item-text {
@@ -1819,6 +1811,7 @@ div.x-form-text-grow .x-form-textarea {
 }
 /* /Users/maxrahder/HooferSailing/hoofers/ext/classic/theme-base/sass/src/form/field/Checkbox.scss:43 */
 .x-form-cb-after {
+    /* allow for the component to be positioned after the label */
     left: auto;
     right: 0;
 }
@@ -1829,6 +1822,8 @@ div.x-form-text-grow .x-form-textarea {
 }
 /* /Users/maxrahder/HooferSailing/hoofers/ext/classic/theme-base/sass/src/form/field/Checkbox.scss:57 */
 .x-form-cb-label {
+    /* some browsers like IE 10 need a block element to be able to measure
+the height of a multi-line element */
     display: inline-block;
 }
 /* /Users/maxrahder/HooferSailing/hoofers/ext/classic/theme-base/sass/src/form/field/Checkbox.scss:60 */
@@ -1840,7 +1835,6 @@ div.x-form-text-grow .x-form-textarea {
     display: block;
     /* preserve margins in IE */
     position: relative;
-    /* preserve margins in IE */
     overflow: hidden;
 }
 /* /Users/maxrahder/HooferSailing/hoofers/ext/classic/theme-base/sass/src/form/FieldSet.scss:7 */
@@ -2095,7 +2089,6 @@ div.x-form-text-grow .x-form-textarea {
     height: auto!important;
     /* The wrap has to accommodate the list, so override the .x-form-text height rule */
     cursor: text;
-    /* The wrap has to accommodate the list, so override the .x-form-text height rule */
     overflow-y: auto;
 }
 /* /Users/maxrahder/HooferSailing/hoofers/ext/classic/theme-base/sass/src/form/field/Tag.scss:11 */
@@ -11724,7 +11717,6 @@ body > .x-mask {
     position: relative;
     /*allow hover in IE on empty items*/
     border-width: 1px;
-    /*allow hover in IE on empty items*/
     border-style: dotted;
     border-color: #fff;
     color: #404040;
@@ -15508,6 +15500,7 @@ div.x-border-layout-ct {
 }
 /* /Users/maxrahder/HooferSailing/hoofers/ext/classic/theme-neutral/sass/src/slider/Multi.scss:158 */
 .x-slider-ct-vert {
+    /* Vertical styles */
     height: 100%;
 }
 /* /Users/maxrahder/HooferSailing/hoofers/ext/classic/theme-neutral/sass/src/slider/Multi.scss:162 */

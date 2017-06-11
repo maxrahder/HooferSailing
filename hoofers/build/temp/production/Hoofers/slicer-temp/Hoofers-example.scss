@@ -1382,11 +1382,3 @@ $current-package: false;
 $current-resource-root: $Hoofers-resource-root;
 $relative-image-path-for-uis: $Hoofers-resource-path;
 @import '../../../../../sass/src/Application';
-
-/* including package Hoofers */
-$Hoofers-resource-root: '' !default;
-$Hoofers-resource-path: 'images' !default;
-$current-package: false;
-$current-resource-root: $Hoofers-resource-root;
-$relative-image-path-for-uis: $Hoofers-resource-path;
-@import '../../../../../classic/sass/src/view/main/Main';
