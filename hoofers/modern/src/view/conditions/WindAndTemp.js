@@ -45,7 +45,7 @@ Ext.define('Hoofers.view.conditions.WindAndTemp', {
             '<i style="font-size: 8em; color: #aaaaaa;" ',
             'class="fa fa-meh-o"></i>',
 
-            '<p style="font-size: 1.2em; margin: 0em 2em 0em 2em;">The buoy is temporarily damaged, and is only transmitting water temperature.',
+            '<p style="font-size: 1.2em; margin: 0em 2em 0em 2em;">The buoy is temporarily damaged, and is<br/>only transmitting water temperature.',
 
 
 
