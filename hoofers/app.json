@@ -173,9 +173,6 @@
      *
      */
     "js": [{
-        "path": "resources/lib/moment.min.js",
-        "includeInBundle": false
-    }, {
         "path": "resources/lib/suncalc.js",
         "includeInBundle": false
     }, {
